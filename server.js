@@ -1,0 +1,7 @@
+var express = require('express'),
+	  app = express(),
+	  port = process.env.PORT || 5000;
+
+app.listen(port);
+
+console.log('Rejoice. You may now control Fire on port: ' + port);
