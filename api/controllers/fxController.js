@@ -1,14 +1,16 @@
 exports.list_fxs = function(req,res) {
 	//GET /fxs
-	console.log('Full Effect Array Requested');
+	console.log('Full Effect Array Requested' + '\n' + Date.now() );
+	res.send('Full Effect Array Request Received\n');
 }
 
 exports.enable_fx = function(req,res) { 
 	//POST /fxs
 	//Request to enable client control of req.params.fxId 
 	//console.log(req);
-	console.log('Request to enable fxId: ' + req.body.fxId);
-	res.send('Requested Enable for fxId: ' + req.body.fxId);
+	console.log('Request to enable fxId: ' + req.body.fxId + '\n' + Date.now() );
+	res.send('Requested Enable for fxId: ' + req.body.fxId + '\n' + Date.now() );
+
 }
 
 
@@ -16,7 +18,8 @@ exports.disable_fxs = function(req,res) {
 	//DELETE /fxs
 	//turn EVERYTHING off. Disable all fx.i
 	console.log('Master Shut Off Request');
-	res.send('Master Shut Off Request Received');
+	res.send('Master Shut Off Request Received' +'\n' + Date.Now() );
+
 }
 
 exports.get_fx_details = function(req,res) {
