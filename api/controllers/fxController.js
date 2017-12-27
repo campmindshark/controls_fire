@@ -25,22 +25,22 @@ exports.disable_fxs = function(req,res) {
 exports.get_fx_details = function(req,res) {
 	//GET /fx/:fxId
 	//type and state informatiom for req.params.fxId
-	console.log('Details request for fxId:'+  req.body.fxId);
-	res.send('Details requst for fxId: ' + req.body.fxId);
+	console.log('Details request for fxId:'+  req.params.fxId);
+	res.send('Details requst for fxId: ' + req.params.fxId);
 }
 
 exports.set_fx_state = function(req,res) {
 	//POST /fx/:fxId
 	//change state of req.params.fxId to req.params.fxState
-	console.log('State change requested for fxId: ' + req.body.fxId);
-	res.send('State change request for fxId: ' + req.body.fxId);	
+	console.log('State change requested for fxId: ' + req.params.fxId);
+	res.send('State change request for fxId: ' + req.params.fxId);	
 }
 
 
 exports.disable_fx = function(req,res){
 	//DELETE /fxs/:fx
 	//Turn off and disable client control of req.params.fxId
-	console.log('Disable request for fxId: ' + req.body.fxId);
-	res.send('Disable request for fxId: ' + req.body.fxId);
+	console.log('Disable request for fxId: ' + req.params.fxId);
+	res.send('Disable request for fxId: ' + req.params.fxId);
 }
 
