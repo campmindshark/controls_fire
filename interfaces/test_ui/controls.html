@@ -1,0 +1,62 @@
+<html>
+	<head>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="assets/js/scripts.js"></script>
+		<link rel="stylesheet" type="text/css" href="styles.css">
+
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div class="header row">
+				<div class="container">
+					<div class="title">Basic Controller</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="subtitle row">End Point Controls</div>
+					<div id="fxs" class="row">
+						<div class="get_all_fxs_info">
+							<button class="btn_ajax" data-endpoint="fxs" data-verb="GET">Get All FX Info</button>
+						</div>
+						<div class="enable_fx">
+							<button class="btn_ajax" data-fx-id="1" data-endpoint="fxs" data-verb="POST">Enable Fx 1</button>
+							<button class="btn_ajax" data-fx-id="2" data-endpoint="fxs" data-verb="POST">Enable Fx 2</button>
+							<button class="btn_ajax" data-fx-id="3" data-endpoint="fxs" data-verb="POST">Enable Fx 3</button>
+							<button class="btn_ajax" data-fx-id="4" data-endpoint="fxs" data-verb="POST">Enable Fx 4</button>
+							<button class="btn_ajax" data-fx-id="5" data-endpoint="fxs" data-verb="POST">Enable Fx 5</button>
+							<button class="btn_ajax" data-fx-id="6" data-endpoint="fxs" data-verb="POST">Enable Fx 6</button>
+							<button class="btn_ajax" data-fx-id="7" data-endpoint="fxs" data-verb="POST">Enable Fx 7</button>
+							<button class="btn_ajax" data-fx-id="8" data-endpoint="fxs" data-verb="POST">Enable Fx 8</button>
+							<button class="btn_ajax" data-fx-id="9" data-endpoint="fxs" data-verb="POST">Enable Fx 9</button>
+							<button class="btn_ajax" data-fx-id="10" data-endpoint="fxs" data-verb="POST">Enable Fx 10</button>
+						</div>
+						<div class="master_kill">
+							
+						</div>
+					</div>
+					<div id="fx" class="row">
+						<div class="get_fx_info">
+							<button class="btn_ajax" data-fx-id="1" data-endpoint="fx" data-verb="GET">Get FxId 1</button>
+						</div>
+						<div class="set_fx_state">
+							
+						</div>
+						<div class="disble_fx">
+							
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-6">
+					<div class="subtitle row">Response</div>
+					<div id="response_placeholder" class="row"/>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
