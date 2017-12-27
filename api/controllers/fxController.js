@@ -18,7 +18,7 @@ exports.disable_fxs = function(req,res) {
 	//DELETE /fxs
 	//turn EVERYTHING off. Disable all fx.i
 	console.log('Master Shut Off Request');
-	res.send('Master Shut Off Request Received' +'\n' + Date.Now() );
+	res.send('Master Shut Off Request Received' +'\n' + Date.now() );
 
 }
 
