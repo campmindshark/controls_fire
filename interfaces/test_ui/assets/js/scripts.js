@@ -9,10 +9,12 @@ $(document).ready(function() {
 		var url = base_url + $this.data("endpoint");
 		var verb = $this.data("verb");
 		var fxId = $this.data("fxId");
+		var state = $this.data("state");
 		console.log($this);
 		console.log("url: "+ url);
-		console.log("verb: " +  verb + "\n");
+		console.log("verb: " +  verb);
 		console.log("fxId: " + fxId);
+		console.log("state: " + state)
 		switch ($this.data("verb")) {
 			case "GET":
 				if(fxId) {
@@ -27,6 +29,14 @@ $(document).ready(function() {
 				
 			break;
 			case "POST":
+				if (state) {
+					url += "/" + fxId; 
+					console.log('url + id:' + url );
+					$.post(url, { state: $this.data('state')},function(data, status) {
+					$("div#response_placeholder").innerHTML  = ("Data: " + data + "\nStatus: " + status);
+					});
+					break;
+				}
 				if (fxId) {
 					$.post(url, { fxId: $this.data('fxId')},function(data, status) {
 					$("div#response_placeholder").innerHTML  = ("Data: " + data + "\nStatus: " + status);
