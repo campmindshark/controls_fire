@@ -8,7 +8,7 @@ module.exports = function(app) {
 		.post(fxs.enable_fx)
 		.delete(fxs.disable_fxs);
 
-	app.route('/fxs/:fxId')
+	app.route('/fx/:fxId')
 		.get(fxs.get_fx_details)
 		.post(fxs.set_fx_state)
 		.delete(fxs.disable_fx);		
