@@ -38,6 +38,19 @@ $(document).ready(function() {
 				});
 			break;
 			case "DELETE":
+				if(fxId) {
+					url += "/" + fxId; 
+					console.log('url + id:' + url );
+				}
+				$.ajax({
+    				url: url, 
+    				type: 'DELETE',
+    				success: function(data,status) {
+    					console.log("Response Data: " + data + "\n");
+    					console.log("Response Status: " + status + "\n");
+    					$("div#response_placeholder").innerHTML = ("Data: " + data + "\nStatus: " + status);
+    				}
+    			});
 			break;
 		}
 		});

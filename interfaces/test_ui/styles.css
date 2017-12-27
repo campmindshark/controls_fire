@@ -6,3 +6,7 @@ div .title {
 div .subtitle {
   text-align: center;
 }
+button .btn_ajax {
+  width: 100%;
+  text-align: center;
+}
