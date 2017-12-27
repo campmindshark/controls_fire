@@ -1,7 +1,9 @@
 $(document).ready(function() {
 	console.log("Start");
 	var base_url = "http://192.168.2.2:5000/";
-
+	function process_respone(data,status) {
+		$("div#response_placeholder.row").replaceWith('<div id="response_placeholder" class="row">' + 'Data: ' + data + '\nStatus: ' + status + '</div>');
+	}
 	$("button.btn_ajax").each(function(){
 		var $this = $(this);
 		$this.on("click", function() {
@@ -21,31 +23,26 @@ $(document).ready(function() {
 					url += "/" + fxId; 
 					console.log('url + id:' + url );
 				}
-				$.get(url, function(data,status) {
-    			console.log("Response Data: " + data + "\n");
-    			console.log("Response Status: " + status + "\n");
-    			$("div#response_placeholder").innerHTML = ("Data: " + data + "\nStatus: " + status);
-    			});
-				
+				$.get(url, function(data, status) {
+					process_respone(data,status);
+				});
 			break;
 			case "POST":
 				if (state) {
 					url += "/" + fxId; 
 					console.log('url + id:' + url );
-					$.post(url, { state: $this.data('state')},function(data, status) {
-					$("div#response_placeholder").innerHTML  = ("Data: " + data + "\nStatus: " + status);
+					$.post(url, { state: $this.data('state')}, function(data, status) {
+					process_respone(data,status);
 					});
 					break;
 				}
 				if (fxId) {
 					$.post(url, { fxId: $this.data('fxId')},function(data, status) {
-					$("div#response_placeholder").innerHTML  = ("Data: " + data + "\nStatus: " + status);
-					}); 
+					process_respone(data,status);
+				}); 
 				break;	
 				}
-				$.post(url, function(data, status) {
-					$("div#response_placeholder").innerHTML  = ("Data: " + data + "\nStatus: " + status);
-				});
+				$.post(url, process_respone(data,status));
 			break;
 			case "DELETE":
 				if(fxId) {
@@ -55,11 +52,9 @@ $(document).ready(function() {
 				$.ajax({
     				url: url, 
     				type: 'DELETE',
-    				success: function(data,status) {
-    					console.log("Response Data: " + data + "\n");
-    					console.log("Response Status: " + status + "\n");
-    					$("div#response_placeholder").innerHTML = ("Data: " + data + "\nStatus: " + status);
-    				}
+    				success: function(data, status) {
+					process_respone(data,status);
+				}
     			});
 			break;
 		}

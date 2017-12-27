@@ -18,11 +18,14 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-xs-6">
+				<div class="col-xs-8">
 					<div class="subtitle row">End Point Controls</div>
 					<div id="fxs" class="row">
 						<div class="get_all_fxs_info">
 							<button class="btn_ajax" data-endpoint="fxs" data-verb="GET">Get All FX Info</button>
+						</div>
+						<div class="master_shutoff">
+							<button class="btn_ajax" data-endpoint="fxs" data-verb="DELETE">Master Shutoff</button>
 						</div>
 						<div class="enable_fx">
 							<button class="btn_ajax" data-fx-id="1" data-endpoint="fxs" data-verb="POST">Enable Fx 1</button>
@@ -36,9 +39,7 @@
 							<button class="btn_ajax" data-fx-id="9" data-endpoint="fxs" data-verb="POST">Enable Fx 9</button>
 							<button class="btn_ajax" data-fx-id="10" data-endpoint="fxs" data-verb="POST">Enable Fx 10</button>
 						</div>
-						<div class="master_shutoff">
-							<button class="btn_ajax" data-endpoint="fxs" data-verb="DELETE">Master Shutoff</button>
-						</div>
+						
 					</div>
 					<div id="fx" class="row">
 						<div class="get_fx_info">
@@ -55,31 +56,67 @@
 						</div>
 						<div class="set_fx_state">
 							<div class="row">
-								<div class="col-xs-3">
-									<button class="btn_ajax" data-state="on" data-fx-id="1"  data-endpoint="fx" data-verb="POST">Set Fx 1</button>
+								<div class="col-xs-1">
+									<button class="btn_ajax" data-state="on" data-fx-id="1"  data-endpoint="fx" data-verb="POST">Set 1</button>
 								</div>
-								<div class="col-xs-3">
-									<button class="btn_ajax" data-state="on" data-fx-id="2"  data-endpoint="fx" data-verb="POST">Set Fx 2</button>
+								<div class="col-xs-1">
+									<button class="btn_ajax" data-state="on" data-fx-id="2"  data-endpoint="fx" data-verb="POST">Set 2</button>
 								</div>
-								<div class="col-xs-3">
-									<button class="btn_ajax" data-state="on" data-fx-id="3"  data-endpoint="fx" data-verb="POST">Set Fx 3</button>
+								<div class="col-xs-1">
+									<button class="btn_ajax" data-state="on" data-fx-id="3"  data-endpoint="fx" data-verb="POST">Set 3</button>
 								</div>
-								<div class="col-xs-3">
-									<button class="btn_ajax" data-state="on" data-fx-id="4"  data-endpoint="fx" data-verb="POST">Set Fx 4</button>
+								<div class="col-xs-1">
+									<button class="btn_ajax" data-state="on" data-fx-id="4"  data-endpoint="fx" data-verb="POST">Set 4</button>
+								</div>
+								<div class="col-xs-1">
+									<button class="btn_ajax" data-state="on" data-fx-id="5"  data-endpoint="fx" data-verb="POST">Set 5</button>
+								</div>
+								<div class="col-xs-1">
+									<button class="btn_ajax" data-state="on" data-fx-id="6"  data-endpoint="fx" data-verb="POST">Set 6</button>
+								</div>
+								<div class="col-xs-1">
+									<button class="btn_ajax" data-state="on" data-fx-id="7"  data-endpoint="fx" data-verb="POST">Set 7</button>
+								</div>
+								<div class="col-xs-1">
+									<button class="btn_ajax" data-state="on" data-fx-id="8"  data-endpoint="fx" data-verb="POST">Set 8</button>
+								</div>
+								<div class="col-xs-1">
+									<button class="btn_ajax" data-state="on" data-fx-id="9"  data-endpoint="fx" data-verb="POST">Set 9</button>
+								</div>
+								<div class="col-xs-1">
+									<button class="btn_ajax" data-state="on" data-fx-id="10"  data-endpoint="fx" data-verb="POST">Set 10</button>
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-xs-3">
+								<div class="col-xs-1">
 									<button class="btn_ajax" data-state="off" data-fx-id="1"  data-endpoint="fx" data-verb="POST">Clear Fx 1</button>
 								</div>
-								<div class="col-xs-3">
+								<div class="col-xs-1">
 									<button class="btn_ajax" data-state="off" data-fx-id="2"  data-endpoint="fx" data-verb="POST">Clear Fx 2</button>
 								</div>
-								<div class="col-xs-3">
+								<div class="col-xs-1">
 									<button class="btn_ajax" data-state="off" data-fx-id="3"  data-endpoint="fx" data-verb="POST">Clear Fx 3</button>
 								</div>
-								<div class="col-xs-3">
+								<div class="col-xs-1">
 									<button class="btn_ajax" data-state="off" data-fx-id="4"  data-endpoint="fx" data-verb="POST">Clear Fx 4</button>
+								</div>
+								<div class="col-xs-1">
+									<button class="btn_ajax" data-state="off" data-fx-id="5"  data-endpoint="fx" data-verb="POST">Clear Fx 5</button>
+								</div>
+								<div class="col-xs-1">
+									<button class="btn_ajax" data-state="off" data-fx-id="6"  data-endpoint="fx" data-verb="POST">Clear Fx 6</button>
+								</div>
+								<div class="col-xs-1">
+									<button class="btn_ajax" data-state="off" data-fx-id="7"  data-endpoint="fx" data-verb="POST">Clear Fx 7</button>
+								</div>
+								<div class="col-xs-1">
+									<button class="btn_ajax" data-state="off" data-fx-id="8"  data-endpoint="fx" data-verb="POST">Clear Fx 8</button>
+								</div>
+								<div class="col-xs-1">
+									<button class="btn_ajax" data-state="off" data-fx-id="9"  data-endpoint="fx" data-verb="POST">Clear Fx 9</button>
+								</div>
+								<div class="col-xs-1">
+									<button class="btn_ajax" data-state="off" data-fx-id="10"  data-endpoint="fx" data-verb="POST">Clear Fx 10</button>
 								</div>
 							</div>
 						</div>
@@ -97,8 +134,8 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-xs-6">
-					<div class="subtitle row">Response</div>
+				<div class="col-xs-4">
+					<div class="subtitle row">Server Response</div>
 					<div id="response_placeholder" class="row">
 						<div>Placeholder!</div>
 					</div>
