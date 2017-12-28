@@ -13,10 +13,10 @@ $(document).ready(function() {
 		var fxId = $this.data("fxId");
 		var state = $this.data("state");
 		console.log($this);
-		console.log("url: "+ url);
-		console.log("verb: " +  verb);
+		console.log("url: " + url);
+		console.log("verb: " + verb);
 		console.log("fxId: " + fxId);
-		console.log("state: " + state)
+		console.log("state: " + state);
 		switch ($this.data("verb")) {
 			case "GET":
 				if(fxId) {
