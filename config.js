@@ -1,6 +1,6 @@
 var appConfig = {
-	"installation": "TestFire"
-	"version":"1.0.0"
+	"installation": "TestFire",
+	"version":"1.0.0",
 	"parts": {
 		supplies: {
 			"example_supply_name": ["manifold_line_1", "manifold_line_2"]
@@ -8,7 +8,7 @@ var appConfig = {
 			"left_eye": [],
 			"right_eye": [],
 			"master":["why", "left_eye", "right_eye"]
-		}
+		},
 		effects: {
 			"example_effect_name":["supply_solenoid_1", "supply_solenoid_2" ]	
 			"fx1":["why"],
@@ -18,7 +18,7 @@ var appConfig = {
 			"W":["W1", "W2", "W3"],
 			"H":["H4", "H5"],
 			"Y":["Y6", "Y7"]	
-		}
+		},
 		igniters: {
 			"example_igniter": ["fx1","fx2","fx3"],
 			"W1":["W"],
