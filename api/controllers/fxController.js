@@ -44,7 +44,7 @@ exports.set_fx_state = function(req,res) {
 	var newState = req.params.fxState;
 	var base_path = "/sys/class/gpio";
 	
-	if (!(fxState == 1 || newState == 0 )) {
+	if (!(newState == 1 || newState == 0 )) {
 		return "invalid state";
 	}
 	var fs = require('fs');
