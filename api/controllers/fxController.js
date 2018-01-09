@@ -37,14 +37,18 @@ exports.get_fx_details = function(req,res) {
 exports.set_fx_state = function(req,res) {
 	//POST /fx/:fxId
 	//change state of req.params.fxId to req.params.fxState
+	
 	console.log('State change requested for fxId: ' + req.params.fxId);
-	console.log('New State Requested: ' req.params.newState);
+	console.log('New State Requested: ' + req.params.fxState);
+
+	var newState = req.params.fxState;
 	var base_path = "/sys/class/gpio";
-	if (!(newState == 1 || newState == 0 )) {
+	
+	if (!(fxState == 1 || newState == 0 )) {
 		return "invalid state";
 	}
 	var fs = require('fs');
-	fs.writeFile("/sys/class/gpio/gpio" + gpio[req.params.fxId], newState, function(err) {
+	fs.writeFile("/sys/class/gpio/gpio" + gpio[req.params.fxId], fxState, function(err) {
     	if(err) {
     		console.log(err);
         	return err;
