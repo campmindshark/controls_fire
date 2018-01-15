@@ -37,7 +37,6 @@ exports.get_fx_details = function(req,res) {
 exports.set_fx_state = function(req,res) {
 	//POST /fx/:fxId
 	//change state of req.params.fxId to req.params.fxState
-	
 	console.log('State change requested for fxId: ' + req.params.fxId);
 	console.log('New State Requested: ' + req.params.fxState);
 

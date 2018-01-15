@@ -10,7 +10,13 @@ var appConfig = {
 			"master":["why", "left_eye", "right_eye"]
 		},
 		effects: {
-			"example_effect_name":["supply_solenoid_1", "supply_solenoid_2" ]	
+			"example_effect_name":["supply_solenoid_1", "supply_solenoid_2" ],
+			"right_eye_1":["right_eye"],
+			"right_eye_2":["right_eye"],
+			"right_eye_3":["right_eye"],
+			"right_eye_4":["right_eye"],
+			"right_eye_5":["right_eye"],
+
 			"fx1":["why"],
 			"fx2":["why", "right_eye"],
 			"fx3":["left_eye"],
@@ -25,7 +31,8 @@ var appConfig = {
 			"W2":["W"],
 			"W3":["W"],
 			"H":["H"], 
-			"Y":["Y"]	
+			"Y":["Y"],
+			"right_eye":["right_eye_1", "right_eye_2", "right_eye_3", "right_eye_4", "right_eye_5"]
 		}
 		
 	}

@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	console.log("Start");
-	var base_url = "http://192.168.2.2:5000/";
+	var base_url = "http://192.168.2.10:5000/";
 	function process_respone(data,status) {
 		$("div#response_placeholder.row").replaceWith('<div id="response_placeholder" class="row">' + 'Data: ' + data + '\nStatus: ' + status + '</div>');
 	}
