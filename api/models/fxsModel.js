@@ -1,9 +1,8 @@
 
-class fxModel{
 
-	constructor(id, gpio_pin) {
+function fxModel(id, config) {
 	this.id = id;
-	this.gpio_pin = gpio_pin;
+	this.config = config;
 }
 
 fxModel.prototype.CreateEffect = function () {
@@ -20,9 +19,7 @@ fxModel.prototype.WriteState = function(newState) {
 		return "invalid state";
 	}
 	var fs = require('fs');
-	fs.writeFile("/sys/class/gpio/gpio" + gpio[this.id]
-	, (gpio_pin.active_low ? newState : 1 - newState)
-	, function(err) {
+	fs.writeFile("/sys/class/gpio/gpio" + gpio[this.id], newState, function(err) {
     	if(err) {
     		console.log(err);
         	return err;
@@ -31,4 +28,3 @@ fxModel.prototype.WriteState = function(newState) {
 	});
 
 };
-}
