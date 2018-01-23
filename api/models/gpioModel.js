@@ -7,7 +7,7 @@ const gpio_pins = [30,31,48,5 ,3 ,49,117,115,111,110,20
   var gpio = class gpio {
     constructor(id, init_value) {
       this.id = id;
-      this.raw_value = = get_from_file("value");
+      this.raw_value = get_from_file("value");
       this.active_low = get_from_file("active_low");
       this.direction = get_from_file("direction");
       this.edge = get_from_file("edge");
@@ -16,7 +16,7 @@ const gpio_pins = [30,31,48,5 ,3 ,49,117,115,111,110,20
 
       if(init_value != this.raw_value) {
         fs.writeFile(base_path() + file_name + "value"
-        , active_low_corrected_value(init_value);
+        , active_low_corrected_value(init_value)
         , function(err) {
           if(err) {
             console.log(err);
