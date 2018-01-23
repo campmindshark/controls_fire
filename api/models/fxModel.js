@@ -1,34 +1,35 @@
+import gpio from "gpioModel";
 
-class fxModel{
+var  Effects = class EffectsModel {
+  constructor(id, config) {
+    this.id = id;
+    this.config = config;
+		this.effect_array = [];
+		CreateArray();
+  }
 
-	constructor(id, gpio_pin) {
-	this.id = id;
-	this.gpio_pin = gpio_pin;
+  CreateArray = function() {
+		//TODO: load from config
+		for(i=0; i<12; i++) {
+			this.effect_array[i] = new gpio(i, 0);
+		}
+  }
 }
 
-fxModel.prototype.CreateEffect = function () {
-
-};
-
-fxModel.prototype.SetEffectState = function (key, val) {
-
-};
-
-fxModel.prototype.WriteState = function(newState) {
-	var base_path = "/sys/class/gpio";
-	if (!(newState == 1 || newState == 0 )) {
-		return "invalid state";
+var Effect = class Effect {
+	constructor(id, gpio_pin) {
+		this.id = id;
+		this.gpio_pin = gpio_pin;
 	}
-	var fs = require('fs');
-	fs.writeFile("/sys/class/gpio/gpio" + gpio[this.id]
-	, (gpio_pin.active_low ? newState : 1 - newState)
-	, function(err) {
-    	if(err) {
-    		console.log(err);
-        	return err;
-    	}
-    	console.log("New State Written: " + newState);
-	});
 
-};
+	CreateEffect = function () {
+
+	};
+
+	SetEffectState = function(new_state) {
+		if (!(newState == 1 || newState == 0 )) {
+			return "invalid state";
+		}
+		this.gpio_pin.Value = new_state;
+	}
 }
