@@ -1,4 +1,4 @@
-import gpio from "gpioModel";
+import gpio from "./gpioModel";
 
 var  Effects = class EffectsModel {
   constructor(id, config) {
