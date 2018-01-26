@@ -2,6 +2,7 @@ var fs = require('fs');
   export default class gpio {
     constructor(id, init_value) {
       this.id = id;
+      this.base_path = "/sys/class/gpio/gpio" + gpio.gpio_pins[this.id] + "/"
       this.raw_value = this.get_from_file("value");
       this.active_low = this.get_from_file("active_low");
       this.direction = this.get_from_file("direction");
@@ -9,9 +10,9 @@ var fs = require('fs');
       this.power = this.get_from_file("power");
       var initial_corrected = this.active_low_corrected_value(init_value);
       if(initial_corrected != this.raw_value) {
-        this.write_to_file("value", init_value);
+        this.write_to_file("value", initial_corrected);
       }
-      //console.log(this.toString());
+      console.log(this.toString());
     }
 
     static gpio_pins = [30,31,48,5 ,3 ,49,117,115,111,110,20
@@ -27,7 +28,7 @@ var fs = require('fs');
       "\ndirection: " + this.direction +
       "\nedge: " + this.edge +
       "\npower: " + this.power +
-      "\nbase_path: " + this.Path;
+      "\nPath: " + this.base_path;
     }
 
 
@@ -42,10 +43,6 @@ var fs = require('fs');
       this.raw_value = new_value;
     }
 
-    get Path() {
-      return "/sys/class/gpio/gpio" + gpio.gpio_pins[this.id] + "/";
-    }
-
     active_low_corrected_value = function(value) {
       return this.active_low == 1 ? 1 - this.value : this.value
     }
@@ -55,7 +52,9 @@ var fs = require('fs');
         , 'utf8'
         , function(err, file_data) {
           if (err) {
-            console.log("Failed to read gpio info\nbase_path: " + this.base_path + "\nfile_name: " + file_name + "\n" + err + "\n");
+            console.log("Failed to read gpio info"
+            + "\nfile_name: " + file_name + "\n"
+            + err + "\n");
             return "ERROR";
           }
           return file_data;
@@ -70,7 +69,7 @@ var fs = require('fs');
               console.log("Failed to write gpio info: " + this.base_path + "\n" + file_name + "\n" + err + "\n");
               throw err;
             }
-            console.log("New State Written: " + data);
+            console.log("New state written: " + data);
           });
 
         }
