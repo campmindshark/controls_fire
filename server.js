@@ -8,7 +8,6 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var effects = require('./api/models/fxModel');
 var routes = require('./api/routes/fxRoutes');
 routes(app);
 

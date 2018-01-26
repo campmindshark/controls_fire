@@ -1,5 +1,5 @@
 import Effects from "../models/fxModel";
-var fxs = new Effects("Demo Array Id", "config placeholder");
+var effects = new Effects("Demo Array Id", "config placeholder");
 
 exports.list_fxs = function(req,res) {
 	//GET /fxs
@@ -40,21 +40,7 @@ exports.set_fx_state = function(req,res) {
 	//change state of req.params.fxId to req.params.fxState
 	console.log('State change requested for fxId: ' + req.params.fxId);
 	console.log('New State Requested: ' + req.params.fxState);
-
-	var newState = req.params.fxState;
-	var base_path = "/sys/class/gpio";
-
-	if (!(newState == 1 || newState == 0 )) {
-		return "invalid state";
-	}
-	var fs = require('fs');
-	fs.writeFile("/sys/class/gpio/gpio" + gpio[req.params.fxId], fxState, function(err) {
-    	if(err) {
-    		console.log(err);
-        	return err;
-    	}
-    	console.log("New State Written: " + newState);
-	});
+	effects.CommandEffect(req.params.fxId, req.params.fxState);
 
 
 	res.send('State change request for fxId: ' + req.params.fxId);
