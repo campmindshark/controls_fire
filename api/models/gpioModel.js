@@ -55,7 +55,7 @@ export default class gpio {
     set_id = function(id) {
       if (id < gpio.gpio_pins.length) {
         //valid id!
-        this.id = id;
+        return id;
       } else {
         throw "Invalid gpio id. Ids should be sequential integers starting at 0";
       }
