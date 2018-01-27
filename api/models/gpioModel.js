@@ -25,13 +25,15 @@ export default class gpio {
 
     info = function() {
       //returns info about this gpio
-      return "GPIO ID: " + this.id +
+      var info_msg = "\nGPIO ID: " + this.id +
       "\nraw_value: " + this.raw_value +
       "\nactive_low: " + this.active_low +
       "\ndirection: " + this.direction +
       "\nedge: " + this.edge +
       "\npower: " + this.power +
       "\nPath: " + this.path;
+      console.log(info_msg);
+      return info_msg;
     }
 
 

@@ -6,8 +6,8 @@ exports.list_fxs = function(req,res) {
 
 	var msg = 'Full Effect Array Requested\n time: ' + Date.now() + "\n";
 	console.log(msg);
-
-	res.send(req.app.locals.effects.info());
+	var effect_info = req.app.locals.effects.info();
+	res.send(effect_info.replace(/\n/g, "<br>"));
 }
 
 exports.enable_fx = function(req,res) {
