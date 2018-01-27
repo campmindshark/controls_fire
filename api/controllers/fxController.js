@@ -1,13 +1,13 @@
-import Effects from "../models/fxModel";
-var effects = new Effects("Demo Array Id", "config placeholder");
+console.log(process.cwd());
 
 exports.list_fxs = function(req,res) {
 	//GET /fxs
 	//TODO: Create Config
 
-	var msg = 'Full Effect Array Requested: ' + Date.now() + "\n";
+	var msg = 'Full Effect Array Requested\n time: ' + Date.now() + "\n";
 	console.log(msg);
-	res.send(msg + fxs);
+
+	res.send(req.app.locals.effects.info());
 }
 
 exports.enable_fx = function(req,res) {

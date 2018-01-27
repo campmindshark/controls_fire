@@ -4,10 +4,12 @@ var express = require('express'),
 	bodyParser = require('body-parser'),
 	cors = require('cors');
 
+import Effects from "./api/models/fxModel";
+
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
+app.locals.effects = new Effects("Demo Array Id", "config placeholder");
 var routes = require('./api/routes/fxRoutes');
 routes(app);
 
