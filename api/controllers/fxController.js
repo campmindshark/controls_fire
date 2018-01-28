@@ -37,9 +37,8 @@ exports.set_fx_state = function(req,res) {
 	//POST /fx/:fxId
 	//change state of req.params.fxId to req.params.fxState
 	console.log('State change requested for fxId: ' + req.params.fxId);
-	console.log('New State Requested: ' + req.params.fxState);
-	effects.CommandEffect(req.params.fxId, req.params.fxState);
-
+	console.log('New State Requested: ' + req.body.fxState);
+	req.app.locals.effects.CommandEffect(req.params.fxId, req.body.fxState);
 
 	res.send('State change request for fxId: ' + req.params.fxId);
 }

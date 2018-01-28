@@ -1,4 +1,5 @@
-import "./file_utils"
+import "./file_utils";
+var fs = require('fs');
 
 export default class gpio {
   constructor(id, mode, init_value) {
@@ -53,8 +54,8 @@ export default class gpio {
       }
 
       set Value(val) {
-        new_value = this.active_low_corrected_value(val);
-        this.raw_value = this.writeFileAsync("value", new_value);
+        var new_value = this.active_low_corrected_value(val);
+        this.raw_value = fs.writeFileAsync("value", new_value);
       }
 
       active_low_corrected_value = function(value) {

@@ -19,17 +19,16 @@ export default class Effects {
 
 	CommandEffect = function(id, state) {
 		//TODO: check if effect is enabled
-		SetEffectState(id, state);
+		this.SetEffectState(id, state);
+
 	}
 
 	SetEffectState = function(id, state) {
 		//check for valid state
 		if (!(state == 1 || state == 0 )) {
-
 			return "invalid state";
 		}
-
-		this.effect_array[id].Value = new_state;
+		this.effect_array[id].Value = state;
 		return this.effect_array[id];
 	}
 
