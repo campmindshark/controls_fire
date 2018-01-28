@@ -54,8 +54,7 @@ export default class gpio {
 
       set Value(val) {
         new_value = this.active_low_corrected_value(val);
-        this.write_to_file("value", new_value);
-        this.raw_value = new_value;
+        this.raw_value = this.writeFileAsync("value", new_value);
       }
 
       active_low_corrected_value = function(value) {
@@ -77,18 +76,4 @@ export default class gpio {
         return path;
       }
 
-      write_to_file = function (file_name, data) {
-        fs.writeFile(this.path + file_name
-          , data
-          , (err) => {
-            if(err) {
-              console.log("Failed to write gpio info: "
-              + "\nfile_name: " + file_name + "\n"
-              + err + "\n");
-              throw err;
-            }
-            console.log("New state written: " + data);
-          });
-        }
-
-      }
+}

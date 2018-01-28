@@ -1,5 +1,3 @@
-console.log(process.cwd());
-
 exports.list_fxs = function(req,res) {
 	//GET /fxs
 	//TODO: Create Config

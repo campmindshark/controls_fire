@@ -23,3 +23,28 @@ fs.readFileAsync = function(file) {
     }
   });
 }
+
+fs.writeFileAsync = function(file, data) {
+  return new Promise((resolve,reject) =>
+  {
+    try {
+      fs.writeFile(file, data,
+        (err) => {
+          if(err) {
+            console.log("Failed to write gpio info: "
+            + "\file: " + file + "\n"
+            + err + "\n");
+            reject(err);
+          }
+          else resolve(data);
+        }
+      )
+    }
+    catch(err) {
+      console.log("Failed to write gpio info: "
+      + "\file: " + file + "\n"
+      + err + "\n");
+      reject(err);
+    }
+  });
+}
