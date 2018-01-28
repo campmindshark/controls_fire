@@ -20,7 +20,6 @@ export default class Effects {
 	CommandEffect = function(id, state) {
 		//TODO: check if effect is enabled
 		this.SetEffectState(id, state);
-
 	}
 
 	SetEffectState = function(id, state) {
