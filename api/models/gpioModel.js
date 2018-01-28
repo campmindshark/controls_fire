@@ -2,13 +2,14 @@ import "./file_utils"
 
 export default class gpio {
   constructor(id, mode, init_value) {
-    this.id         = this.set_id(id);
-    this.path       = this.build_path(mode, gpio.gpio_pins[id]);
-    this.raw_value;
     this.active_low;
     this.direction;
     this.edge;
+    this.id         = this.set_id(id);
+    this.mode       = mode;
+    this.path       = this.build_path(mode, gpio.gpio_pins[id]);
     this.power;
+    this.raw_value;
 
     //Async - Lazy load initial state of gpio files
     var files = [ "value"
@@ -29,15 +30,14 @@ export default class gpio {
           this.direction = values[2].trim();
           this.edge = values[3].trim();
           this.power = values[4].trim();
-
-        }
-      );
+          console.log(Date.now());
+          console.log(JSON.stringify(this));
+      });
 
       var initial_corrected = this.active_low_corrected_value(init_value);
       if(initial_corrected != this.raw_value) {
         this.write_to_file("value", initial_corrected);
       }
-      //console.log(this.toString());
     }
 
     static base_path = "/sys/class/gpio/gpio";
@@ -46,20 +46,6 @@ export default class gpio {
       ,60,50,51,4 ,2 ,15,14 ,113,112,7
       ,38,34,66,69,45,23,47 ,27 ,22 ,62 ,36,32,86,87,10,9 ,8 ,78,76,74,72,70
       ,39,35,67,68,44,26,46 ,65 ,63 ,37 ,33,61,88,89,11,81,80,79,77,75,73,71];
-
-      info = function() {
-        //returns info about this gpio
-        var info_msg = "\nGPIO ID: " + this.id +
-        "\nraw_value: " + this.raw_value +
-        "\nactive_low: " + this.active_low +
-        "\ndirection: " + this.direction +
-        "\nedge: " + this.edge +
-        "\npower: " + this.power +
-        "\nPath: " + this.path;
-        console.log(info_msg);
-        return info_msg;
-      }
-
 
       get Value() {
         this.raw_value = this.get_from_file("value");
@@ -86,10 +72,8 @@ export default class gpio {
       }
 
       build_path = function(mode, pin){
-        console.log("building path in mode: " + mode);
         var path = (mode == "mock") ? process.cwd().toString() + "/" + "mock_gpio" : "";
         path += gpio.base_path + pin + "/";
-        console.log(path);
         return path;
       }
 

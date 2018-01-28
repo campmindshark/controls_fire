@@ -7,16 +7,6 @@ export default class Effects {
 		this.effect_array = this.BuildArray();
   }
 
-	info = function() {
-		var info_msg = "\nArray Id: " + this.id
-					 + "\nConfig: " + this.config
-					 + "\nEffect Array Pieces: ";
-	 			 for(var i = 0; i < this.effect_array.length; i++) {
-					 info_msg += this.effect_array[i].info();
-				 }
-				 return info_msg;
-	}
-
   BuildArray = function BuildArray() {
 		//TODO: create based on passed config
 		//just a dummy array for now
@@ -28,14 +18,13 @@ export default class Effects {
   }
 
 	CommandEffect = function(id, state) {
-		//TODO: ensure id is in effect_array
 		//TODO: check if effect is enabled
 		SetEffectState(id, state);
 	}
 
-	SetEffectState = function(id, new_state) {
+	SetEffectState = function(id, state) {
 		//check for valid state
-		if (!(newState == 1 || newState == 0 )) {
+		if (!(state == 1 || state == 0 )) {
 
 			return "invalid state";
 		}

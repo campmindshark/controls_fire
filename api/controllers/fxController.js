@@ -6,8 +6,7 @@ exports.list_fxs = function(req,res) {
 
 	var msg = 'Full Effect Array Requested\n time: ' + Date.now() + "\n";
 	console.log(msg);
-	var effect_info = req.app.locals.effects.info();
-	res.send(effect_info.replace(/\n/g, "<br>"));
+	res.send(JSON.stringify(req.app.locals.effects));
 }
 
 exports.enable_fx = function(req,res) {
@@ -18,7 +17,6 @@ exports.enable_fx = function(req,res) {
 	res.send('Requested Enable for fxId: ' + req.body.fxId + '\n' + Date.now() );
 
 }
-
 
 exports.disable_fxs = function(req,res) {
 	//DELETE /fxs
@@ -32,7 +30,9 @@ exports.get_fx_details = function(req,res) {
 	//GET /fx/:fxId
 	//type and state informatiom for req.params.fxId
 	console.log('Details request for fxId:'+  req.params.fxId);
-	res.send('Details requst for fxId: ' + req.params.fxId);
+
+	res.send(JSON.stringify(req.app.locals.effects.effect_array[req.params.fxId]));
+	//res.send('Details requst for fxId: ' + req.params.fxId);
 }
 
 exports.set_fx_state = function(req,res) {
