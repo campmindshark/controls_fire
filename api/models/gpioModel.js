@@ -1,19 +1,35 @@
-var fs = require('fs');
+import "./file_utils"
 
 export default class gpio {
   constructor(id, mode, init_value) {
     this.id         = this.set_id(id);
     this.path       = this.build_path(mode, gpio.gpio_pins[id]);
-    this.raw_value  = this.get_from_file("value");
-    this.active_low = this.get_from_file("active_low");
-    this.direction  = this.get_from_file("direction");
-    this.edge       = this.get_from_file("edge");
-    this.power      = this.get_from_file("power");
+    //Async - Lazy load initial state of gpio files
+    var files = ["value", "active_low", "direction", "edge", "power"].map(
+      (file_name) =>
+        {
+          var fs = require('fs');
+          return fs.readFileAsync(this.path + file_name);
+        });
+
+    Promise.all(files).then(
+      (values) => {
+        console.log(values);
+      }
+  );
+
+    // this.raw_value  = this.get_from_file("value");
+    // console.log(this.raw_value);
+    // this.active_low = this.get_from_file("active_low");
+    // this.direction  = this.get_from_file("direction");
+    // this.edge       = this.get_from_file("edge");
+    // this.power      = this.get_from_file("power");
+
     var initial_corrected = this.active_low_corrected_value(init_value);
     if(initial_corrected != this.raw_value) {
       this.write_to_file("value", initial_corrected);
     }
-    console.log(this.toString());
+    //console.log(this.toString());
   }
 
   static base_path = "/sys/class/gpio/gpio";
@@ -65,27 +81,18 @@ export default class gpio {
       console.log("building path in mode: " + mode);
       var path = (mode == "mock") ? process.cwd().toString() + "/" + "mock_gpio" : "";
       path += gpio.base_path + pin + "/";
+      console.log(path);
       return path;
     }
 
-    get_from_file = function(file_name) {
-      fs.readFile(this.path + file_name
-        , 'utf8'
-        , function(err, file_data) {
-          if (err) {
-            console.log("Failed to read gpio info: "
-            + "\nfile_name: " + file_name + "\n"
-            + err + "\n");
-            return "ERROR";
-          }
-          return file_data;
-        });
-      }
+    get_from_file(file_name) {
+
+    }
 
       write_to_file = function (file_name, data) {
         fs.writeFile(this.path + file_name
           , data
-          , function(err) {
+          , (err) => {
             if(err) {
               console.log("Failed to write gpio info: "
               + "\nfile_name: " + file_name + "\n"
