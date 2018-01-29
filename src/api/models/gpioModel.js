@@ -86,7 +86,9 @@ export default class gpio {
       }
 
       build_path = function(mode, pin){
-        var path = (mode == "mock") ? process.cwd().toString() + "/" + "mock_gpio" : "";
+
+        var mock_path = process.cwd().substring(0, process.cwd().indexOf("src")) + "mock_gpio";
+        var path = (mode == "mock") ? mock_path  : "";
         path += gpio.base_path + pin + "/";
         return path;
       }
