@@ -11,9 +11,15 @@ exports.enable_fx = function(req,res) {
 	//POST /fxs
 	//Request to enable client control of req.params.fxId
 	//console.log(req);
-	console.log('Request to enable fxId: ' + req.body.fxId + '\n' + Date.now() );
-	res.send('Requested Enable for fxId: ' + req.body.fxId + '\n' + Date.now() );
-
+	console.log('\nRequest to enable fxId: ' + req.body.fxId + '\n' + Date.now() );
+	var msg = "";
+	if (req.app.locals.effects.Enable_Effect(req.body.fxId)) {
+		msg = 'SUCCESS: Enabled fxId: ' + req.body.fxId + '\n' + Date.now();
+	} else {
+		msg = "FAIL: Request to Enable fxId ";
+	}
+	console.log('\nResponse to enable fxId: ' + req.body.fxId + '\n' + Date.now() );
+	res.send(msg);
 }
 
 exports.disable_fxs = function(req,res) {

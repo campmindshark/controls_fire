@@ -12,14 +12,18 @@ export default class Effects {
 		//just a dummy array for now
 		var fxs = []
 		for(var i=0; i<12; i++) {
-			fxs[i] = new gpio(i, this.ModeTest(), 0);
+			fxs[i] = "init";
 		}
 		return fxs;
   }
 
 	CommandEffect = function(id, state) {
-		//TODO: check if effect is enabled
-		this.SetEffectState(id, state);
+		if(this.effect_array[id] != "Disabled") {
+		    this.SetEffectState(id, state);
+    } else {
+      console.log("Cannot Command Disabled Effect ID: " + id);
+      return false;
+    }
 	}
 
 	SetEffectState = function(id, state) {
@@ -27,12 +31,35 @@ export default class Effects {
 		if (!(state == 1 || state == 0 )) {
 			throw "\ninvalid state:" + state + "\nfor id: " + id;
 		}
-		this.effect_array[id].Value = state;
-		return this.effect_array[id];
+    try {
+		    this.effect_array[id].Value = state;
+		      return true;
+    }
+    catch(err) {
+      console.log(err);
+      return false;
+    }
 	}
 
+  Enable_Effect = function(id) {
+    try {
+      this.effect_array[id] = new gpio(id, this.ModeTest(), 0);
+      return true;
+    }
+    catch(err) {
+      return false;
+    }
+  }
+
   Disable_Effect = function(id) {
-    fxs[i] = "Disabled";
+    try {
+      //TODO: check state and set Value to 0 before and set Disabled in the callback
+      this.effect_array[id] = "Disabled";
+      return true;
+    }
+    catch(err) {
+      return false;
+    }
   }
 
 	ModeTest = function() {
