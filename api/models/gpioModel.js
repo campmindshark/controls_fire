@@ -54,10 +54,9 @@ export default class gpio {
 
       get Value() {
         fs.readFileAsync("value").then((data) => {
-          console.log("readFileAsync callback with data: " + data);
+          console.log("\nreadFileAsync callback with data: " + data);
           this.raw_value = data;
         });
-        //this.raw_value = file_data;
         return this.active_low_corrected_value(this.raw_value);
       }
 
@@ -65,7 +64,7 @@ export default class gpio {
         var new_value = this.active_low_corrected_value(value);
         console.log("\nSet attempt: " + new_value);
         fs.writeFileAsync("value", new_value).then((new_value) => {
-          console.log("\nnew_value: " + new_value + "\n");
+          console.log("\nnew_value: " + new_value);
           this.raw_value = new_value;
           console.log("\nnew raw value set: " + JSON.stringify(this));
         });
@@ -89,10 +88,6 @@ export default class gpio {
         var path = (mode == "mock") ? process.cwd().toString() + "/" + "mock_gpio" : "";
         path += gpio.base_path + pin + "/";
         return path;
-      }
-
-      get_from_file = function(file_name) {
-        return fs.readFileAsync(this.path + file_name);
       }
 
 }
