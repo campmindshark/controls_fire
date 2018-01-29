@@ -64,7 +64,7 @@ export default class gpio {
         console.log(this.Value);
         var new_value = this.active_low_corrected_value(value);
         //console.log("\nSet attempt: " + new_value);
-        fs.writeFileAsync("value", new_value).then((new_value) => {
+        fs.writeFileAsync(this.path + "value", new_value).then((new_value) => {
           //console.log("\nnew_value: " + new_value);
           this.raw_value = new_value;
           console.log("\nnew raw value set: " + JSON.stringify(this));
