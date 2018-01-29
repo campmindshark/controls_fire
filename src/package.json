@@ -1,0 +1,23 @@
+{
+  "name": "controls_fire",
+  "version": "0.0.1",
+  "description": "Control Code for Propane Flame Effect Systems by MindShark",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js --exec babel-node --presets es2015,stage-2"
+  },
+  "author": "Tushar Shah",
+  "license": "ISC",
+  "dependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "nodemon": "^1.14.2"
+  }
+}
