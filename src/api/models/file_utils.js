@@ -28,8 +28,8 @@ fs.writeFileAsync = function(file, data) {
   return new Promise((resolve,reject) =>
   {
     try {
-      fs.writeFile(file, data,
-        (err) => {
+      fs.writeFile(file, data, {encoding: 'utf-8', flag:'w'}
+      ,  (err) => {
           if(err) {
             console.log("Failed to write gpio info: "
             + "\file: " + file + "\n"
@@ -38,7 +38,7 @@ fs.writeFileAsync = function(file, data) {
           }
           else resolve(data);
         }
-      )
+      );
     }
     catch(err) {
       console.log("Failed to write gpio info: "
