@@ -25,11 +25,15 @@ export default class Effects {
 	SetEffectState = function(id, state) {
 		//check for valid state
 		if (!(state == 1 || state == 0 )) {
-			return "invalid state";
+			throw "\ninvalid state:" + state + "\nfor id: " + id;
 		}
 		this.effect_array[id].Value = state;
 		return this.effect_array[id];
 	}
+
+  Disable_Effect = function(id) {
+    fxs[i] = "Disabled";
+  }
 
 	ModeTest = function() {
     //TODO: add Beaglebone black mode
