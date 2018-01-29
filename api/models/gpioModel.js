@@ -40,8 +40,8 @@ export default class gpio {
             this.Value = initial_corrected;
           }
 
-          console.log(Date.now());
-          console.log("\ngpio init complete\n");
+          console.log("\n" + Date.now());
+          console.log("\ngpio init complete");
       });
     }
 
@@ -54,24 +54,25 @@ export default class gpio {
 
       get Value() {
         fs.readFileAsync("value").then((data) => {
-          console.log("\nreadFileAsync callback with data: " + data);
+          //console.log("\nreadFileAsync callback with data: " + data);
           this.raw_value = data;
         });
         return this.active_low_corrected_value(this.raw_value);
       }
 
       set Value(value) {
+        console.log(this.Value);
         var new_value = this.active_low_corrected_value(value);
-        console.log("\nSet attempt: " + new_value);
+        //console.log("\nSet attempt: " + new_value);
         fs.writeFileAsync("value", new_value).then((new_value) => {
-          console.log("\nnew_value: " + new_value);
+          //console.log("\nnew_value: " + new_value);
           this.raw_value = new_value;
           console.log("\nnew raw value set: " + JSON.stringify(this));
         });
       }
 
       active_low_corrected_value = function(value) {
-        console.log("\nvalue: " + value + "\nactive_low: " + this.active_low);
+        //console.log("\nvalue: " + value + "\nactive_low: " + this.active_low);
         return this.active_low == 1 ? 1 - value : value;
       }
 

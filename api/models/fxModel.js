@@ -32,6 +32,7 @@ export default class Effects {
 	}
 
 	ModeTest = function() {
+    //TODO: add Beaglebone black mode
 		//only mocking gpio work for now
 		return "mock";
 	}
