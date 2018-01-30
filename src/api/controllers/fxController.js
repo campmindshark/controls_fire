@@ -42,11 +42,15 @@ exports.get_fx_details = function(req,res) {
 exports.set_fx_state = function(req,res) {
 	//POST /fx/:fxId
 	//change state of req.params.fxId to req.params.fxState
-	console.log('State change requested for fxId: ' + req.params.fxId);
-	console.log('New State Requested: ' + req.body.fxState);
-	req.app.locals.effects.CommandEffect(req.params.fxId, req.body.fxState);
-
-	res.send('State change request for fxId: ' + req.params.fxId);
+	console.log('\nState change requested for fxId: ' + req.params.fxId);
+	console.log('\nNew State Requested: ' + req.body.fxState);
+	var msg;
+	if (req.app.locals.effects.CommandEffect(req.params.fxId, req.body.fxState)) {
+		msg = "\nSUCCESS: Effect commanded.";
+	} else {
+		msg = "\nFAIL: Unable to CommandEffect";
+	}
+	res.send(msg);
 }
 
 

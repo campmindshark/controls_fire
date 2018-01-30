@@ -10,8 +10,9 @@ export default class Effects {
   BuildArray = function BuildArray() {
 		//TODO: create based on passed config
 		//just a dummy array for now
-		var fxs = []
+		var fxs = [];
 		for(var i=0; i<12; i++) {
+      //do not initialize gpio until an enable has been received from a client.
 			fxs[i] = "init";
 		}
 		return fxs;
@@ -19,7 +20,13 @@ export default class Effects {
 
 	CommandEffect = function(id, state) {
 		if(this.effect_array[id] != "Disabled") {
-		    this.SetEffectState(id, state);
+		    if (this.SetEffectState(id, state)) {
+          console.log("New effect state set");
+          return true;
+        } else {
+          console.log("Failed to set new effect state");
+          return false;
+        }
     } else {
       console.log("Cannot Command Disabled Effect ID: " + id);
       return false;
@@ -27,11 +34,11 @@ export default class Effects {
 	}
 
 	SetEffectState = function(id, state) {
-		//check for valid state
-		if (!(state == 1 || state == 0 )) {
-			throw "\ninvalid state:" + state + "\nfor id: " + id;
-		}
     try {
+        //check for valid state
+        if (!(state == 1 || state == 0 )) {
+          throw "\ninvalid state:" + state + "\nfor id: " + id;
+        }
 		    this.effect_array[id].Value = state;
 		      return true;
     }
@@ -53,7 +60,7 @@ export default class Effects {
 
   Disable_Effect = function(id) {
     try {
-      //TODO: check state and set Value to 0 before and set Disabled in the callback
+      //TODO: check state and set .Value to 0 before and set Disabled in the callback
       this.effect_array[id] = "Disabled";
       return true;
     }
