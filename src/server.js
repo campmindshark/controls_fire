@@ -10,7 +10,7 @@ import Effects from "./api/models/fx_model";
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-//TODO: Build from config file
+
 var json_config = require('./config.json');
 
 app.locals.effects = new Effects(JSON.stringify(json_config));
