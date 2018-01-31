@@ -14,4 +14,7 @@ module.exports = function(app) {
 		.get(fxs.get_fx_details)
 		.post(fxs.set_fx_state)
 		.delete(fxs.disable_fx);
+
+	app.route('/info')
+		.get(fxs.system_info);
 };

@@ -4,11 +4,12 @@ export default class Effects {
   constructor(id, config) {
     this.id = id;
     this.config = config;
-		this.effect_array = this.BuildArray();
+
+  	//TODO: create based on passed config
+		this.effect_array = this.build_demo_array();
   }
 
-  BuildArray = function BuildArray() {
-		//TODO: create based on passed config
+  build_demo_array = function() {
 		//just a dummy array for now
 		var fxs = [];
 		for(var i=0; i<12; i++) {
@@ -18,9 +19,18 @@ export default class Effects {
 		return fxs;
   }
 
-	CommandEffect = function(id, state) {
+  info = function() {
+    //TODO: pretty print this
+    return JSON.stringify(this);
+  }
+
+  get_array_details = function() {
+    return JSON.stringify(this.effect_array);
+  }
+
+	command_effect = function(id, state) {
 		if(this.effect_array[id] != "Disabled") {
-		    if (this.SetEffectState(id, state)) {
+		    if (this.set_effect_state(id, state)) {
           console.log("New effect state set");
           return true;
         } else {
@@ -33,7 +43,7 @@ export default class Effects {
     }
 	}
 
-	SetEffectState = function(id, state) {
+	set_effect_state = function(id, state) {
     try {
         //check for valid state
         if (!(state == 1 || state == 0 )) {
@@ -48,9 +58,9 @@ export default class Effects {
     }
 	}
 
-  Enable_Effect = function(id) {
+  enable_effect = function(id) {
     try {
-      this.effect_array[id] = new gpio(id, this.ModeTest(), 0);
+      this.effect_array[id] = new gpio(id, this.mode_test(), 0);
       return true;
     }
     catch(err) {
@@ -58,9 +68,11 @@ export default class Effects {
     }
   }
 
-  Disable_Effect = function(id) {
+  disable_effect = function(id, graceful) {
     try {
-      //TODO: check state and set .Value to 0 before and set Disabled in the callback
+      if (graceful) {
+        this.effect_array[id].Value = 0;
+      }
       this.effect_array[id] = "Disabled";
       return true;
     }
@@ -69,7 +81,22 @@ export default class Effects {
     }
   }
 
-	ModeTest = function() {
+  master_shut_off = function(graceful) {
+    try {
+      this.effect_array.forEach(
+        (element) =>
+        {
+          this.disable_effect(element.id, graceful);
+        }
+      );
+      return true;
+    }
+    catch(err) {
+      return false;
+    }
+  }
+
+	mode_test = function() {
     //TODO: add Beaglebone black mode
 		//only mocking gpio work for now
 		return "mock";
