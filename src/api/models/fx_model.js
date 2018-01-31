@@ -1,22 +1,14 @@
-import gpio from "./gpioModel";
+import ConfigManager from "./config_manager"
+import gpio from "./gpio_model";
 
 export default class Effects {
-  constructor(id, config) {
-    this.id = id;
-    this.config = config;
+  constructor(json_config) {
+    this.config = new ConfigManager(json_config);
+    this.id = this.config.value('id');
+    this.version = this.config.value('version');
 
   	//TODO: create based on passed config
-		this.effect_array = this.build_demo_array();
-  }
-
-  build_demo_array = function() {
-		//just a dummy array for now
-		var fxs = [];
-		for(var i=0; i<12; i++) {
-      //do not initialize gpio until an enable has been received from a client.
-			fxs[i] = "init";
-		}
-		return fxs;
+		this.effect_array = ConfigManager.build_demo_array();
   }
 
   info = function() {
