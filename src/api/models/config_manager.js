@@ -4,7 +4,6 @@ export default class ConfigManager {
     var parts = config.parts;
     console.log(config);
     console.log(parts);
-
   }
 
   static build_demo_array = function() {
@@ -16,8 +15,4 @@ export default class ConfigManager {
     return fxs;
   }
 
-  value = function(key) {
-    //TODO: check for key first
-    return this.parsed[key];
-  }
 }

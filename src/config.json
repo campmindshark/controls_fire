@@ -3,7 +3,7 @@
 	"version":"0.0.1",
 	"parts": {
 		"supplies": {
-			"basic": [],
+			"sign": [],
 			"left_eye": [],
 			"right_eye": [],
 			"master":["sign", "left_eye", "right_eye"]
