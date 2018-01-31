@@ -4,8 +4,8 @@ import gpio from "./gpio_model";
 export default class Effects {
   constructor(json_config) {
     this.config = new ConfigManager(json_config);
-    this.id = this.config.value('id');
-    this.version = this.config.value('version');
+    this.id = this.config.id;
+    this.version = this.config.version;
 
   	//TODO: create based on passed config
 		this.effect_array = ConfigManager.build_demo_array();
