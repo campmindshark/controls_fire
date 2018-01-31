@@ -1,80 +1,91 @@
 {
 	"name": "TestFire",
 	"version":"0.0.1",
-	"parts": {
-		"supplies": [
+	"parts": [
 			{
 				"name":"sign",
+				"type":"supply",
 				"manifolds": []
 			},
 			{
 				"name":"left_eye",
+				"type":"supply",
 				"manifolds": []
 			},
 			{
 				"name":"right_eye",
+				"type":"supply",
 				"manifolds": []
-			}
-		],
-		"effects": [
+			},
 			{
 				"name": "sign_solenoid",
+				"type":"outlet",
 				"supplies":["sign"]
 			},
 			{
 				"name": "right_eye_1",
+				"type":"outlet",
 				"supplies":["right_eye"]
 			},
 			{
 				"name": "right_eye_2",
+				"type":"outlet",
 				"supplies":["right_eye"]
 			},
 			{
 				"name": "right_eye_3",
+				"type":"outlet",
 				"supplies":["right_eye"]
 			},
 			{
 				"name": "right_eye_4",
+				"type":"outlet",
 				"supplies":["right_eye"]
 			},
 			{
 				"name": "right_eye_5",
+				"type":"outlet",
 				"supplies":["right_eye"]
 			},
 			{
 				"name":"left_eye_1",
+				"type":"outlet",
 				"supplies":["left_eye"]
 			},
 			{
 				"name":"left_eye_2",
+				"type":"outlet",
 				"supplies":["left_eye"]
 			},
 			{
 				"name":"left_eye_3",
+				"type":"outlet",
 				"supplies":["left_eye"]
 			},
 			{
 				"name":"left_eye_4",
+				"type":"outlet",
 				"supplies":["left_eye"]
 			},
 			{
 				"name":"left_eye_5",
+				"type":"outlet",
 				"supplies":["left_eye"]
-			}
-		],
-		"igniters": [
+			},
 			{
 				"name":"sign_pilot",
+				"type":"igniter",
 				"effects":["sign_solenoid"]
 			},
 			{
 				"name":"right_eye_pilot",
+				"type":"igniter",
 				"effects": ["right_eye_1", "right_eye_2", "right_eye_3", "right_eye_4", "right_eye_5"]
 			},
 			{
 				"name":"left_eye_pilot",
+				"type":"igniter",
 				"effects": ["left_eye_1", "left_eye_2", "left_eye_3", "left_eye_4", "left_eye_5"]
 			}
 		]
-	}
 }

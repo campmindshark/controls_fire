@@ -9,22 +9,16 @@ export default class Effects {
     this.name = config.name;
     this.version = config.version;
 
-		this.effect_array = this.build_array(config.parts); //ConfigManager.build_demo_array();
+		this.effect_array = this.build_array(config.parts);
   }
 
   build_array = function(parts) {
-    //load supplies
-    var supplies = parts.supplies;
-    //load effects
-    var fxs =  parts.effects;
-    //load igniters
-    var igniters = parts.igniters;
-
-    if (supplies.length + fxs.length + igniters.length > gpio.gpio_pins.length) {
+    
+    if (parts.length > gpio.gpio_pins.length) {
       throw "TOO MANY EFFECTS.";
     }
 
-    console.log('supplies: ' + JSON.stringify(supplies));
+    console.log('parts: ' + JSON.stringify(parts));
 
   }
 
