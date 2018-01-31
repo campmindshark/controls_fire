@@ -65,7 +65,7 @@ exports.disable_fx = function(req,res){
 		,"\nEffect ID: " + req.params.fxId + " has been Disabled."
 		,"\nEffect ID: " + req.params.fxId + " could not been Disabled."
  	)
-	res.send('Disable request for fxId: ' + req.params.fxId);
+	res.send(msg);
 }
 
 const handle_api_call = function(method_call, success_msg, fail_msg,) {

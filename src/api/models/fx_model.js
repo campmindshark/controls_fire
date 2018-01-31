@@ -6,7 +6,7 @@ export default class Effects {
 
     var config = JSON.parse(json_config);
 
-    this.id = config.id;
+    this.name = config.name;
     this.version = config.version;
 
 		this.effect_array = this.build_array(config.parts); //ConfigManager.build_demo_array();
@@ -26,6 +26,15 @@ export default class Effects {
 
     console.log('supplies: ' + JSON.stringify(supplies));
 
+  }
+
+  build_demo_array = function() {
+    //just a dummy array of 12 effects
+    var fxs = [];
+    for(var i=0; i<12; i++) {
+      fxs[i] = "init";
+    }
+    return fxs;
   }
 
   info = function() {

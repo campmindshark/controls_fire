@@ -1,78 +1,78 @@
 {
-	"id": "TestFire",
+	"name": "TestFire",
 	"version":"0.0.1",
 	"parts": {
 		"supplies": [
 			{
-				"id":"sign",
+				"name":"sign",
 				"manifolds": []
 			},
 			{
-				"id":"left_eye",
+				"name":"left_eye",
 				"manifolds": []
 			},
 			{
-				"id":"right_eye",
+				"name":"right_eye",
 				"manifolds": []
 			}
 		],
 		"effects": [
 			{
-				"id": "sign_solenoid",
+				"name": "sign_solenoid",
 				"supplies":["sign"]
 			},
 			{
-				"id": "right_eye_1",
+				"name": "right_eye_1",
 				"supplies":["right_eye"]
 			},
 			{
-				"id": "right_eye_2",
+				"name": "right_eye_2",
 				"supplies":["right_eye"]
 			},
 			{
-				"id": "right_eye_3",
+				"name": "right_eye_3",
 				"supplies":["right_eye"]
 			},
 			{
-				"id": "right_eye_4",
+				"name": "right_eye_4",
 				"supplies":["right_eye"]
 			},
 			{
-				"id": "right_eye_5",
+				"name": "right_eye_5",
 				"supplies":["right_eye"]
 			},
 			{
-				"id":"left_eye_1",
+				"name":"left_eye_1",
 				"supplies":["left_eye"]
 			},
 			{
-				"id":"left_eye_2",
+				"name":"left_eye_2",
 				"supplies":["left_eye"]
 			},
 			{
-				"id":"left_eye_3",
+				"name":"left_eye_3",
 				"supplies":["left_eye"]
 			},
 			{
-				"id":"left_eye_4",
+				"name":"left_eye_4",
 				"supplies":["left_eye"]
 			},
 			{
-				"id":"left_eye_5",
+				"name":"left_eye_5",
 				"supplies":["left_eye"]
 			}
 		],
 		"igniters": [
 			{
-				"id":"sign_pilot",
+				"name":"sign_pilot",
 				"effects":["sign_solenoid"]
 			},
 			{
-				"id":"right_eye_pilot",
+				"name":"right_eye_pilot",
 				"effects": ["right_eye_1", "right_eye_2", "right_eye_3", "right_eye_4", "right_eye_5"]
 			},
 			{
-				"id":"left_eye_pilot",
+				"name":"left_eye_pilot",
 				"effects": ["left_eye_1", "left_eye_2", "left_eye_3", "left_eye_4", "left_eye_5"]
 			}
 		]
