@@ -1,14 +1,31 @@
-import ConfigManager from "./config_manager"
+
 import gpio from "./gpio_model";
 
 export default class Effects {
   constructor(json_config) {
-    this.config = new ConfigManager(json_config);
-    this.id = this.config.id;
-    this.version = this.config.version;
 
-  	//TODO: create based on passed config
-		this.effect_array = ConfigManager.build_demo_array();
+    var config = JSON.parse(json_config);
+
+    this.id = config.id;
+    this.version = config.version;
+
+		this.effect_array = this.build_array(config.parts); //ConfigManager.build_demo_array();
+  }
+
+  build_array = function(parts) {
+    //load supplies
+    var supplies = parts.supplies;
+    //load effects
+    var fxs =  parts.effects;
+    //load igniters
+    var igniters = parts.igniters;
+
+    if (supplies.length + fxs.length + igniters.length > gpio.gpio_pins.length) {
+      throw "TOO MANY EFFECTS.";
+    }
+
+    console.log('supplies: ' + JSON.stringify(supplies));
+
   }
 
   info = function() {

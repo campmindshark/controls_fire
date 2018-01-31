@@ -1,9 +1,6 @@
 export default class ConfigManager {
   constructor(json_config) {
-    var config = JSON.parse(json_config);
-    var parts = config.parts;
-    console.log(config);
-    console.log(parts);
+    this.config = JSON.parse(json_config);
   }
 
   static build_demo_array = function() {

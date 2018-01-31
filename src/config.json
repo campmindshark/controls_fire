@@ -2,31 +2,79 @@
 	"id": "TestFire",
 	"version":"0.0.1",
 	"parts": {
-		"supplies": {
-			"sign": [],
-			"left_eye": [],
-			"right_eye": [],
-			"master":["sign", "left_eye", "right_eye"]
-		},
-		"effects": {
-			"sign_solenoid": ["sign"],
-
-			"right_eye_1":["right_eye"],
-			"right_eye_2":["right_eye"],
-			"right_eye_3":["right_eye"],
-			"right_eye_4":["right_eye"],
-			"right_eye_5":["right_eye"],
-
-			"left_eye_1":["left_eye"],
-			"left_eye_2":["left_eye"],
-			"left_eye_3":["left_eye"],
-			"left_eye_4":["left_eye"],
-			"left_eye_5":["left_eye"]
-		},
-		"igniters": {
-			"sign_pilot":["sign_solenoid"],
-			"right_eye": ["right_eye_1", "right_eye_2", "right_eye_3", "right_eye_4", "right_eye_5"],
-			"left_eye": ["left_eye_1", "left_eye_2", "left_eye_3", "left_eye_4", "left_eye_5"]
-		}
+		"supplies": [
+			{
+				"id":"sign",
+				"manifolds": []
+			},
+			{
+				"id":"left_eye",
+				"manifolds": []
+			},
+			{
+				"id":"right_eye",
+				"manifolds": []
+			}
+		],
+		"effects": [
+			{
+				"id": "sign_solenoid",
+				"supplies":["sign"]
+			},
+			{
+				"id": "right_eye_1",
+				"supplies":["right_eye"]
+			},
+			{
+				"id": "right_eye_2",
+				"supplies":["right_eye"]
+			},
+			{
+				"id": "right_eye_3",
+				"supplies":["right_eye"]
+			},
+			{
+				"id": "right_eye_4",
+				"supplies":["right_eye"]
+			},
+			{
+				"id": "right_eye_5",
+				"supplies":["right_eye"]
+			},
+			{
+				"id":"left_eye_1",
+				"supplies":["left_eye"]
+			},
+			{
+				"id":"left_eye_2",
+				"supplies":["left_eye"]
+			},
+			{
+				"id":"left_eye_3",
+				"supplies":["left_eye"]
+			},
+			{
+				"id":"left_eye_4",
+				"supplies":["left_eye"]
+			},
+			{
+				"id":"left_eye_5",
+				"supplies":["left_eye"]
+			}
+		],
+		"igniters": [
+			{
+				"id":"sign_pilot",
+				"effects":["sign_solenoid"]
+			},
+			{
+				"id":"right_eye_pilot",
+				"effects": ["right_eye_1", "right_eye_2", "right_eye_3", "right_eye_4", "right_eye_5"]
+			},
+			{
+				"id":"left_eye_pilot",
+				"effects": ["left_eye_1", "left_eye_2", "left_eye_3", "left_eye_4", "left_eye_5"]
+			}
+		]
 	}
 }
