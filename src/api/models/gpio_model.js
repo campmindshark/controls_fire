@@ -53,7 +53,7 @@ export default class gpio {
       ,39,35,67,68,44,26,46 ,65 ,63 ,37 ,33,61,88,89,11,81,80,79,77,75,73,71];
 
       get Value() {
-        fs.readFileAsync("value").then((data) => {
+        fs.readFileAsync(this.path + "value").then((data) => {
           //console.log("\nreadFileAsync callback with data: " + data);
           this.raw_value = data;
         });

@@ -42,16 +42,26 @@ export default class Effects {
   }
 
   info = function() {
-    //TODO: pretty print this
     return JSON.stringify(this);
   }
 
   get_array_details = function() {
-    return JSON.stringify(this.effect_array);
+    var out_data = [];
+    for(var i=0;i<this.effect_array.length; i++) {
+      out_data[i] = this.get_effect_details(i);
+    }
+    return JSON.stringify(out_data);
   }
 
   get_effect_details = function(id) {
-    return JSON.stringify(this.effect_array[id]);
+    return {
+      "id": this.effect_array[id].gpio.id,
+      "name": this.effect_array[id].part.name,
+      "enabled":this.effect_array[id].gpio === 'gpio'? "enabled" : "disabled",
+      "type": this.effect_array[id].part.type,
+      "gpio_mode": this.mode_test(),
+      "Value": this.effect_array[id].gpio.Value
+    };
   }
 
   command_effect = function(id, state) {
