@@ -54,10 +54,11 @@ export default class Effects {
   }
 
   get_effect_details = function(id) {
+    console.log(this.effect_array[id].gpio);
     return {
       "id": this.effect_array[id].gpio.id,
       "name": this.effect_array[id].part.name,
-      "enabled":this.effect_array[id].gpio === 'gpio'? "enabled" : "disabled",
+      "enabled": this.effect_array[id].gpio != 'disabled' && this.effect_array[id].gpio != 'init' ? 'enabled' : 'disabled',
       "type": this.effect_array[id].part.type,
       "gpio_mode": this.mode_test(),
       "Value": this.effect_array[id].gpio.Value
