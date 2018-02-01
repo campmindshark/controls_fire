@@ -66,7 +66,7 @@ export default class Effects {
   }
 
   command_effect = function(id, state) {
-    if(this.effect_array[id].gpio != "Disabled") {
+    if(this.effect_array[id].gpio != "disabled") {
       if (this.set_effect_state(id, state)) {
         console.log("New effect state set");
         return true;
@@ -111,7 +111,7 @@ export default class Effects {
       if (graceful) {
         this.effect_array[id].gpio.Value = 0;
       }
-      this.effect_array[id].gpio = "Disabled";
+      this.effect_array[id].gpio = "disabled";
       return true;
     }
     catch(err) {
