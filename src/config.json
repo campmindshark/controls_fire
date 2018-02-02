@@ -90,7 +90,7 @@
 		],
 		"internal": [
 			{
-				"name":"master",
+				"name":"master_power",
 				"type":"relay",
 				"gpio":"71"
 			}

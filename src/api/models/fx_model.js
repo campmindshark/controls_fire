@@ -7,14 +7,14 @@ export default class Effects {
 
     this.name = config.name;
     this.version = config.version;
-    this.effect_array = this.build_array(config.parts);
-    this.internal = config.internal_parts;
+    this.effect_array = this.build_effect_array(config.parts);
+    this.internal = this.build_internal_array(config.internal_parts);
   }
 
   //#region Property Builders
-  build_array = function(parts) {
+  build_effect_array = function(parts) {
 
-    if (parts!= null && parts.length > 0) {
+    if (parts != null && parts.length > 0) {
       if (parts.length > gpio.gpio_pins.length) {
         throw "TOO MANY PARTS. Configure fewer parts.";
       }
@@ -30,7 +30,20 @@ export default class Effects {
       }
       return fxs;
     } else {
-      throw "No Parts Configured.\nYou must configure parts to control fire.";
+      throw "ERROR: No Parts Configured.\nYou must configure parts to control fire.";
+    }
+  }
+
+  build_internal_array = function(internal_parts) {
+    var internal = [];
+    if(internal_parts != null && parts.length > 0) {
+      if(internal_parts.find((element) => { return element == 'master_power'})) {
+
+      } else {
+        "ERROR: Internal Parts Array does not have a master_power configured.\nConfigure master_power in internal_parts";
+      }
+    } else {
+      "ERROR: No Internal Parts Configured.\nYou must configure a master_power in internal_parts at a minimum.";
     }
   }
 
