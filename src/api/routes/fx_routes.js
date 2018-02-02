@@ -16,7 +16,10 @@ module.exports = function(app) {
 		.post(fx_controller.set_fx_state)
 		.delete(fx_controller.disable_fx);
 
-	app.route('/info')
+	app.route('/system/info')
 		.get(sys_controller.system_info);
+
+	app.route('/system/pins')
+		.get(sys_controller.pins);
 
 }
