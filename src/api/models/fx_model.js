@@ -8,8 +8,10 @@ export default class Effects {
     this.name = config.name;
     this.version = config.version;
     this.effect_array = this.build_array(config.parts);
+    this.internal = config.internal_parts;
   }
 
+  //#region Property Builders
   build_array = function(parts) {
 
     if (parts!= null && parts.length > 0) {
@@ -40,6 +42,7 @@ export default class Effects {
     }
     return fxs;
   }
+  //#endregion
 
   info = function() {
     return JSON.stringify(this);

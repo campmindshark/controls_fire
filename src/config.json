@@ -87,5 +87,12 @@
 				"type":"igniter",
 				"effects": ["left_eye_1", "left_eye_2", "left_eye_3", "left_eye_4", "left_eye_5"]
 			}
+		],
+		"internal": [
+			{
+				"name":"master",
+				"type":"relay",
+				"gpio":"71"
+			}
 		]
 }
