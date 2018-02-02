@@ -1,5 +1,3 @@
-import gpio from '../models/gpio_model';
-import System from '../models/sys_model';
 
 exports.system_info = function(req,res) {
 	//GET /system/info
