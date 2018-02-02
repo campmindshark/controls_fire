@@ -2,10 +2,11 @@ import gpio from './gpio_model'
 
 export default class System {
   constructor()  {
+    //lazy load system values on create.
     this.values = {
       "pins": {
         "gpio": gpio.gpio_pins,
-        "power_relay": gpio.power_relay_pin
+        "master_power": gpio.master_power_pin
       }
     }
   }

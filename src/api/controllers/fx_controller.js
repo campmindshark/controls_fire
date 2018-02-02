@@ -37,7 +37,7 @@ exports.get_fx_details = function(req,res) {
 	//GET /fx/:fxId
 	//type and state informatiom for req.params.fxId
 	console.log('Details request for fxId:'+  req.params.fxId);
-	var id = req.app.locals.effects.id_check(req.params.fxId);
+	var id = req.app.locals.effects.id_test(req.params.fxId);
 	if (id != 'bad id') {
 		var msg = req.app.locals.effects.get_effect_details(id);
 		res.send(msg);
@@ -51,7 +51,7 @@ exports.set_fx_state = function(req,res) {
 	//change state of req.params.fxId to req.params.fxState
 	console.log('\nState change requested for fxId: ' + req.params.fxId);
 	console.log('\nNew State Requested: ' + req.body.fxState);
-	var id = req.app.locals.effects.id_check(req.params.fxId);
+	var id = req.app.locals.effects.id_test(req.params.fxId);
 	if (id != 'bad id') {
 		var msg = handle_api_call(
 			req.app.locals.effects.command_effect(id, req.body.fxState)
@@ -68,7 +68,7 @@ exports.disable_fx = function(req,res){
 	//DELETE /fxs/:fx
 	//Turn off and disable client control of req.params.fxId
 	console.log('Disable request for fxId: ' + req.params.fxId);
-	var id = req.app.locals.effects.id_check(req.params.fxId);
+	var id = req.app.locals.effects.id_test(req.params.fxId);
 	if (id != 'bad id') {
 		var msg = handle_api_call(
 			req.app.locals.effects.disable_effect(id, false)

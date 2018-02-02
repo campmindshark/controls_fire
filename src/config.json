@@ -88,7 +88,7 @@
 				"effects": ["left_eye_1", "left_eye_2", "left_eye_3", "left_eye_4", "left_eye_5"]
 			}
 		],
-		"internal": [
+		"internal_parts": [
 			{
 				"name":"master_power",
 				"type":"relay",

@@ -35,15 +35,14 @@ export default class Effects {
   }
 
   build_internal_array = function(internal_parts) {
-    var internal = [];
-    if(internal_parts != null && parts.length > 0) {
-      if(internal_parts.find((element) => { return element == 'master_power'})) {
-
+    if(internal_parts != null && internal_parts.length > 0) {
+      if(internal_parts.find((element) => { return element.name === "master_power"})) {
+        return internal_parts;
       } else {
-        "ERROR: Internal Parts Array does not have a master_power configured.\nConfigure master_power in internal_parts";
+        throw "ERROR: Internal Parts Array does not have a master_power configured.\nConfigure master_power in internal_parts";
       }
     } else {
-      "ERROR: No Internal Parts Configured.\nYou must configure a master_power in internal_parts at a minimum.";
+      throw "ERROR: No Internal Parts Configured.\nYou must configure a master_power part in internal_parts at a minimum.";
     }
   }
 
@@ -56,7 +55,7 @@ export default class Effects {
     return fxs;
   }
   //#endregion
-
+  //#region GET
   info = function() {
     return JSON.stringify(this);
   }
@@ -80,6 +79,18 @@ export default class Effects {
       "Value": this.effect_array[id].gpio.Value
     };
   }
+  //#endregion
+  //#region POST
+  enable_effect = function(id) {
+    try {
+      this.effect_array[id].gpio = new gpio(id, this.mode_test(), 0);
+      console.log (this);
+      return true;
+    }
+    catch(err) {
+      return false;
+    }
+  }
 
   command_effect = function(id, state) {
     if(this.effect_array[id].gpio != "disabled") {
@@ -95,26 +106,16 @@ export default class Effects {
       return false;
     }
   }
-
-  set_effect_state = function(id, state) {
+  //#endregion
+  //#region DELETE
+  master_shut_off = function(graceful) {
     try {
-      //TODO:
-      if (!(state == 1 || state == 0 )) {
-        throw "\ninvalid state:" + state + "\nfor id: " + id;
-      }
-      this.effect_array[id].gpio.Value = state;
-      return true;
-    }
-    catch(err) {
-      console.log(err);
-      return false;
-    }
-  }
-
-  enable_effect = function(id) {
-    try {
-      this.effect_array[id].gpio = new gpio(id, this.mode_test(), 0);
-      console.log (this);
+      this.effect_array.forEach(
+        (element) =>
+        {
+          this.disable_effect(element.id, graceful);
+        }
+      );
       return true;
     }
     catch(err) {
@@ -134,19 +135,14 @@ export default class Effects {
       return false;
     }
   }
-
-  master_shut_off = function(graceful) {
-    try {
-      this.effect_array.forEach(
-        (element) =>
-        {
-          this.disable_effect(element.id, graceful);
-        }
-      );
-      return true;
-    }
-    catch(err) {
-      return false;
+  //#endregion
+  //#region Data Tests
+  id_test = function(test_id) {
+    //TODO: handle the ids better. a db would probably help.
+    if (typeof !isNaN(parseInt(test_id)) && isFinite(test_id) && test_id < this.effect_array.length) {
+      return test_id;
+    } else {
+      return "bad id";
     }
   }
 
@@ -155,13 +151,22 @@ export default class Effects {
     //only mocking gpio work for now
     return "mock";
   }
+  //#endregion
+  //#region GPIO
 
-  id_check = function(test_id) {
-    //TODO: handle the ids better. a db would probably help.
-    if (typeof !isNaN(parseInt(test_id)) && isFinite(test_id) && test_id < this.effect_array.length) {
-      return test_id;
-    } else {
-      return "bad id";
+  set_effect_state = function(id, state) {
+    try {
+      //TODO: do better about states and validating them.
+      if (!(state == 1 || state == 0 )) {
+        throw "\ninvalid state:" + state + "\nfor id: " + id;
+      }
+      this.effect_array[id].gpio.Value = state;
+      return true;
+    }
+    catch(err) {
+      console.log(err);
+      return false;
     }
   }
+  //#endregion
 }
