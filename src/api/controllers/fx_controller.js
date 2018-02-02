@@ -1,13 +1,6 @@
-exports.system_info = function(req,res) {
-	//GET /info
-	console.log('\nSystem Information Request: ' + Date.now());
-	var msg = req.app.locals.effects.info();
-	res.send(msg);
-}
 
 exports.list_fxs = function(req,res) {
 	//GET /fxs
-	//TODO: Create Config
 	console.log('Full Effect Array Requested\n time: ' + Date.now() + "\n");
 	var msg = req.app.locals.effects.get_array_details();
 	res.send(msg);

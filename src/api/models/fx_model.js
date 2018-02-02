@@ -22,8 +22,8 @@ export default class Effects {
         //TODO: load initial values from config
         fxs[i] =
         {
-            "part" : parts[i],
-            "gpio" : "init"
+          "part" : parts[i],
+          "gpio" : "init"
         };
       }
       return fxs;
@@ -32,7 +32,7 @@ export default class Effects {
     }
   }
 
-   build_demo_array = function() {
+  build_demo_array = function() {
     //just a dummy array of 12 effects
     var fxs = [];
     for(var i=0; i<12; i++) {
@@ -82,7 +82,7 @@ export default class Effects {
 
   set_effect_state = function(id, state) {
     try {
-      //check for valid state
+      //TODO:
       if (!(state == 1 || state == 0 )) {
         throw "\ninvalid state:" + state + "\nfor id: " + id;
       }
@@ -142,18 +142,10 @@ export default class Effects {
 
   id_check = function(test_id) {
     //TODO: handle the ids better. a db would probably help.
-  	if (typeof !isNaN(parseInt(test_id)) && isFinite(test_id)) {
-  		if (test_id < this.effect_array.length) {
-  			return test_id;
-  		}
-  		else {
-  			return "bad id";
-  		}
-  	}
-    for(var i = 0; i<this.effect_array.length; i++) {
-      if (this.effect_array[i].part.name == test_id) {
-        return i;
-      }
+    if (typeof !isNaN(parseInt(test_id)) && isFinite(test_id) && test_id < this.effect_array.length) {
+      return test_id;
+    } else {
+      return "bad id";
     }
   }
 }
