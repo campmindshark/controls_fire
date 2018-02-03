@@ -13,14 +13,23 @@ module.exports = function(app) {
 	//Individual Effect
 	app.route('/fxs/:fxId')
 		.get(fx_controller.get_fx_details)
-		.post(fx_controller.set_fx_state)
+		.patch(fx_controller.set_fx_state)
 		.delete(fx_controller.disable_fx);
 
+	//            .( * .
+  //       .*  .  ) .
+  //      . . POOF .* .
+  //       '* . (  .) '
+  //        ` ( . *
+	app.route('/fxs/:fxId/fire')
+		.post(fx_controller.open)
+		.delete(fx_controller.close);
 
-	//Configuration and System Data
+	//All data that's any data
 	app.route('/system/')
 		.get(sys_controller.system_info);
 
+	
 	app.route('/system/:key')
 		.get(sys_controller.get_system_value);
 

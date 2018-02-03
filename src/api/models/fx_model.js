@@ -5,10 +5,10 @@ export default class Effects {
   constructor(json_config) {
     var config = JSON.parse(json_config);
 
-    this.name = config.name;
+  this.name = config.name;
     this.version = config.version;
     this.effect_array = this.build_effect_array(config.parts);
-    this.internal = this.build_internal_array(config.internal_parts);
+    this.internal = this.build_internal_array(config.system_parts);
   }
 
   //#region Property Builders
@@ -19,11 +19,11 @@ export default class Effects {
         throw "TOO MANY PARTS. Configure fewer parts.";
       }
       var fxs = [];
+
       for (var i = 0; i< parts.length; i++) {
         //TODO: do something with the different input types
         //TODO: load initial values from config
-        fxs[i] =
-        {
+        fxs[i] = {
           "part" : parts[i],
           "gpio" : "init"
         };
@@ -34,25 +34,30 @@ export default class Effects {
     }
   }
 
-  build_internal_array = function(internal_parts) {
-    if(internal_parts != null && internal_parts.length > 0) {
-      if(internal_parts.find((element) => { return element.name === "master_power"})) {
-        return internal_parts;
+  build_internal_array = function(system_parts) {
+    if(system_parts != null && system_parts.length > 0) {
+      if(system_parts.find((element) => { return element.name === "master_power"})) {
+        var internal = [];
+        //Load config int obj and enable gpio by default for system parts
+        for (var i = 0; i < system_parts.length; i++) {
+          //TODO: Do better with ids
+          var id = gpio.gpio_pins.findIndex((element) => { return element == system_parts[i].gpio;});
+          if (id != -1) {
+            internal[i] = {
+              "part" : system_parts[i],
+              "gpio" : new gpio(id, this.mode_test(), 0)
+            }
+          } else {
+            throw "ERROR: Bad GPIO config : " + JSON.stringify(system_parts[i]);
+          }
+        }
+        return internal;
       } else {
-        throw "ERROR: Internal Parts Array does not have a master_power configured.\nConfigure master_power in internal_parts";
+        throw "ERROR: System Parts Array does not have a master_power configured.\nConfigure master_power in system_parts";
       }
     } else {
-      throw "ERROR: No Internal Parts Configured.\nYou must configure a master_power part in internal_parts at a minimum.";
+      throw "ERROR: No System Parts Configured.\nYou must configure a master_power part in system_parts at a minimum.";
     }
-  }
-
-  build_demo_array = function() {
-    //just a dummy array of 12 effects
-    var fxs = [];
-    for(var i=0; i<12; i++) {
-      fxs[i] = "init";
-    }
-    return fxs;
   }
   //#endregion
   //#region GET
@@ -92,18 +97,35 @@ export default class Effects {
     }
   }
 
-  command_effect = function(id, state) {
-    if(this.effect_array[id].gpio != "disabled") {
-      if (this.set_effect_state(id, state)) {
-        console.log("New effect state set");
-        return true;
+  reconfigure = function(part_id, key, value) {
+    var id = this.id_test(part_id);
+    if (id != 'bad id') {
+      if (key in this.effect_array[id]) {
+        switch (key) {
+          case 'gpio':
+            var part_to_disable = this.effect_array.find((element) => {
+              return (gpio.gpio_pins[element.gpio.id] == value && element.id != id);
+            });
+            if (part_to_disable != undefined) {
+              this.disable_effect(part_to_disable.id, true);
+            }
+            this.effect_array[id].part.gpio = value;
+            this.effect_array[id].gpio = "init";
+            return true;
+            break;
+          default:
+            this.effect_array[id].part[key] = value;
+            return true;
+            break;
+        }
       } else {
-        console.log("Failed to set new effect state");
+        //key not found
+        console.log('Key Not Found. \nUnable to reconfigure key: ' + key + '\n');
         return false;
       }
     } else {
-      console.log("Cannot Command Disabled Effect ID: " + id);
-      return false;
+      //Bad ID error
+      console.log('Bad Id: ' + id + '\nUnable to reconfigure.');
     }
   }
   //#endregion
@@ -152,7 +174,22 @@ export default class Effects {
     return "mock";
   }
   //#endregion
-  //#region GPIO
+  //#region The Bench.
+
+  command_effect = function(id, state) {
+    if(this.effect_array[id].gpio != "disabled") {
+      if (this.set_effect_state(id, state)) {
+        console.log("New effect state set");
+        return true;
+      } else {
+        console.log("Failed to set new effect state");
+        return false;
+      }
+    } else {
+      console.log("Cannot Command Disabled Effect ID: " + id);
+      return false;
+    }
+  }
 
   set_effect_state = function(id, state) {
     try {

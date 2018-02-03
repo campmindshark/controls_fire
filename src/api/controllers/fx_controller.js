@@ -1,4 +1,4 @@
-
+//#region /fxs
 exports.list_fxs = function(req,res) {
 	//GET /fxs
 	console.log('Full Effect Array Requested\n time: ' + Date.now() + "\n");
@@ -32,7 +32,8 @@ exports.disable_fxs = function(req,res) {
 	,"Master Shut Off Request Did Not Complete")
 	res.send(msg);
 }
-
+//#endregion
+//#region /fxs/:fxId
 exports.get_fx_details = function(req,res) {
 	//GET /fx/:fxId
 	//type and state informatiom for req.params.fxId
@@ -46,15 +47,16 @@ exports.get_fx_details = function(req,res) {
 	}
 }
 
-exports.set_fx_state = function(req,res) {
-	//POST /fx/:fxId
-	//change state of req.params.fxId to req.params.fxState
-	console.log('\nState change requested for fxId: ' + req.params.fxId);
-	console.log('\nNew State Requested: ' + req.body.fxState);
+exports.update_config = function(req,res) {
+	//PATCH /fx/:fxId
+	console.log('\nConfig update requested for fxId: ' + req.params.fxId + '\n');
+	console.log('\nConfig key: ' 											 + req.body.key + '\n')
+	console.log('\nRequested value: ' 			 + req.body.value + '\n');
+
 	var id = req.app.locals.effects.id_test(req.params.fxId);
 	if (id != 'bad id') {
 		var msg = handle_api_call(
-			req.app.locals.effects.command_effect(id, req.body.fxState)
+			req.app.locals.effects.reconfigure(id, req.body.key, req.body.value)
 			, "\nEffect command completed."
 			, "\nEffect command did not complete"
 		);
@@ -65,7 +67,7 @@ exports.set_fx_state = function(req,res) {
 }
 
 exports.disable_fx = function(req,res){
-	//DELETE /fxs/:fx
+	//DELETE /fxs/:fxId
 	//Turn off and disable client control of req.params.fxId
 	console.log('Disable request for fxId: ' + req.params.fxId);
 	var id = req.app.locals.effects.id_test(req.params.fxId);
@@ -81,6 +83,18 @@ exports.disable_fx = function(req,res){
 	}
 
 }
+//#endregion
+//#region /fxs/:fxId/fire
+exports.open = function(req,res) {
+	//POST /fxs/:fxId/fire
+	req.app.locals.effects.effect_array[req.params.fxId].gpio.Value = 1;
+}
+exports.close = function(req,res) {
+	//DELETE /fxs/:fxId/fire
+	req.app.locals.effects.effect_array[req.params.fxId].gpio.Value = 0;
+
+}
+//#endregion
 
 const handle_api_call = function(method_call, success_msg, fail_msg,) {
 	try {
