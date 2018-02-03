@@ -24,92 +24,93 @@
 				"name": "sign_solenoid",
 				"type":"outlet",
 				"gpio":30,
-				"supplies":["sign"]
+				"sources":["sign"]
 			},
 			{
 				"name": "right_eye_1",
 				"type":"outlet",
 				"gpio":31,
-				"supplies":["right_eye"]
+				"sources":["right_eye"]
 			},
 			{
 				"name": "right_eye_2",
 				"type":"outlet",
 				"gpio":48,
-				"supplies":["right_eye"]
+				"sources":["right_eye"]
 			},
 			{
 				"name": "right_eye_3",
 				"type":"outlet",
 				"gpio":49,
-				"supplies":["right_eye"]
+				"sources":["right_eye"]
 			},
 			{
 				"name": "right_eye_4",
 				"type":"outlet",
 				"gpio":60,
-				"supplies":["right_eye"]
+				"sources":["right_eye"]
 			},
 			{
 				"name": "right_eye_5",
 				"type":"outlet",
 				"gpio":110,
-				"supplies":["right_eye"]
+				"sources":["right_eye"]
 			},
 			{
 				"name":"left_eye_1",
 				"type":"outlet",
 				"gpio":111,
-				"supplies":["left_eye"]
+				"sources":["left_eye"]
 			},
 			{
 				"name":"left_eye_2",
 				"type":"outlet",
 				"gpio":115,
-				"supplies":["left_eye"]
+				"sources":["left_eye"]
 			},
 			{
 				"name":"left_eye_3",
 				"type":"outlet",
 				"gpio":50,
-				"supplies":["left_eye"]
+				"sources":["left_eye"]
 			},
 			{
 				"name":"left_eye_4",
 				"type":"outlet",
 				"gpio":51,
-				"supplies":["left_eye"]
+				"sources":["left_eye"]
 			},
 			{
 				"name":"left_eye_5",
 				"type":"outlet",
 				"gpio":4,
-				"supplies":["left_eye"]
+				"sources":["left_eye"]
 			},
 			{
 				"name":"sign_pilot",
 				"type":"igniter",
 				"gpio":2,
-				"effects":["sign_solenoid"]
+				"sources":["sign_solenoid"]
 			},
 			{
 				"name":"right_eye_pilot",
 				"type":"igniter",
 				"gpio":15,
-				"effects": ["right_eye_1", "right_eye_2", "right_eye_3", "right_eye_4", "right_eye_5"]
+				"sources": ["right_eye_1", "right_eye_2", "right_eye_3", "right_eye_4", "right_eye_5"]
 			},
 			{
 				"name":"left_eye_pilot",
 				"type":"igniter",
 				"gpio":14,
-				"effects": ["left_eye_1", "left_eye_2", "left_eye_3", "left_eye_4", "left_eye_5"]
+				"sources": ["left_eye_1", "left_eye_2", "left_eye_3", "left_eye_4", "left_eye_5"]
 			}
 		],
-		"system_parts": [
+		"system_parts": [ 
 			{
 				"name":"master_power",
 				"type":"relay",
-				"gpio":113
+				"gpio":113,
+				"sources" : []
 			}
 		]
 }
