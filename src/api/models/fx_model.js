@@ -170,7 +170,7 @@ export default class Effects {
 
     mode_test = function() {
         // get live for bones
-        if (os.hostname().indexOf('bone')) {
+        if (os.hostname().indexOf('bone') > 0) {
           return "live";
         }
         //mock all others.
