@@ -169,10 +169,11 @@ export default class Effects {
     }
 
     mode_test = function() {
-        // get real for bones
-        if (os.hostname().match('/^.*bone$/')) {
+        // get live for bones
+        if (os.hostname().indexOf('bone')) {
           return "live";
         }
+        //mock all others.
         return "mock";
     }
     //#endregion
