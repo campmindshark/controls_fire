@@ -5,6 +5,7 @@ var express = require('express'),
     cors = require('cors'),
     fs = require('fs'),
     routes = require('./api/routes/fx_routes'),
+		os = require('os'),
     //TODO: do better with the config source
     json_config = require('./system_config.json');
 
@@ -23,5 +24,5 @@ app.locals.effects = new Effects(JSON.stringify(json_config));
 
 routes(app);
 app.listen(port);
-
+console.log("Device: " + os.hostname() + '\n');
 console.log('Rejoice. You may now control Fire on port: ' + port);

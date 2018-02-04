@@ -1,4 +1,5 @@
 import gpio from "./gpio_model";
+import os from 'os';
 
 export default class Effects {
     constructor(json_config) {
@@ -168,8 +169,10 @@ export default class Effects {
     }
 
     mode_test = function() {
-        //TODO: add Beaglebone black mode
-        //only mocking gpio work for now
+        // get real for bones
+        if (os.hostname().toString().match('/^.*bone$/')) {
+          return "live";
+        }
         return "mock";
     }
     //#endregion
