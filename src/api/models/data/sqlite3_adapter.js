@@ -14,7 +14,7 @@ export default class Sqlite3Adapter {
         this.connect_to_db('./test.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE);
         this.query_db(() => {
             this.db.run(script_filestream.toString());
-            this.close_db_connection();
+
         });
     }
 
@@ -41,8 +41,9 @@ export default class Sqlite3Adapter {
         this.db.close((err) => {
             if (err) {
                 return console.error(err.message);
-            }
+            } else {
             console.log('Close the database connection.');
+          }
         });
     }
 }
