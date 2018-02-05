@@ -6,7 +6,6 @@ CREATE TABLE tblGPIO ( gpio_id integer PRIMARY KEY
                      , edge text
                      , power text);
 
-
 DROP TABLE IF EXISTS tblParts;
 CREATE TABLE tblParts (part_id integer PRIMARY KEY
                      , gpio_id integer
@@ -14,7 +13,6 @@ CREATE TABLE tblParts (part_id integer PRIMARY KEY
                      ,FOREIGN KEY (gpio_id)
                       REFERENCES tblGPIO (gpio_id)
                       ON DELETE SET NULL);
-
 
 DROP TABLE IF EXISTS tblLinkSourceParts;
 CREATE TABLE tblLinkSourceParts
@@ -26,10 +24,7 @@ CREATE TABLE tblLinkSourceParts
     , FOREIGN KEY (part_id)
       REFERENCES tblParts (part_id) ON DELETE CASCADE);
 
-
 DROP VIEW IF EXISTS vwPartConfig;
-
-
 CREATE VIEW vwPartConfig AS
 SELECT p.part_id,
        p.type,
