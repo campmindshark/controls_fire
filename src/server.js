@@ -11,6 +11,7 @@ var express = require('express'),
 
 import Effects from './api/models/fx_model';
 import System from './api/models/sys_model';
+import Sqlite3Adapter from './api/models/data/sqlite3_adapter';
 
 app.use(cors());
 app.use(bodyParser.urlencoded({
@@ -18,8 +19,11 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
+app.locals.db_adapter = new Sqlite3Adapter();
+app.locals.db_adapter.rebuild_db();
+//TODO: System object should manage master_power relay
 app.locals.system = new System();
-//TODO: run this on demand from an endpoint that also enables a power relay
+//TODO: run this on demand from an endpoint
 app.locals.effects = new Effects(JSON.stringify(json_config));
 
 routes(app);
