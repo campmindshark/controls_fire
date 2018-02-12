@@ -1,21 +1,20 @@
 import sqlite3 from 'sqlite3';
 
 export default class Sqlite3Adapter {
-    constructor(db) {
-        if (db != undefined) {
-            this.db = db;
-        }
+    constructor() {
+      this.db;
     }
 
     rebuild_db = function() {
         var fs = require('fs');
         var script_filestream = fs.readFileSync('./api/models/data/create_db.sql');
 
-        this.connect_to_db('./test.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE);
-        this.query_db(() => {
-            this.db.run(script_filestream.toString());
-
-        });
+        this.connect_to_db('./test.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE
+        , this.query_db(() => {
+            var bork = script_filestream.toString();
+            console.log('\n'+this.db.run(bork));
+            this.close_db_connection()
+        }));
     }
 
     query_db = function(query_function) {
@@ -26,13 +25,15 @@ export default class Sqlite3Adapter {
         }
     }
 
-    connect_to_db = function(url, open_mode) {
+    connect_to_db = function(url, open_mode, query_db_call) {
         this.db = new sqlite3.Database(url, open_mode, (err) => {
             if (err) {
                 return console.error(err.message);
-            }
-            console.log('Connected to: ' + url +
-                '\nIn mode: ' + open_mode);
+            } else {
+              query_db_call;
+              console.log('Connected to: ' + url +
+                  '\nIn mode: ' + open_mode);
+                }
         });
     }
 
