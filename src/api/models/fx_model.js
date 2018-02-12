@@ -1,5 +1,6 @@
 import gpio from "./gpio_model";
 import os from 'os';
+import PartData from './data/part_data';
 
 export default class Effects {
     constructor(json_config) {
@@ -22,7 +23,6 @@ export default class Effects {
 
             for (var i = 0; i < parts.length; i++) {
                 //TODO: do something with the different input types
-                //TODO: load initial values from config
                 fxs[i] = {
                     "part": parts[i],
                     "gpio": "init"
@@ -171,7 +171,7 @@ export default class Effects {
     mode_test = function() {
         // get live for bones
         if (os.hostname().indexOf('bone') > 0) {
-          return "live";
+            return "live";
         }
         //mock all others.
         return "mock";
