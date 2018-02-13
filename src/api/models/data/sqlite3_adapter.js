@@ -10,14 +10,15 @@ export default class Sqlite3Adapter {
         var fs = require('fs');
         var script_filestream = fs.readFileSync('./api/models/data/create_db.sql');
 
-        this.connect_to_db('./test.db',
-        sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
-        this.query_db(() => {
-            var bork = script_filestream.toString();
-            console.log('\n'+this.db.run(bork));
-            this.close_db_connection();
-        }));
-    }
+    //    this.connect_to_db('../fire.db',
+    //    sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
+    //     this.query_db(() => {
+    //         console.log('query function');
+    //         var bork = script_filestream.toString();
+    //         console.log('\n'+this.db.run(bork));
+    //         this.close_db_connection();
+    //     }));
+     }
 
     query_db(query_function) {
         try {

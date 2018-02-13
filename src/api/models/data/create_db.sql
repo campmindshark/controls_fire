@@ -16,13 +16,13 @@ CREATE TABLE tblGpio ( gpio_pin integer NOT NULL UNIQUE PRIMARY KEY
 DROP TABLE IF EXISTS tblParts;
 CREATE TABLE tblParts (part_id integer NOT NULL
                      , installation_id integer NOT NULL
-                     , gpio_id integer
+                     , gpio_pin integer
                      , part_name text
                      , type text
                      , FOREIGN KEY (installation_id)
                       REFERENCES tblInstallations (installation_id)
-                     , FOREIGN KEY (gpio_id)
-                      REFERENCES tblGpio (gpio_id)
+                     , FOREIGN KEY (gpio_pin)
+                      REFERENCES tblGpio (gpio_pin)
                       ON DELETE SET NULL
                      , PRIMARY KEY(part_id, installation_id));
 
@@ -45,14 +45,14 @@ DROP VIEW IF EXISTS vwPartConfig;
 CREATE VIEW vwPartConfig AS
 SELECT p.part_id,
        p.type,
-       p.gpio_id,
+       p.gpio_pin,
        g.active_low,
        g.direction,
        g.edge,
        g.power,
        lsp.sources
 FROM tblParts p
-LEFT OUTER JOIN tblGPIO g ON p.gpio_id = g.gpio_id
+LEFT OUTER JOIN tblGPIO g ON p.gpio_pin = g.gpio_pin
 LEFT OUTER JOIN
   (SELECT part_id ,
           group_concat(source_id) as sources
