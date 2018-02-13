@@ -7,9 +7,9 @@ export default class PartData {
     }
   }
 
-  get_part_data = function(installation, part_id) {}
+  get_part_data(installation, part_id) {}
 
-  save_part_data = function(installation, part) {}
+  save_part_data(installation, part) {}
 
 
 

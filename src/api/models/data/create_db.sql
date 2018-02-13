@@ -7,7 +7,7 @@ CREATE TABLE tblInstallations ( installation_id integer UNIQUE
                               , created_by text );
 
 DROP TABLE IF EXISTS tblGpio;
-CREATE TABLE tblGpio ( gpio_id integer NOT NULL UNIQUE PRIMARY KEY
+CREATE TABLE tblGpio ( gpio_pin integer NOT NULL UNIQUE PRIMARY KEY
                      , active_low integer
                      , direction text
                      , edge text
