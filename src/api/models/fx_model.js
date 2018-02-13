@@ -40,7 +40,7 @@ export default class Effects {
           return element.name === "master_power";
         })) {
         var internal = [];
-        findIndexCallback = function(element) {
+        var findIndexCallback = function(element) {
           return element == system_parts[i].gpio;
         };
         //Load config int obj and enable gpio by default for system parts

@@ -10,14 +10,12 @@ export default class Sqlite3Adapter {
         var fs = require('fs');
         var script_filestream = fs.readFileSync('./api/models/data/create_db.sql');
 
-    //    this.connect_to_db('../fire.db',
-    //    sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
-    //     this.query_db(() => {
-    //         console.log('query function');
-    //         var bork = script_filestream.toString();
-    //         console.log('\n'+this.db.run(bork));
-    //         this.close_db_connection();
-    //     }));
+        this.connect_to_db('../fire.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE);
+        this.query_db(() => {
+             console.log('query function');
+             this.db.run(script_filestream.toString());
+             this.close_db_connection();
+        });
      }
 
     query_db(query_function) {
@@ -28,12 +26,11 @@ export default class Sqlite3Adapter {
         }
     }
 
-    connect_to_db(url, open_mode, query_db_call) {
+    connect_to_db(url, open_mode) {
         this.db = new sqlite3.Database(url, open_mode, (err) => {
             if (err) {
                 return console.error(err.message);
             } else {
-              query_db_call();
               console.log('Connected to: ' + url +
                   '\nIn mode: ' + open_mode);
                 }

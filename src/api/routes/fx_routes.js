@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = function(app) {
     var fx_controller = require('../controllers/fx_controller');
     var sys_controller = require('../controllers/sys_controller');
@@ -32,6 +30,4 @@ module.exports = function(app) {
 
     app.route('/system/:key')
         .get(sys_controller.get_system_value);
-
-
-}
+};

@@ -6,6 +6,6 @@ export default class System {
         //lazy load system values on create.
         this.values = {
             "pins": gpio.gpio_pins
-        }
+        };
     }
 }
