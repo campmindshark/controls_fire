@@ -1,38 +1,37 @@
 /* jshint -W014 */
-var express = require('express'),
-    app = express(),
-    port = process.env.PORT || 5000,
-    bodyParser = require('body-parser'),
-    cors = require('cors'),
-    fs = require('fs'),
-    routes = require('./api/routes/fx_routes'),
-    os = require('os'),
-    //TODO: add endpoint to load config
-    //TODO: archive configs
-    json_config = require('./system_config.json');
 
-import Effects from './api/models/fx_model';
-import System from './api/models/sys_model';
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import fs from 'fs';
+import os from 'os';
+import System from './api/models/system_model';
 import Sqlite3Adapter from './api/models/data/sqlite3_adapter';
+
+var app = express(),
+  port = process.env.PORT || 5000,
+  routes = require('./api/routes/fx_routes'),
+  sqlite3 = require('sqlite3').verbose(),
+  //TODO: add endpoint to load config
+  //TODO: archive configs
+  sys_config = require('./system_config.json'),
+  installation_config = require('./installation_config.json');
 
 app.use(cors());
 app.use(bodyParser.urlencoded({
-    extended: true
+  extended: true
 }));
 app.use(bodyParser.json());
 
-//TODO: don't always recreate db.
-app.locals.db_adapter = new Sqlite3Adapter();
-app.locals.db_adapter.rebuild_db();
-
 //TODO: Add user management to system object
 //TODO: System object should manage master_power relay
-app.locals.system = new System();
+app.locals.system = new System(sys_config);
+app.locals.system.create_db();
 
-//TODO: run this on demand from an endpoint
-app.locals.effects = new Effects(JSON.stringify(json_config));
+//TODO: run this on demand from a system endpoint
+app.locals.effects = app.locals.system.get_effects(installation_config);
 
-routes(app);
+routes.routes(app);
 app.listen(port);
 
 console.log("Device: " + os.hostname() + '\n');

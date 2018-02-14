@@ -1,70 +1,42 @@
-import gpio from "./gpio_model";
+import BbbGpio from "./bbb_gpio_model";
 import os from 'os';
 import PartData from './data/part_data';
 
 export default class Effects {
-  constructor(json_config) {
-    var config = JSON.parse(json_config);
-
-    this.name = config.name;
-    this.version = config.version;
-    this.effect_array = this.build_effect_array(config.parts);
-    this.internal = this.build_internal_array(config.system_parts);
+  constructor(installation_config, system_config) {
+    this.name = installation_config.name;
+    this.version = installation_config.version;
+    this.effect_array = Effects.build_part_array(installation_config.parts, false);
   }
 
-  //#region Property Builders
-  build_effect_array(parts) {
-
+  static build_part_array(parts, enable_on_create) {
+    console.log(parts.length);
     if (parts != null && parts.length > 0) {
-      if (parts.length > gpio.gpio_pins.length) {
+      if (parts.length > BbbGpio.pins.length) {
         throw "TOO MANY PARTS. Configure fewer parts.";
       }
       var fxs = [];
-
+      var findIndexCallback = function(element) {
+        return element == parts[i].gpio;
+      };
       for (var i = 0; i < parts.length; i++) {
         //TODO: do something with the different input types
-        fxs[i] = {
+        var id = BbbGpio.pins.findIndex(findIndexCallback);
+        if (id != -1)
+        {
+          fxs[i] = {
           "part": parts[i],
-          "gpio": "init"
+          "gpio": enable_on_create ? new gpio(id, this.mode_test(), 0) : "Disabled"
         };
+      } else {
+        throw "ERROR: Bad GPIO config : " + JSON.stringify(system_parts[i]);
+      }
       }
       return fxs;
     } else {
-      throw "ERROR: No Parts Configured.\nYou must configure parts to control fire.";
+      throw 'ERROR: No Parts Configured.\nYou must configure parts to control fire.';
     }
   }
-
-  build_internal_array(system_parts) {
-    if (system_parts != null && system_parts.length > 0) {
-      if (system_parts.find((element) => {
-          return element.name === "master_power";
-        })) {
-        var internal = [];
-        var findIndexCallback = function(element) {
-          return element == system_parts[i].gpio;
-        };
-        //Load config int obj and enable gpio by default for system parts
-        for (var i = 0; i < system_parts.length; i++) {
-          //TODO: Do better with ids
-          var id = gpio.gpio_pins.findIndex(findIndexCallback);
-          if (id != -1) {
-            internal[i] = {
-              "part": system_parts[i],
-              "gpio": new gpio(id, this.mode_test(), 0)
-            };
-          } else {
-            throw "ERROR: Bad GPIO config : " + JSON.stringify(system_parts[i]);
-          }
-        }
-        return internal;
-      } else {
-        throw "ERROR: System Parts Array does not have a master_power configured.\nConfigure master_power in system_parts";
-      }
-    } else {
-      throw "ERROR: No System Parts Configured.\nYou must configure a master_power part in system_parts at a minimum.";
-    }
-  }
-  //#endregion
   //#region GET
   info() {
     return JSON.stringify(this);
@@ -93,7 +65,7 @@ export default class Effects {
   //#region POST
   enable_effect(id) {
     try {
-      this.effect_array[id].gpio = new gpio(id, this.mode_test(), 0);
+      this.effect_array[id].gpio = new BbbGpio(id, this.mode_test(), 0);
       console.log(this);
       return true;
     } catch (err) {
@@ -108,7 +80,7 @@ export default class Effects {
         switch (key) {
           case 'gpio':
             var part_to_disable = this.effect_array.find((element) => {
-              return (gpio.gpio_pins[element.gpio.id] == value && element.id != id);
+              return (BbbGpio.pins[element.gpio.id] == value && element.id != id);
             });
             if (part_to_disable != undefined) {
               this.disable_effect(part_to_disable.id, true);

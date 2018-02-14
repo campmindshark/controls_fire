@@ -7,10 +7,13 @@ export default class PartData {
     }
   }
 
-  get_part_data(installation, part_id) {}
+  get_part_data(installation, part_id) {
 
-  save_part_data(installation, part) {}
+  }
 
+  save_part_data(installation, part) {
+    var script = "INSERT OR REPLACE INTO tblParts(gpio_pin)\n" +
+                "VALUES ( " + part.gpio + " )";
 
-
+  }
 }

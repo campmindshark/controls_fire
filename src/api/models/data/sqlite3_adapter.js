@@ -1,50 +1,75 @@
 
-import sqlite3 from 'sqlite3';
+var sqlite3 = require('sqlite3').verbose();
 
 export default class Sqlite3Adapter {
-    constructor() {
-      this.db = null;
-    }
+  constructor(url, open_mode) {
+    this.url = url;
+    this.open_mode = open_mode;
+    this.open_connection = this.open_connection.bind(this);
+    this.run_query = this.run_query.bind(this);
+    this.close_connection = this.close_connection.bind(this);
 
-    rebuild_db() {
-        var fs = require('fs');
-        var script_filestream = fs.readFileSync('./api/models/data/create_db.sql');
+  }
 
-        this.connect_to_db('../fire.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE);
-        this.query_db(() => {
-             console.log('query function');
-             this.db.run(script_filestream.toString());
-             this.close_db_connection();
-        });
-     }
+  query_db(script, params, callback) {
+    console.log('\nLoading Script:');
 
-    query_db(query_function) {
-        try {
-            this.db.serialize(query_function);
-        } catch (err) {
-            throw err;
-        }
-    }
-
-    connect_to_db(url, open_mode) {
-        this.db = new sqlite3.Database(url, open_mode, (err) => {
-            if (err) {
-                return console.error(err.message);
-            } else {
-              console.log('Connected to: ' + url +
-                  '\nIn mode: ' + open_mode);
-                }
-        });
-    }
-
-    close_db_connection() {
-        // close the database connection
-        this.db.close((err) => {
-            if (err) {
-                return console.error(err.message);
-            } else {
-            console.log('Close the database connection.');
+    //console.log(script);
+    var db = this.open_connection((err) => {
+      //Serialize Query and execute
+      console.log('\nSerialize and Execute Script');
+      this.run_query(db, script, params, (err) => {
+        //Close connection
+        console.log('\nAttempting to close db')
+        this.close_connection(db, (err) => {
+          if(err) {
+            callback(err);
+            return;
           }
+          console.log('\nDb Should be built now.');
+          callback(null);
         });
-    }
+      });
+    });
+  }
+
+  open_connection(query_callback) {
+    //Connect to db
+    return new sqlite3.Database(this.url, this.open_mode, (err) => {
+      if (err) {
+        console.log('\nError: couldnt connect:', err, err.stack)
+        query_callback(err);
+        return;
+      }
+      console.log('Connected to: ' + this.url + '\nIn mode: ' + this.open_mode);
+      query_callback(null);
+    });
+  }
+
+  run_query(db, script, params, close_callback) {
+    db.serialize(() => {
+      db.run(script, params, (err) => {
+        if (err) {
+          console.log('\nError executing statement:', err, err.stack);
+          close_callback(err);
+          return;
+        }
+        console.log('\nScript executed.');
+        close_callback(null);
+      });
+    });
+  }
+
+  close_connection(db, callback) {
+    db.close((err) => {
+      if (err) {
+        console.log('\nError closing db:', err, err.stack);
+        callback(err);
+        return;
+      }
+      console.log('\nDb connection closed.');
+      callback(null);
+    });
+  }
+
 }

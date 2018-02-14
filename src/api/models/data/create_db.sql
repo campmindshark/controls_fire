@@ -1,8 +1,7 @@
-
 DROP TABLE IF EXISTS tblLinkSourceParts;
 
 DROP TABLE IF EXISTS tblInstallations;
-CREATE TABLE tblInstallations ( installation_id integer UNIQUE
+CREATE TABLE tblInstallations ( installation_id integer UNIQUE PRIMARY KEY
                               , name text
                               , created_by text );
 
@@ -14,7 +13,7 @@ CREATE TABLE tblGpio ( gpio_pin integer NOT NULL UNIQUE PRIMARY KEY
                      , power text);
 
 DROP TABLE IF EXISTS tblParts;
-CREATE TABLE tblParts (part_id integer NOT NULL
+CREATE TABLE tblParts (part_id integer NOT NULL PRIMARY KEY
                      , installation_id integer NOT NULL
                      , gpio_pin integer
                      , part_name text
@@ -24,7 +23,7 @@ CREATE TABLE tblParts (part_id integer NOT NULL
                      , FOREIGN KEY (gpio_pin)
                       REFERENCES tblGpio (gpio_pin)
                       ON DELETE SET NULL
-                     , PRIMARY KEY(part_id, installation_id));
+                   );
 
 CREATE TABLE tblLinkSourceParts
   ( link_id integer NOT NULL
