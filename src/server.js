@@ -13,7 +13,6 @@ var app = express(),
   routes = require('./api/routes/fx_routes'),
   sqlite3 = require('sqlite3').verbose(),
   //TODO: add endpoint to load config
-  //TODO: archive configs
   sys_config = require('./system_config.json'),
   installation_config = require('./installation_config.json');
 
@@ -25,14 +24,14 @@ app.use(bodyParser.json());
 
 //TODO: Add user management to system object
 //TODO: System object should manage master_power relay
-app.locals.system = new System(sys_config);
-app.locals.system.create_db();
-
-//TODO: run this on demand from a system endpoint
-app.locals.effects = app.locals.system.get_effects(installation_config);
-
-routes.routes(app);
-app.listen(port);
-
-console.log("Device: " + os.hostname() + '\n');
-console.log('Rejoice. You may now control Fire on port: ' + port);
+app.locals.system = new System(sys_config, installation_config, (err) => {
+  if(err) {
+    throw err;
+  }
+  console.log('\nSet Routes');
+  routes.routes(app);
+  console.log('\nBegin Listening');
+  app.listen(port);
+  console.log("Device: " + os.hostname() + '\n');
+  console.log('Rejoice. You may now control Fire on port: ' + port);
+});

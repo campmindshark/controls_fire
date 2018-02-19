@@ -31,4 +31,4 @@ exports.routes = function(app) {
     app.route('/system/:key')
       .get(sys_controller.get_system_value);
 
-}
+};

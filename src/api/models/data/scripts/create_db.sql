@@ -1,19 +1,20 @@
-DROP TABLE IF EXISTS tblLinkSourceParts;
+--DROP VIEW IF EXISTS vwPartConfig;
+--DROP TABLE IF EXISTS tblLinkSourceParts;
+--DROP TABLE IF EXISTS tblParts;
+--DROP TABLE IF EXISTS tblInstallations;
+--DROP TABLE IF EXISTS tblGpio;
 
-DROP TABLE IF EXISTS tblInstallations;
 CREATE TABLE tblInstallations ( installation_id integer UNIQUE PRIMARY KEY
                               , name text
                               , created_by text );
 
-DROP TABLE IF EXISTS tblGpio;
 CREATE TABLE tblGpio ( gpio_pin integer NOT NULL UNIQUE PRIMARY KEY
                      , active_low integer
                      , direction text
                      , edge text
                      , power text);
 
-DROP TABLE IF EXISTS tblParts;
-CREATE TABLE tblParts (part_id integer NOT NULL PRIMARY KEY
+CREATE TABLE tblParts (part_id integer NOT NULL
                      , installation_id integer NOT NULL
                      , gpio_pin integer
                      , part_name text
@@ -23,6 +24,7 @@ CREATE TABLE tblParts (part_id integer NOT NULL PRIMARY KEY
                      , FOREIGN KEY (gpio_pin)
                       REFERENCES tblGpio (gpio_pin)
                       ON DELETE SET NULL
+                      , PRIMARY KEY(part_id, installation_id)
                    );
 
 CREATE TABLE tblLinkSourceParts
@@ -40,7 +42,6 @@ CREATE TABLE tblLinkSourceParts
     , PRIMARY KEY (link_id, installation_id)
   );
 
-DROP VIEW IF EXISTS vwPartConfig;
 CREATE VIEW vwPartConfig AS
 SELECT p.part_id,
        p.type,

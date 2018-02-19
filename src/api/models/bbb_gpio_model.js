@@ -15,6 +15,7 @@ export default class BbbGpio {
         this.active_low = null;
         this.direction = null;
         this.edge = null;
+        //this.construct_callback = callback;
 
         //Async - Lazy load initial state of gpio files
         var files = ["value", "active_low", "direction", "edge", "power"].map(
@@ -32,15 +33,13 @@ export default class BbbGpio {
                 this.edge = values[3].trim();
                 this.power = values[4].trim();
 
-                console.log(JSON.stringify(this));
-
                 var initial_corrected = this.active_low_corrected_value(init_value);
                 if (initial_corrected != this.raw_value) {
                     this.Value = initial_corrected;
                 }
-
                 console.log("\n" + Date.now());
                 console.log("\ngpio init complete");
+                //this.construct_callback(null);
             });
     }
     static get pins() {

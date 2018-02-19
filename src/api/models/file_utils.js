@@ -18,7 +18,7 @@ fs.readFileAsync = function(file) {
             reject(err);
         }
     });
-}
+};
 
 fs.writeFileAsync = function(file, data) {
     return new Promise((resolve, reject) => {
@@ -41,4 +41,4 @@ fs.writeFileAsync = function(file, data) {
             reject(err);
         }
     });
-}
+};

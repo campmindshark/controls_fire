@@ -1,32 +1,47 @@
-
 var sqlite3 = require('sqlite3').verbose();
 
 export default class Sqlite3Adapter {
   constructor(url, open_mode) {
     this.url = url;
     this.open_mode = open_mode;
+
+    this.nonquery_db = this.nonquery_db.bind(this);
     this.open_connection = this.open_connection.bind(this);
     this.run_query = this.run_query.bind(this);
     this.close_connection = this.close_connection.bind(this);
 
   }
 
-  query_db(script, params, callback) {
-    console.log('\nLoading Script:');
+  insert_or_replace_into(db, table_map, params) {
 
-    //console.log(script);
-    var db = this.open_connection((err) => {
+    var stmt = db.prepare(`INSERT OR REPLACE INTO ` + table_map.name + `(` + params.columns.join() + `) VALUES( ? )`);
+    for (var i = 0; i < 10; i++) {
+      stmt.run(params.values[i]);
+    }
+    stmt.finalize();
+  }
+
+  nonquery_db(db_command_method, script, params, callback) {
+    console.log('\nLoading Script:');
+    console.log(script);
+    let db = this.open_connection((err) => {
+      if (err) {
+        callback(err);
+      }
       //Serialize Query and execute
       console.log('\nSerialize and Execute Script');
-      this.run_query(db, script, params, (err) => {
+      db_command_method(db, script, params, (err) => {
+        if (err) {
+          callback(err);
+        }
         //Close connection
-        console.log('\nAttempting to close db')
+        console.log('\nAttempting to close db');
         this.close_connection(db, (err) => {
-          if(err) {
+          if (err) {
             callback(err);
             return;
           }
-          console.log('\nDb Should be built now.');
+          console.log('\nQuery complete.');
           callback(null);
         });
       });
@@ -37,7 +52,7 @@ export default class Sqlite3Adapter {
     //Connect to db
     return new sqlite3.Database(this.url, this.open_mode, (err) => {
       if (err) {
-        console.log('\nError: couldnt connect:', err, err.stack)
+        console.log('\nError: couldnt connect:', err, err.stack);
         query_callback(err);
         return;
       }
@@ -71,5 +86,7 @@ export default class Sqlite3Adapter {
       callback(null);
     });
   }
+
+
 
 }

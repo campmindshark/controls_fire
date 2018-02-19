@@ -1,9 +1,102 @@
 {
-	"db_url": "../fire.db",
 	"parts": [{
 		"name": "master_power",
 		"type": "relay",
-		"gpio": 113,
+		"gpio_pin": 113,
 		"sources": []
-	}]
+	}],
+	"data_map": {
+		"db_url": "../fire.db",
+		"db_name": "config",
+		"tables": [
+			{
+				"name": "Gpio",
+				"columns": [{
+						"name": "gpio_pin",
+						"type": "integer"
+					},
+					{
+						"name": "active_low",
+						"type": "integer"
+					},
+					{
+						"name": "direction",
+						"type": "string"
+					},
+					{
+						"name": "edge",
+						"type": "string"
+					},
+					{
+						"name": "power",
+						"type": "integer"
+					}
+				]
+			},
+			{
+				"name": "Installations",
+				"columns": [{
+						"name": "installation_id",
+						"type": "integer"
+					},
+					{
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"name": "created_by",
+						"type": "string"
+					}
+				]
+			},
+			{
+				"name": "Parts",
+				"columns": [{
+						"name": "part_id",
+						"type": "integer"
+					},
+					{
+						"name": "installation_id",
+						"type": "integer"
+					},
+					{
+						"name": "gpio_pin",
+						"type": "integer"
+					},
+					{
+						"name": "part_name",
+						"type": "string"
+					},
+					{
+						"name": "type",
+						"type": "string"
+					}
+				]
+			},
+			{
+				"name": "LinkSourceParts",
+				"columns": [{
+						"name": "link_id",
+						"type": "integer"
+					},
+					{
+						"name": "installation_id",
+						"type": "integer"
+					},
+					{
+						"name": "gpio_pin",
+						"type": "integer"
+					},
+					{
+						"name": "part_name",
+						"type": "string"
+					},
+					{
+						"name": "type",
+						"type": "string"
+					}
+				]
+			}
+		]
+	}
 }

@@ -1,6 +1,6 @@
 {
   "name": "controls_fire",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Control Code for Propane Flame Effect Systems by MindShark",
   "main": "server.js",
   "scripts": {

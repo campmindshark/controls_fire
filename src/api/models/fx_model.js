@@ -1,41 +1,63 @@
-import BbbGpio from "./bbb_gpio_model";
 import os from 'os';
+import BbbGpio from "./bbb_gpio_model";
 import PartData from './data/part_data';
 
 export default class Effects {
-  constructor(installation_config, system_config) {
+  constructor(installation_config, system_config, callback) {
     this.name = installation_config.name;
     this.version = installation_config.version;
-    this.effect_array = Effects.build_part_array(installation_config.parts, false);
-  }
+    this.id_test = this.id_test.bind(this);
+    this.parts = [];
 
-  static build_part_array(parts, enable_on_create) {
-    console.log(parts.length);
+    Effects.build_part_array(installation_config.parts, false, callback,
+      (err, parts, final_callback) => {
+        if (err) {
+          callback(err);
+        }
+        this.parts = parts;
+        callback(null);
+      });
+  }
+  static build_part_array(parts, enable_on_create, final_callback, callback) {
     if (parts != null && parts.length > 0) {
       if (parts.length > BbbGpio.pins.length) {
-        throw "TOO MANY PARTS. Configure fewer parts.";
+        final_callback("TOO MANY PARTS. Configure fewer parts.");
       }
-      var fxs = [];
-      var findIndexCallback = function(element) {
-        return element == parts[i].gpio;
-      };
-      for (var i = 0; i < parts.length; i++) {
-        //TODO: do something with the different input types
-        var id = BbbGpio.pins.findIndex(findIndexCallback);
-        if (id != -1)
-        {
-          fxs[i] = {
-          "part": parts[i],
-          "gpio": enable_on_create ? new gpio(id, this.mode_test(), 0) : "Disabled"
-        };
-      } else {
-        throw "ERROR: Bad GPIO config : " + JSON.stringify(system_parts[i]);
-      }
-      }
-      return fxs;
+      add_next_part_to_array([], parts, final_callback, callback);
     } else {
-      throw 'ERROR: No Parts Configured.\nYou must configure parts to control fire.';
+      final_callback('ERROR: No Parts Configured.\nYou must configure parts to control fire.');
     }
+
+    function add_next_part_to_array(fx_array, parts, final_callback, callback) {
+      var part = parts.shift();
+      var findIndexCallback = function(element) {
+        return element == part.gpio_pin;
+      };
+      var id = BbbGpio.pins.findIndex(findIndexCallback);
+      if (id != -1) {
+        //add/set gpio property
+        part.gpio = enable_on_create == true ?
+                    new BbbGpio(BbbGpio.pins[id], Effects.mode_test(), 0) :
+                    "Disabled";
+        fx_array.push(part);
+      } else {
+        final_callback("ERROR: Bad GPIO config : " + JSON.stringify(part));
+      }
+      if (parts.length > 0) {
+        add_next_part_to_array(fx_array, parts, final_callback, callback);
+      } else {
+        console.log('all parts built');
+        callback(null, fx_array, final_callback);
+      }
+    }
+  }
+  static mode_test() {
+    // get live for bones
+    if (os.hostname().indexOf('bone') > 0) {
+      return "live";
+    }
+    //mock all others.
+    return "mock";
   }
   //#region GET
   info() {
@@ -44,21 +66,22 @@ export default class Effects {
 
   get_array_details() {
     var out_data = [];
-    for (var i = 0; i < this.effect_array.length; i++) {
+    for (var i = 0; i < this.parts.length; i++) {
       out_data[i] = this.get_effect_details(i);
     }
     return JSON.stringify(out_data);
   }
 
   get_effect_details(id) {
-    console.log(this.effect_array[id].gpio);
+    console.log(this.parts[id].gpio);
+    var part = this.parts[id];
     return {
-      "id": this.effect_array[id].gpio.id,
-      "name": this.effect_array[id].part.name,
-      "enabled": this.effect_array[id].gpio != 'disabled' && this.effect_array[id].gpio != 'init' ? 'enabled' : 'disabled',
-      "type": this.effect_array[id].part.type,
-      "gpio_mode": this.mode_test(),
-      "Value": this.effect_array[id].gpio.Value
+      "id": part.gpio.id,
+      "name": part.name,
+      "enabled": part.gpio != 'Disabled' ? 'enabled' : 'disabled',
+      "type": part.type,
+      "gpio_mode": Effects.mode_test(),
+      "Value": part.gpio.Value
     };
   }
   //#endregion
@@ -139,14 +162,7 @@ export default class Effects {
     }
   }
 
-  mode_test() {
-    // get live for bones
-    if (os.hostname().indexOf('bone') > 0) {
-      return "live";
-    }
-    //mock all others.
-    return "mock";
-  }
+
   //#endregion
   //#region The Bench.
 
@@ -179,4 +195,5 @@ export default class Effects {
     }
   }
   //#endregion
+
 }

@@ -5,103 +5,103 @@
     {
       "name": "sign",
       "type": "supply",
-      "gpio": 3,
+      "gpio_pin": 3,
       "manifolds": []
     },
     {
       "name": "left_eye",
       "type": "supply",
-      "gpio": 5,
+      "gpio_pin": 5,
       "manifolds": []
     },
     {
       "name": "right_eye",
       "type": "supply",
-      "gpio": 20,
+      "gpio_pin": 20,
       "manifolds": []
     },
     {
       "name": "sign_solenoid",
       "type": "outlet",
-      "gpio": 30,
+      "gpio_pin": 30,
       "sources": ["sign"]
     },
     {
       "name": "right_eye_1",
       "type": "outlet",
-      "gpio": 31,
+      "gpio_pin": 31,
       "sources": ["right_eye"]
     },
     {
       "name": "right_eye_2",
       "type": "outlet",
-      "gpio": 48,
+      "gpio_pin": 48,
       "sources": ["right_eye"]
     },
     {
       "name": "right_eye_3",
       "type": "outlet",
-      "gpio": 49,
+      "gpio_pin": 49,
       "sources": ["right_eye"]
     },
     {
       "name": "right_eye_4",
       "type": "outlet",
-      "gpio": 60,
+      "gpio_pin": 60,
       "sources": ["right_eye"]
     },
     {
       "name": "right_eye_5",
       "type": "outlet",
-      "gpio": 110,
+      "gpio_pin": 110,
       "sources": ["right_eye"]
     },
     {
       "name": "left_eye_1",
       "type": "outlet",
-      "gpio": 111,
+      "gpio_pin": 111,
       "sources": ["left_eye"]
     },
     {
       "name": "left_eye_2",
       "type": "outlet",
-      "gpio": 115,
+      "gpio_pin": 115,
       "sources": ["left_eye"]
     },
     {
       "name": "left_eye_3",
       "type": "outlet",
-      "gpio": 50,
+      "gpio_pin": 50,
       "sources": ["left_eye"]
     },
     {
       "name": "left_eye_4",
       "type": "outlet",
-      "gpio": 51,
+      "gpio_pin": 51,
       "sources": ["left_eye"]
     },
     {
       "name": "left_eye_5",
       "type": "outlet",
-      "gpio": 4,
+      "gpio_pin": 4,
       "sources": ["left_eye"]
     },
     {
       "name": "sign_pilot",
       "type": "igniter",
-      "gpio": 2,
+      "gpio_pin": 2,
       "sources": ["sign_solenoid"]
     },
     {
       "name": "right_eye_pilot",
       "type": "igniter",
-      "gpio": 15,
+      "gpio_pin": 15,
       "sources": ["right_eye_1", "right_eye_2", "right_eye_3", "right_eye_4", "right_eye_5"]
     },
     {
       "name": "left_eye_pilot",
       "type": "igniter",
-      "gpio": 14,
+      "gpio_pin": 14,
       "sources": ["left_eye_1", "left_eye_2", "left_eye_3", "left_eye_4", "left_eye_5"]
     }
   ]
