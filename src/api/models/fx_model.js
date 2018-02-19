@@ -18,6 +18,7 @@ export default class Effects {
         callback(null);
       });
   }
+
   static build_part_array(parts, enable_on_create, final_callback, callback) {
     if (parts != null && parts.length > 0) {
       if (parts.length > BbbGpio.pins.length) {
@@ -88,7 +89,8 @@ export default class Effects {
   //#region POST
   enable_effect(id) {
     try {
-      this.effect_array[id].gpio = new BbbGpio(id, this.mode_test(), 0);
+      var part = this.parts[id];
+      part.gpio = new BbbGpio(part.gpio_pin, Effects.mode_test(), 0);
       console.log(this);
       return true;
     } catch (err) {
@@ -99,20 +101,20 @@ export default class Effects {
   reconfigure(part_id, key, value) {
     var id = this.id_test(part_id);
     if (id != 'bad id') {
-      if (key in this.effect_array[id]) {
+      if (key in this.parts[id]) {
         switch (key) {
           case 'gpio':
-            var part_to_disable = this.effect_array.find((element) => {
+            var part_to_disable = this.parts.find((element) => {
               return (BbbGpio.pins[element.gpio.id] == value && element.id != id);
             });
             if (part_to_disable != undefined) {
               this.disable_effect(part_to_disable.id, true);
             }
-            this.effect_array[id].part.gpio = value;
-            this.effect_array[id].gpio = "init";
+            this.parts[id].part.gpio = value;
+            this.parts[id].gpio = "init";
             return true;
           default:
-            this.effect_array[id].part[key] = value;
+            this.parts[id].part[key] = value;
             return true;
         }
       } else {
@@ -129,7 +131,7 @@ export default class Effects {
   //#region DELETE
   master_shut_off(graceful) {
     try {
-      this.effect_array.forEach(
+      this.parts.forEach(
         (element) => {
           this.disable_effect(element.id, graceful);
         }
@@ -143,9 +145,9 @@ export default class Effects {
   disable_effect(id, graceful) {
     try {
       if (graceful) {
-        this.effect_array[id].gpio.Value = 0;
+        this.parts[id].gpio.Value = 0;
       }
-      this.effect_array[id].gpio = "disabled";
+      this.parts[id].gpio = "disabled";
       return true;
     } catch (err) {
       return false;
@@ -155,19 +157,17 @@ export default class Effects {
   //#region Data Tests
   id_test(test_id) {
     //TODO: handle the ids better. a db would probably help.
-    if (typeof !isNaN(parseInt(test_id)) && isFinite(test_id) && test_id < this.effect_array.length) {
+    if (typeof !isNaN(parseInt(test_id)) && isFinite(test_id) && test_id < this.parts.length) {
       return test_id;
     } else {
       return "bad id";
     }
   }
-
-
   //#endregion
   //#region The Bench.
 
   command_effect(id, state) {
-    if (this.effect_array[id].gpio != "disabled") {
+    if (this.parts[id].gpio != "disabled") {
       if (this.set_effect_state(id, state)) {
         console.log("New effect state set");
         return true;
@@ -187,7 +187,7 @@ export default class Effects {
       if (!(state == 1 || state == 0)) {
         throw "\ninvalid state:" + state + "\nfor id: " + id;
       }
-      this.effect_array[id].gpio.Value = state;
+      this.parts[id].gpio.Value = state;
       return true;
     } catch (err) {
       console.log(err);

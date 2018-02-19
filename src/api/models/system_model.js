@@ -15,15 +15,15 @@ export default class System {
     build_data_layer(this, callback,
       (err, system, final_callback) => {
         if (err) {
-          console.log('\n[System Initialization]: Complete');
-          console.log("Failed to build data layer");
+          console.log('[System Initialization]: FAIL');
+          console.log("[System Initialization]: Failed to build data layer");
           final_callback(err);
         }
         build_internal_array(this, callback,
           (err, system, parts) => {
             if (err) {
-              console.log('\n[System Initialization]: FAIL');
-              console.log("Failed to build system parts array");
+              console.log('[System Initialization]: FAIL');
+              console.log('[System Initialization]: Failed to build system parts array');
               callback(err);
             }
             system.parts = parts;

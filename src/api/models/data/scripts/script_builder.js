@@ -32,5 +32,8 @@ export default class ScriptBuilder {
     return script;
   }
 
+  static export_script(pin) {
+    return '\necho ' + pin + " > /sys/class/gpio/export";
+  }
 
 }
