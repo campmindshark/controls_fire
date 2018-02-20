@@ -1,4 +1,4 @@
-import Sqlite3Adapter from './sqlite3_adapter';
+//import Sqlite3Adapter from './sqlite3_adapter';
 
 export default class GpioData {
   constructor(pins) {
