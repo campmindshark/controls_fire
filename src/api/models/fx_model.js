@@ -8,7 +8,8 @@ export default class Effects {
     this.id_test = this.id_test.bind(this);
     this.parts = [];
 
-    Effects.build_part_array(installation_config.parts, false, callback,
+    //TODO: don't enable on create for effects
+    Effects.build_part_array(installation_config.parts, true, callback,
       (err, parts, final_callback) => {
         if (err) {
           callback(err);

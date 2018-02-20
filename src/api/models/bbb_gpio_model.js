@@ -56,19 +56,18 @@ export default class BbbGpio {
     console.log('TEST STRING');
     fs.readFileAsync(this.path + "value").then((data) => {
       //console.log("\nreadFileAsync callback with data: " + data);
-      this.raw_value = data;
+      this.raw_value = data.trim();
     });
     return this.active_low_corrected_value(this.raw_value);
   }
 
   set Value(value) {
-    console.log('TEST STRING');
     console.log(this.Value);
     var new_value = this.active_low_corrected_value(value);
     //console.log("\nSet attempt: " + new_value);
-    fs.writeFileAsync(this.path + "value", new_value).then((new_value) => {
+    fs.writeFileAsync(this.path + "value", new_value.trim()).then((new_value) => {
       //console.log("\nnew_value: " + new_value);
-      this.raw_value = new_value;
+      this.raw_value = new_value.trim();
       console.log("\nnew raw value set: " + JSON.stringify(this));
     });
   }
