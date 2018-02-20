@@ -43,7 +43,7 @@ export default class BbbGpio {
         console.log("\ngpio init complete");
         //this.construct_callback(null);
       });
-      fs.writeFileAsync("./api/models/data/scripts/shell/gpio" + pin + ".sh", this.export_and_clear_script(this.pin));
+      fs.writeFileAsync("./scripts/gpio" + pin + ".sh", this.export_and_clear_script(this.pin));
       console.log();
   }
   static get pins() {

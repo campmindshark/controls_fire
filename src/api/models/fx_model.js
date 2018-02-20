@@ -1,6 +1,5 @@
 import os from 'os';
 import BbbGpio from "./bbb_gpio_model";
-import PartData from './data/part_data';
 
 export default class Effects {
   constructor(installation_config, system_config, callback) {
