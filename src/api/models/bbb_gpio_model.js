@@ -62,7 +62,7 @@ export default class BbbGpio {
 
   set Value(value) {
     console.log(this.Value);
-    var new_value = this.active_low_corrected_value(value).trim();
+    var new_value = this.active_low_corrected_value(value);
     //console.log("\nSet attempt: " + new_value);
     fs.writeFileAsync(this.path + "value", new_value).then((new_value) => {
       //console.log("\nnew_value: " + new_value);

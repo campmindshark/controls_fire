@@ -38,7 +38,7 @@ export default class Effects {
       if (id != -1) {
         //add/set gpio property
         part.gpio = enable_on_create == true ?
-                    new BbbGpio(BbbGpio.pins[id], Effects.mode_test(), 0) :
+                    new BbbGpio(BbbGpio.pins[id], Effects.mode_test(), 1) :
                     "Disabled";
         fx_array.push(part);
       } else {
