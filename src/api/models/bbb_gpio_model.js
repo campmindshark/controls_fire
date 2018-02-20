@@ -11,15 +11,13 @@ export default class BbbGpio {
     this.mode = mode;
     this.path = this.build_path(mode, this.pin);
 
-    this.power = null;
     this.raw_value = null;
     this.active_low = null;
     this.direction = null;
     this.edge = null;
-    //this.construct_callback = callback;
 
     //Async - Lazy load initial state of gpio files
-    var files = ["value", "active_low", "direction", "edge", "power"].map(
+    var files = ["value", "active_low", "direction", "edge"].map(
       (file_name) => {
         var fs = require('fs');
         return fs.readFileAsync(this.path + file_name);
@@ -32,7 +30,6 @@ export default class BbbGpio {
         this.active_low = values[1].trim();
         this.direction = values[2].trim();
         this.edge = values[3].trim();
-        this.power = values[4].trim();
 
         var initial_corrected = this.active_low_corrected_value(init_value);
         if (initial_corrected != this.raw_value) {
