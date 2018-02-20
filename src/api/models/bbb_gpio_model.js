@@ -37,7 +37,7 @@ export default class BbbGpio {
         }
 
         console.log("\n" + Date.now());
-        console.log("\ngpio init complete");
+        console.log("\ngpio init complete: " + this.pin);
         //this.construct_callback(null);
       });
       fs.writeFileAsync("./scripts/gpio" + pin + ".sh", this.export_and_clear_script(this.pin));
