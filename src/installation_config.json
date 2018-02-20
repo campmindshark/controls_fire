@@ -6,13 +6,15 @@
       "name": "left_eye_1",
       "type": "outlet",
       "gpio_pin": 38,
-      "sources": ["left_eye"]
+      "sources": ["left_eye"],
+      "inverted_output": true
     },
     {
       "name": "left_eye_2",
       "type": "outlet",
       "gpio_pin": 34,
-      "sources": ["left_eye"]
+      "sources": ["left_eye"],
+      "inverted_output": true
     },
     {
       "name": "left_eye_3",
@@ -24,55 +26,64 @@
       "name": "left_eye_4",
       "type": "outlet",
       "gpio_pin": 69,
-      "sources": ["left_eye"]
+      "sources": ["left_eye"],
+      "inverted_output": true
     },
     {
       "name": "left_eye_5",
       "type": "outlet",
       "gpio_pin": 45,
-      "sources": ["left_eye"]
+      "sources": ["left_eye"],
+      "inverted_output": true
     },
     {
       "name": "right_eye_1",
       "type": "outlet",
       "gpio_pin": 23,
-      "sources": ["right_eye"]
+      "sources": ["right_eye"],
+      "inverted_output": true
     },
     {
       "name": "right_eye_2",
       "type": "outlet",
       "gpio_pin": 47,
-      "sources": ["right_eye"]
+      "sources": ["right_eye"],
+      "inverted_output": true
     },
     {
       "name": "right_eye_3",
       "type": "outlet",
       "gpio_pin": 27,
-      "sources": ["right_eye"]
+      "sources": ["right_eye"],
+      "inverted_output": true
     },
     {
       "name": "right_eye_4",
       "type": "outlet",
       "gpio_pin": 39,
-      "sources": ["right_eye"]
+      "sources": ["right_eye"],
+      "inverted_output": true
     },
     {
       "name": "right_eye_5",
       "type": "outlet",
       "gpio_pin": 35,
-      "sources": ["right_eye"]
+      "sources": ["right_eye"],
+      "inverted_output": true
     },
     {
       "name": "left_eye_pilot",
       "type": "igniter",
       "gpio_pin": 67,
-      "sources": ["left_eye_1", "left_eye_2", "left_eye_3", "left_eye_4", "left_eye_5"]
+      "sources": ["left_eye_1", "left_eye_2", "left_eye_3", "left_eye_4", "left_eye_5"],
+      "inverted_output": true
     },
     {
       "name": "right_eye_pilot",
       "type": "igniter",
       "gpio_pin": 68,
-      "sources": ["right_eye_1", "right_eye_2", "right_eye_3", "right_eye_4", "right_eye_5"]
+      "sources": ["right_eye_1", "right_eye_2", "right_eye_3", "right_eye_4", "right_eye_5"],
+      "inverted_output": true
     }
   ]
 }
