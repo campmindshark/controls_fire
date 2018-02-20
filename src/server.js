@@ -6,12 +6,12 @@ import cors from 'cors';
 import fs from 'fs';
 import os from 'os';
 import System from './api/models/system_model';
-import Sqlite3Adapter from './api/models/data/sqlite3_adapter';
+//import Sqlite3Adapter from './api/models/data/sqlite3_adapter';
 
 var app = express(),
   port = process.env.PORT || 5000,
   routes = require('./api/routes/fx_routes'),
-  sqlite3 = require('sqlite3').verbose(),
+  //sqlite3 = require('sqlite3').verbose(),
   //TODO: add endpoint to load config
   sys_config = require('./system_config.json'),
   installation_config = require('./installation_config.json');
