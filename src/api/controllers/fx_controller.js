@@ -84,11 +84,19 @@ exports.disable_fx = function(req, res) {
 //#region /fxs/:fxId/fire
 exports.open = function(req, res) {
     //POST /fxs/:fxId/fire
-    req.app.locals.system.effects.parts[req.params.fxId].gpio.Value = 1;
+    var part = req.app.locals.system.effects.parts[req.params.fxId];
+    var new_value = part.inverted_output ? 0 : 1;
+    part.gpio.set_value(new_value, (err) => {
+      res.send(JSON.stringify(part));
+    });
 };
 exports.close = function(req, res) {
     //DELETE /fxs/:fxId/fire
-    req.app.locals.system.effects.parts[req.params.fxId].gpio.Value = 0;
+    var part = req.app.locals.system.effects.parts[req.params.fxId];
+    var new_value = part.inverted_output ? 1 : 0;
+    part.gpio.set_value(new_value, (err) => {
+      res.send(JSON.stringify(part));
+    });
 };
 //#endregion
 

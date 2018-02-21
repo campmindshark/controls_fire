@@ -6,7 +6,6 @@ import cors from 'cors';
 import fs from 'fs';
 import os from 'os';
 import System from './api/models/system_model';
-//import Sqlite3Adapter from './api/models/data/sqlite3_adapter';
 
 var app = express(),
   port = process.env.PORT || 5000,
@@ -22,12 +21,12 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-//TODO: Add user management to system object
 //TODO: System object should manage master_power relay
 app.locals.system = new System(sys_config, installation_config, (err) => {
   if(err) {
     throw err;
   }
+  //TODO: set master_power relay(s) to ON
   console.log('\nSet Routes');
   routes.routes(app);
   console.log('\nBegin Listening');

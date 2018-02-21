@@ -4,8 +4,8 @@ import fs from 'fs';
 const base_path = "/sys/class/gpio/gpio";
 
 export default class BbbGpio {
-  constructor(pin, mode, init_value) {
-
+  constructor(pin, mode, init_value, callback) {
+    console.log('[Gpio Init]: Start for Pin: ' + pin + '\n');
     this.pin = pin;
 
     this.mode = mode;
@@ -31,17 +31,22 @@ export default class BbbGpio {
         this.direction = values[2].trim();
         this.edge = values[3].trim();
 
+        console.log('\n' + Date.now());
+        console.log('\n[Gpio Init]: Values Loaded');
+
         var initial_corrected = this.active_low_corrected_value(init_value);
         if (initial_corrected != this.raw_value) {
-          this.Value = initial_corrected;
+          this.set_value(initial_corrected, (err) => {
+            if(err) {
+              callback(err);
+            }
+            console.log('\n[Gpio Init]: Initial Value Set for pin: ' + pin);
+            callback(null);
+          });
         }
 
-        console.log("\n" + Date.now());
-        console.log("\ngpio init complete: " + this.pin);
-        //this.construct_callback(null);
       });
-      fs.writeFileAsync("./scripts/gpio" + pin + ".sh", this.export_and_clear_script(this.pin));
-      console.log();
+      //fs.writeFileAsync("./scripts/gpio" + pin + ".sh", this.export_and_clear_script(this.pin));
   }
   static get pins() {
     return [30, 31, 48, 5, 3, 49, 117, 115, 111, 110, 20, 60, 50, 51, 4, 2,
@@ -52,16 +57,16 @@ export default class BbbGpio {
     ];
   }
   //#region Properties
-  get Value() {
+  get_value(callback) {
     fs.readFileAsync(this.path + "value").then((data) => {
       //console.log("\nreadFileAsync callback with data: " + data);
       this.raw_value = data.trim();
+      callback(this.active_low_corrected_value(this.raw_value));
     });
-    return this.active_low_corrected_value(this.raw_value);
+
   }
 
-  set Value(value) {
-    console.log(this.Value);
+  set_value(value, callback) {
     var new_value = this.active_low_corrected_value(value);
     //console.log("\nSet attempt: " + new_value);
     fs.writeFileAsync(this.path + "value", new_value).then((new_value) => {

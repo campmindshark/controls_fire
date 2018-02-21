@@ -8,8 +8,7 @@ export default class Effects {
     this.id_test = this.id_test.bind(this);
     this.parts = [];
 
-    //TODO: don't enable on create for effects
-    Effects.build_part_array(installation_config.parts, true, callback,
+    Effects.build_part_array(installation_config.parts, false, callback,
       (err, parts, final_callback) => {
         if (err) {
           callback(err);
@@ -38,7 +37,9 @@ export default class Effects {
       if (id != -1) {
         //add/set gpio property
         part.gpio = enable_on_create == true ?
-                    new BbbGpio(BbbGpio.pins[id], Effects.mode_test(), 1) :
+                    new BbbGpio(BbbGpio.pins[id],
+                                Effects.mode_test(),
+                                (part.inverted_output ?1 :0)) :
                     "Disabled";
         fx_array.push(part);
       } else {
@@ -82,7 +83,7 @@ export default class Effects {
       "enabled": part.gpio != 'Disabled' ? 'enabled' : 'disabled',
       "type": part.type,
       "gpio_mode": Effects.mode_test(),
-      "Value": part.gpio.Value
+      "value": part.gpio.get_value((err) => {if(err){throw err;}})
     };
   }
   //#endregion
@@ -142,14 +143,19 @@ export default class Effects {
     }
   }
 
-  disable_effect(id, graceful) {
+  disable_effect(id, graceful, callback) {
     try {
       if (graceful) {
-        this.parts[id].gpio.Value = 0;
+        this.parts[id].gpio.set_value(0,(err) => {
+          if(err) {
+            callback(err);
+          }
+          this.parts[id].gpio = "disabled";
+          callback(null);
+        });
       }
-      this.parts[id].gpio = "disabled";
-      return true;
-    } catch (err) {
+    }
+    catch (err) {
       return false;
     }
   }
@@ -187,8 +193,12 @@ export default class Effects {
       if (!(state == 1 || state == 0)) {
         throw "\ninvalid state:" + state + "\nfor id: " + id;
       }
-      this.parts[id].gpio.Value = state;
-      return true;
+      this.parts[id].gpio.set_value(state, (err) => {
+        if(err) {
+          return err;
+        }
+        return true;
+      });
     } catch (err) {
       console.log(err);
       return false;
