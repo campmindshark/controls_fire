@@ -12,21 +12,18 @@ exports.routes = function(app) {
     app.route('/fxs/:fxId')
       .get(fx_controller.get_fx_details)
       .patch(fx_controller.update_config)
-      .delete(fx_controller.disable_fx);
+      .delete(fx_controller.disable_fx)
+      //            .( * .
+      //       .*  .  ) .
+      //      . . POOF .* .
+      //       '* . (  .) '
+      //        ` ( . *
+      .post(fx_controller.fire);
 
-    //            .( * .
-    //       .*  .  ) .
-    //      . . POOF .* .
-    //       '* . (  .) '
-    //        ` ( . *
-    app.route('/fxs/:fxId/fire')
-      .post(fx_controller.open)
-      .delete(fx_controller.close);
 
     //All data that's any data
     app.route('/system/')
       .get(sys_controller.system_info);
-
 
     app.route('/system/:key')
       .get(sys_controller.get_system_value);

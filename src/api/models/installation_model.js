@@ -30,10 +30,10 @@ export default class Installation {
 
     function add_next_part_to_array(fx_array, parts, callback) {
       var part = parts.shift();
-      var findIndexCallback = function(element) {
+      var find_index_callback = (element) => {
         return element == part.gpio_pin;
       };
-      var id = BbbGpio.pins.findIndex(findIndexCallback);
+      var id = BbbGpio.pins.findIndex(find_index_callback);
       if (id != -1) {
         //add/set gpio property
         part.gpio = enable_on_create == true ?
@@ -133,11 +133,9 @@ export default class Installation {
             return true;
         }
       } else {
-        //key not found
         console.error('Key Not Found. \nUnable to reconfigure key: ' + key + '\n');
       }
     } else {
-      //Bad ID error
       console.error('Bad Id: ' + id + '\nUnable to reconfigure.');
     }
     return false;

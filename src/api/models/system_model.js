@@ -6,8 +6,8 @@ import os from 'os';
 export default class System {
   constructor(system_config, installation_config, callback) {
     this.parts = [];
-    var system_parts = JSON.parse(JSON.stringify(system_config.parts));
-    build_internal_array(system_parts,
+    //var system_parts = JSON.parse(JSON.stringify(system_config.parts));
+    build_internal_array(system_config.parts,
       (err, parts) => {
         if (err) {
           console.error('[System Initialization]: FAIL');
@@ -34,7 +34,6 @@ export default class System {
             var matched = false;
             Object.keys(ifaces).forEach(function(ifname) {
               var alias = 0;
-
               ifaces[ifname].forEach(function(iface) {
                 if ('IPv4' !== iface.family || iface.internal !== false) {
                   // skip over internal (i.e. 127.0.0.1) and non-ipv4 addresses

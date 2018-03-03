@@ -82,10 +82,15 @@ exports.disable_fx = function(req, res) {
 };
 //#endregion
 //#region /fxs/:fxId/fire
-exports.open = function(req, res) {
+exports.fire = function(req, res) {
     //POST /fxs/:fxId/fire
+    var new_value;
     var part = req.app.locals.system.installation.parts[req.params.fxId];
-    var new_value = part.inverted_output_device ? 0 : 1;
+    if (req.body.open == 1) {
+      new_value = part.inverted_output_device ? 0 : 1;
+    } else {
+      new_value = part.inverted_output_device ? 1 : 0;
+    }
     part.gpio.set_value(new_value, (err) => {
       res.send(JSON.stringify(part));
     });
