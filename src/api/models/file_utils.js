@@ -5,14 +5,14 @@ fs.readFileAsync = function(file) {
         try {
             fs.readFile(file, 'utf8', (err, data) => {
                 if (err) {
-                    console.log("Failed to read gpio info: " +
+                    console.error("Failed to read gpio info: " +
                         "\file: " + file + "\n" +
                         err + "\n");
                     reject(err);
                 } else resolve(data);
             });
         } catch (err) {
-            console.log("Failed to read gpio info: " +
+            console.error("Failed to read gpio info: " +
                 "\file: " + file + "\n" +
                 err + "\n");
             reject(err);
@@ -28,14 +28,14 @@ fs.writeFileAsync = function(file, data) {
                 flag: 'w'
             }, (err) => {
                 if (err) {
-                    console.log("Failed to write gpio info: " +
+                    console.error("Failed to write gpio info: " +
                         "\file: " + file + "\n" +
                         err + "\n");
                     reject(err);
                 } else resolve(data);
             });
         } catch (err) {
-            console.log("Failed to write gpio info: " +
+            console.error("Failed to write gpio info: " +
                 "\file: " + file + "\n" +
                 err + "\n");
             reject(err);

@@ -1,89 +1,229 @@
 {
-  "name": "TestFire",
-  "version": "0.0.1",
-  "parts": [
+  "installations": [
     {
-      "name": "left_eye_1",
-      "type": "outlet",
-      "gpio_pin": 38,
-      "sources": ["left_eye"],
-      "inverted_output": true
+      "name": "EyeFire",
+      "version": "1.0.0",
+      "ip": "192.168.1.108",
+      "parts": [{
+          "name": "left_dsv_0",
+          "type": "outlet",
+          "gpio_pin": 38,
+          "sources": ["left_eye"],
+          "inverted_output_device": true
+        },
+        {
+          "name": "left_dsv_1",
+          "type": "outlet",
+          "gpio_pin": 34,
+          "sources": ["left_eye"],
+          "inverted_output_device": true
+        },
+        {
+          "name": "left_dsv_2",
+          "type": "outlet",
+          "gpio_pin": 66,
+          "sources": ["left_eye"]
+        },
+        {
+          "name": "left_dsv_3",
+          "type": "outlet",
+          "gpio_pin": 69,
+          "sources": ["left_eye"],
+          "inverted_output_device": true
+        },
+        {
+          "name": "left_dsv_4",
+          "type": "outlet",
+          "gpio_pin": 45,
+          "sources": ["left_eye"],
+          "inverted_output_device": true
+        },
+        {
+          "name": "left_eye_pilot",
+          "type": "outlet",
+          "gpio_pin": 23,
+          "sources": ["left_eye"],
+          "inverted_output_device": true
+        },
+        {
+          "name": "right_dsv_0",
+          "type": "outlet",
+          "gpio_pin": 47,
+          "sources": ["right_eye"],
+          "inverted_output_device": true
+        },
+        {
+          "name": "right_dsv_1",
+          "type": "outlet",
+          "gpio_pin": 27,
+          "sources": ["right_eye"],
+          "inverted_output_device": true
+        },
+        {
+          "name": "right_dsv_2",
+          "type": "outlet",
+          "gpio_pin": 22,
+          "sources": ["right_eye"],
+          "inverted_output_device": true
+        },
+        {
+          "name": "right_dsv_3",
+          "type": "outlet",
+          "gpio_pin": 62,
+          "sources": ["right_eye"],
+          "inverted_output_device": true
+        },
+        {
+          "name": "right_dsv_4",
+          "type": "outlet",
+          "gpio_pin": 36,
+          "sources": ["right_eye"],
+          "inverted_output_device": true
+        },
+        {
+          "name": "right_eye_pilot",
+          "type": "outlet",
+          "gpio_pin": 32,
+          "sources": ["right_eye"],
+          "inverted_output_device": true
+        },
+        {
+          "name": "left_eye_glowfly",
+          "type": "igniter",
+          "gpio_pin": 86,
+          "sources": ["left_dsv1", "left_dsv2", "left_dsv3", "left_dsv4", "left_dsv5"],
+          "inverted_output_device": true
+        },
+        {
+          "name": "right_eye_glowfly",
+          "type": "igniter",
+          "gpio_pin": 87,
+          "sources": ["right_dsv1", "right_dsv2", "right_dsv3", "right_dsv4", "right_dsv5"],
+          "inverted_output_device": true
+        },
+        {
+          "name": "left_supply",
+          "type": "supply",
+          "gpio_pin": 10,
+          "inverted_output_device": "true"
+        },
+        {
+          "name": "right_supply",
+          "type": "supply",
+          "gpio_pin": 9,
+          "inverted_output_device": "true"
+        }
+      ]
     },
     {
-      "name": "left_eye_2",
-      "type": "outlet",
-      "gpio_pin": 34,
-      "sources": ["left_eye"],
-      "inverted_output": true
-    },
-    {
-      "name": "left_eye_3",
-      "type": "outlet",
-      "gpio_pin": 66,
-      "sources": ["left_eye"]
-    },
-    {
-      "name": "left_eye_4",
-      "type": "outlet",
-      "gpio_pin": 69,
-      "sources": ["left_eye"],
-      "inverted_output": true
-    },
-    {
-      "name": "left_eye_5",
-      "type": "outlet",
-      "gpio_pin": 45,
-      "sources": ["left_eye"],
-      "inverted_output": true
-    },
-    {
-      "name": "right_eye_1",
-      "type": "outlet",
-      "gpio_pin": 23,
-      "sources": ["right_eye"],
-      "inverted_output": true
-    },
-    {
-      "name": "right_eye_2",
-      "type": "outlet",
-      "gpio_pin": 47,
-      "sources": ["right_eye"],
-      "inverted_output": true
-    },
-    {
-      "name": "right_eye_3",
-      "type": "outlet",
-      "gpio_pin": 27,
-      "sources": ["right_eye"],
-      "inverted_output": true
-    },
-    {
-      "name": "right_eye_4",
-      "type": "outlet",
-      "gpio_pin": 39,
-      "sources": ["right_eye"],
-      "inverted_output": true
-    },
-    {
-      "name": "right_eye_5",
-      "type": "outlet",
-      "gpio_pin": 35,
-      "sources": ["right_eye"],
-      "inverted_output": true
-    },
-    {
-      "name": "left_eye_pilot",
-      "type": "igniter",
-      "gpio_pin": 67,
-      "sources": ["left_eye_1", "left_eye_2", "left_eye_3", "left_eye_4", "left_eye_5"],
-      "inverted_output": true
-    },
-    {
-      "name": "right_eye_pilot",
-      "type": "igniter",
-      "gpio_pin": 68,
-      "sources": ["right_eye_1", "right_eye_2", "right_eye_3", "right_eye_4", "right_eye_5"],
-      "inverted_output": true
+      "name": "SignFire",
+      "version": "1.0.0",
+      "ip": "192.168.bork.korb",
+      "parts": [
+        {
+          "name": "left_bank_0",
+          "type": "outlet",
+          "gpio_pin": 8,
+          "sources": ["sign_supply_0"],
+          "inverted_output_device": true
+        },
+        {
+          "name": "left_bank_1",
+          "type": "outlet",
+          "gpio_pin": 78,
+          "sources": ["sign_supply_0"],
+          "inverted_output_device": true
+        },
+        {
+          "name": "left_bank_2",
+          "type": "outlet",
+          "gpio_pin": 76,
+          "sources": ["sign_supply_1"],
+          "inverted_output_device": true
+        },
+        {
+          "name": "left_bank_3",
+          "type": "outlet",
+          "gpio_pin": 74,
+          "sources": ["sign_supply_1"],
+          "inverted_output_device": true
+        },
+        {
+          "name": "left_bank_4",
+          "type": "outlet",
+          "gpio_pin": 72,
+          "sources": ["sign_supply_1"],
+          "inverted_output_device": true
+        },
+        {
+          "name": "Vulcan's Engorged Column of Volcanic Undersea Justice",
+          "type": "outlet",
+          "gpio_pin": 70,
+          "sources": ["sign_supply_0", "sign_supply_1", "sign_supply_2", "sign_supply_3"],
+          "inverted_output_device": true
+        },
+        {
+          "name": "right_bank_0",
+          "type": "outlet",
+          "gpio_pin": 39,
+          "sources": ["sign_supply_2"],
+          "inverted_output_device": true
+        },
+        {
+          "name": "right_bank_1",
+          "type": "outlet",
+          "gpio_pin": 35,
+          "sources": ["sign_supply_2"],
+          "inverted_output_device": true
+        },
+        {
+          "name": "right_bank_2",
+          "type": "outlet",
+          "gpio_pin": 67,
+          "sources": ["sign_supply_2"],
+          "inverted_output_device": true
+        },
+        {
+          "name": "right_bank_3",
+          "type": "outlet",
+          "gpio_pin": 68,
+          "sources": ["sign_supply_3"],
+          "inverted_output_device": true
+        },
+        {
+          "name": "right_bank_4",
+          "type": "outlet",
+          "gpio_pin": 44,
+          "sources": ["sign_supply_3"],
+          "inverted_output_device": true
+        },
+        {
+          "name": "sign_pilot",
+          "type": "outlet",
+          "gpio_pin": 26,
+          "sources": ["sign_supply_0"]
+        },
+        {
+          "name":"sign_supply_0",
+          "type":"supply",
+          "gpio_pin": 46
+        },
+        {
+          "name":"sign_supply_1",
+          "type":"supply",
+          "gpio_pin": 65
+        },
+        {
+          "name":"sign_supply_2",
+          "type":"supply",
+          "gpio_pin": 63
+        },
+        {
+          "name":"sign_supply_3",
+          "type":"supply",
+          "gpio_pin": 37
+        }
+      ]
     }
   ]
 }

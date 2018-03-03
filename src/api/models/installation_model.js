@@ -1,34 +1,34 @@
 import os from 'os';
 import BbbGpio from "./bbb_gpio_model";
 
-export default class Effects {
-  constructor(installation_config, system_config, callback) {
+export default class Installation {
+  constructor(installation_config, callback) {
     this.name = installation_config.name;
     this.version = installation_config.version;
     this.id_test = this.id_test.bind(this);
     this.parts = [];
 
-    Effects.build_part_array(installation_config.parts, false, callback,
-      (err, parts, final_callback) => {
+    Installation.build_part_array(installation_config.parts, false,
+      (err, parts) => {
         if (err) {
           callback(err);
         }
         this.parts = parts;
-        callback(null);
+        callback(null, parts);
       });
   }
 
-  static build_part_array(parts, enable_on_create, final_callback, callback) {
+  static build_part_array(parts, enable_on_create, callback) {
     if (parts != null && parts.length > 0) {
       if (parts.length > BbbGpio.pins.length) {
-        final_callback("TOO MANY PARTS. Configure fewer parts.");
+        callback("TOO MANY PARTS. Configure fewer parts.");
       }
-      add_next_part_to_array([], parts, final_callback, callback);
+      add_next_part_to_array([], parts, callback);
     } else {
-      final_callback('ERROR: No Parts Configured.\nYou must configure parts to control fire.');
+      callback('ERROR: No Parts Configured.\nYou must configure parts to control fire.');
     }
 
-    function add_next_part_to_array(fx_array, parts, final_callback, callback) {
+    function add_next_part_to_array(fx_array, parts, callback) {
       var part = parts.shift();
       var findIndexCallback = function(element) {
         return element == part.gpio_pin;
@@ -37,19 +37,28 @@ export default class Effects {
       if (id != -1) {
         //add/set gpio property
         part.gpio = enable_on_create == true ?
-                    new BbbGpio(BbbGpio.pins[id],
-                                Effects.mode_test(),
-                                (part.inverted_output ?1 :0)) :
-                    "Disabled";
-        fx_array.push(part);
+          new BbbGpio(BbbGpio.pins[id],
+            Installation.mode_test(),
+            (part.inverted_output_device ? 1 : 0), (err) => {
+              if (err) {
+                callback(err);
+              }
+              push_part_and_continue();
+            }) :
+          "Disabled";
+          push_part_and_continue();
       } else {
-        final_callback("ERROR: Bad GPIO config : " + JSON.stringify(part));
+        callback("ERROR: Bad GPIO config : " + JSON.stringify(part));
       }
-      if (parts.length > 0) {
-        add_next_part_to_array(fx_array, parts, final_callback, callback);
-      } else {
-        console.log('all parts built');
-        callback(null, fx_array, final_callback);
+
+      function push_part_and_continue() {
+        fx_array.push(part);
+        if (parts.length > 0) {
+          add_next_part_to_array(fx_array, parts, callback);
+        } else {
+          console.log('all parts built');
+          callback(null, fx_array);
+        }
       }
     }
   }
@@ -61,6 +70,7 @@ export default class Effects {
     //mock all others.
     return "mock";
   }
+
   //#region GET
   info() {
     return JSON.stringify(this);
@@ -82,8 +92,12 @@ export default class Effects {
       "name": part.name,
       "enabled": part.gpio != 'Disabled' ? 'enabled' : 'disabled',
       "type": part.type,
-      "gpio_mode": Effects.mode_test(),
-      "value": part.gpio.get_value((err) => {if(err){throw err;}})
+      "gpio_mode": Installation.mode_test(),
+      "value": part.gpio.get_value((err) => {
+        if (err) {
+          throw err;
+        }
+      })
     };
   }
   //#endregion
@@ -91,7 +105,7 @@ export default class Effects {
   enable_effect(id) {
     try {
       var part = this.parts[id];
-      part.gpio = new BbbGpio(part.gpio_pin, Effects.mode_test(), 0);
+      part.gpio = new BbbGpio(part.gpio_pin, Installation.mode_test(), 0);
       console.log(this);
       return true;
     } catch (err) {
@@ -120,13 +134,13 @@ export default class Effects {
         }
       } else {
         //key not found
-        console.log('Key Not Found. \nUnable to reconfigure key: ' + key + '\n');
-        return false;
+        console.error('Key Not Found. \nUnable to reconfigure key: ' + key + '\n');
       }
     } else {
       //Bad ID error
-      console.log('Bad Id: ' + id + '\nUnable to reconfigure.');
+      console.error('Bad Id: ' + id + '\nUnable to reconfigure.');
     }
+    return false;
   }
   //#endregion
   //#region DELETE
@@ -143,65 +157,28 @@ export default class Effects {
     }
   }
 
-  disable_effect(id, graceful, callback) {
+  disable_effect(id, graceful) {
     try {
       if (graceful) {
-        this.parts[id].gpio.set_value(0,(err) => {
-          if(err) {
-            callback(err);
+        this.parts[id].gpio.set_value(0, (err) => {
+          if (err) {
+            return false;
           }
           this.parts[id].gpio = "disabled";
-          callback(null);
+          return true;
         });
       }
-    }
-    catch (err) {
+    } catch (err) {
       return false;
     }
   }
   //#endregion
   //#region Data Tests
   id_test(test_id) {
-    //TODO: handle the ids better. a db would probably help.
     if (typeof !isNaN(parseInt(test_id)) && isFinite(test_id) && test_id < this.parts.length) {
       return test_id;
     } else {
       return "bad id";
-    }
-  }
-  //#endregion
-  //#region The Bench.
-
-  command_effect(id, state) {
-    if (this.parts[id].gpio != "disabled") {
-      if (this.set_effect_state(id, state)) {
-        console.log("New effect state set");
-        return true;
-      } else {
-        console.log("Failed to set new effect state");
-        return false;
-      }
-    } else {
-      console.log("Cannot Command Disabled Effect ID: " + id);
-      return false;
-    }
-  }
-
-  set_effect_state(id, state) {
-    try {
-      //TODO: do better about states and validating them.
-      if (!(state == 1 || state == 0)) {
-        throw "\ninvalid state:" + state + "\nfor id: " + id;
-      }
-      this.parts[id].gpio.set_value(state, (err) => {
-        if(err) {
-          return err;
-        }
-        return true;
-      });
-    } catch (err) {
-      console.log(err);
-      return false;
     }
   }
   //#endregion

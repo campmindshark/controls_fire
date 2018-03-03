@@ -3,7 +3,7 @@ exports.system_info = function(req, res) {
     console.log('\nSystem Information Request: ' + Date.now());
     var msg = {
         "system": req.app.locals.system,
-        "effects": req.app.locals.effects
+        "installation": req.app.locals.installation
     };
     res.send(msg);
 };
