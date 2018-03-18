@@ -17,6 +17,8 @@ export default class BbbGpio {
         this.path = this.build_path(mode, this.pin);
         this.initialize = this.initialize.bind(this);
         this.load_all_pin_values = this.load_all_pin_values.bind(this);
+        this.get_value = this.get_value.bind(this);
+        this.set_value = this.set_value.bind(this);
     }
 
     async initialize(init_value) {
@@ -55,13 +57,19 @@ export default class BbbGpio {
     }
     //#region Properties
     async get_value() {
-        var val = await fs.readFileAsync(this.path + 'value');
-        this.raw_value = val.trim();
+        if(this.raw_value != null)
+        {
+            var val = await fs.readFileAsync(this.path + 'value');
+            this.raw_value = val.trim();
+        }
         return this.active_low_corrected_value(this.raw_value);
 
     }
 
     async set_value(value) {
+        if (this.raw_value === null) {
+            console.error('Cannot Command Disabled Effect');
+        }
         var new_value = this.active_low_corrected_value(value);
         this.raw_value = await fs.writeFileAsync(this.path + 'value', new_value);
         console.log('\nnew raw value set: ' + JSON.stringify(this));
