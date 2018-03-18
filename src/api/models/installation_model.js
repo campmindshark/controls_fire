@@ -8,6 +8,11 @@ export default class Installation {
         this.parts = installation_config.parts;
         this.id_test = this.id_test.bind(this);
     }
+    async initialize() {
+        console.log('[Installation Init]: Begin');
+        this.parts = await Installation.build_part_array(this.parts);
+        console.log('[Installation Init]: Installation parts built');
+    }
     //#region Static Methods
     static async build_part_array(parts, enable_on_create = false) {
         if (parts != null && parts.length > 0) {
@@ -26,7 +31,6 @@ export default class Installation {
         async function build_part(part_config, enable_on_create) {
             return new Promise(resolve => promise_part_build_async(resolve));
             async function promise_part_build_async(resolve) {
-                console.log('begin promise');
                 var part = part_config;
                 var id = BbbGpio.pins.findIndex((element) => {
                     return element == part_config.gpio_pin;
@@ -37,13 +41,11 @@ export default class Installation {
                     if(enable_on_create == true) {
                         await part.gpio.initialize(part_config.inverted_output_device ? 1 : 0);
                     }
-                    console.log('resolve promise');
                     resolve(part);
                 } else {
                     throw new Error('ERROR: Bad GPIO config : ' + JSON.stringify(part));
                 }
             }
-
         }
     }
 
@@ -56,11 +58,6 @@ export default class Installation {
         return 'mock';
     }
     //#endregion
-    async initialize() {
-        console.log('[Installation Init]: Begin');
-        this.parts = await Installation.build_part_array(this.parts);
-        console.log('[Installation Init]: Installation parts built');
-    }
     //#region GET
     info() {
         return JSON.stringify(this);
@@ -93,7 +90,8 @@ export default class Installation {
     enable_effect(id) {
         try {
             var part = this.parts[id];
-            part.gpio = new BbbGpio(part.gpio_pin, Installation.mode_test(), 0);
+            part.gpio = new BbbGpio(part.gpio_pin, Installation.mode_test());
+            part.gpio.initialize(0);
             console.log(this);
             return true;
         } catch (err) {

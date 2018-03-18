@@ -3,7 +3,7 @@
     {
       "name": "EyeFire",
       "version": "1.0.0",
-      "ip": "192.168.2.4",
+      "ip": "192.168.2.22",
       "parts": [{
           "name": "left_dsv_0",
           "type": "outlet",

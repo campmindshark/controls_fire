@@ -16,17 +16,17 @@ export default class BbbGpio {
 
         this.path = this.build_path(mode, this.pin);
         this.initialize = this.initialize.bind(this);
-        this.load_all_pin_values = this.load_all_pin_values.bind(this);
         this.get_value = this.get_value.bind(this);
         this.set_value = this.set_value.bind(this);
     }
 
     async initialize(init_value) {
+        console.log('[Gpio Init]: Start for Pin: ' + this.pin + '\n');
         await this.load_all_pin_values(init_value);
+        console.log('[Gpio Init]: Complete for Pin ' + this.pin);
     }
 
     async load_all_pin_values(init_value) {
-        console.log('[Gpio Init]: Start for Pin: ' + this.pin + '\n');
         var raw_value = await fs.readFileAsync(this.path + 'value');
         var active_low = await fs.readFileAsync(this.path + 'active_low');
         var direction = await fs.readFileAsync(this.path + 'direction');

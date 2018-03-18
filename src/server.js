@@ -22,11 +22,12 @@ app.use(bodyParser.json());
 
 //TODO: System object should manage master_power relay
 app.locals.system = new System(sys_config, installation_config);
-app.locals.system.initialize();
-//TODO: set master_power relay(s) to ON
-console.log('\nSet Routes');
-routes.routes(app);
-console.log('\nBegin Listening');
-app.listen(port);
-console.log('Device: ' + os.hostname() + '\n');
-console.log('Rejoice. You may now control Fire on port: ' + port);
+app.locals.system.initialize(() => {
+    //TODO: set master_power relay(s) to ON
+    console.log('\nSet Routes');
+    routes.routes(app);
+    console.log('\nBegin Listening');
+    app.listen(port);
+    console.log('Device: ' + os.hostname() + '\n');
+    console.log('Rejoice. You may now control Fire on port: ' + port);
+});

@@ -7,18 +7,21 @@ export default class System {
         this.installation = installation_config;
     }
 
-    async initialize() {
+    async initialize(callback) {
         var sys_parts = await build_internal_array(this.parts);
         this.parts = sys_parts;
-        for (var installation of this.installation.installations) {
-            console.log('[System Initialization]: from config:' + installation.ip);
-            if (match_device_ip(installation.ip) == true) {
-                this.installation = new Installation(installation);
+        var installations = this.installation.installations;
+        for (var i = 0; i < installations.length; i++) {
+            console.log('[System Initialization]: from config:' + installations[i].ip);
+            if (match_device_ip(installations[i].ip) == true) {
+                this.installation = new Installation(installations[i]);
                 await this.installation.initialize();
                 console.log('\n[System Initialization]: Complete');
-                break;
+                i = installations.length;
             }
         }
+        callback();
+
         async function build_internal_array(parts) {
             if (parts != null && parts.length > 0) {
                 if (config_check(parts)) {
