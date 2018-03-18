@@ -20,9 +20,8 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-//TODO: System object should manage master_power relay
 app.locals.system = new System(sys_config, installation_config);
-app.locals.system.initialize(() => {
+app.locals.system.initialize().then(() => {
     //TODO: set master_power relay(s) to ON
     console.log('\nSet Routes');
     routes.routes(app);
