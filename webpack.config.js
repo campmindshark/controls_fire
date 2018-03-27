@@ -3,7 +3,7 @@ var webpack = require("webpack");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: ["./hot_and_gui/static/index.js"],
+  entry: ["babel-polyfill", "./hot_and_gui/static/index.js"],
   output: {
     path: path.join(__dirname, "build/hot_and_gui/static"),
     filename: "bundle.js"
@@ -19,16 +19,15 @@ module.exports = {
           query: {
             presets: ["react", "env"]
           }
-        },
-
+        }
       }
     ]
   },
-   plugins: [
-     new HtmlWebpackPlugin({
-       template: "./hot_and_gui/static/index.html",
-       filename: "index.html",
-       inject: "body"
-     })
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./hot_and_gui/static/index.html",
+      filename: "index.html",
+      inject: "body"
+    })
   ]
 };
