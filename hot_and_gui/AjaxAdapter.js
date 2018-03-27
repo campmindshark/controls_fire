@@ -52,7 +52,7 @@ export default function ajax_adapter(ajax_props) {
       }
     }
 
-    x.send(JSON.stringify(body));
+    x.send(body != null ? JSON.stringify(body) : null);
 
     function build_query_string(query_params = []) {
       var kvps = query_params.map(param => {

@@ -12,7 +12,7 @@ exports.list_fxs = function(req, res) {
 
 exports.enable_fx = async function(req, res) {
   //POST /fxs
-  //Request to enable client control of req.params.fxId
+  //Request to enable client control of req.body.fxId
   console.log(
     "[Effect Controller]",
     " Enable Request fxId: ",
@@ -22,7 +22,6 @@ exports.enable_fx = async function(req, res) {
   var enabled_part = await req.app.locals.system.installation.enable_effect(
     req.body.fxId
   );
-
   res.send(enabled_part);
 };
 

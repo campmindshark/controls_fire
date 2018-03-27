@@ -3,8 +3,9 @@
     {
       "name": "EyeFire",
       "version": "1.0.0",
-      "ip": "192.168.2.5",
-      "parts": [{
+      "ip": "192.168.2.11",
+      "parts": [
+        {
           "name": "left_dsv_0",
           "type": "outlet",
           "gpio_pin": 38,
@@ -91,14 +92,26 @@
           "name": "left_eye_glowfly",
           "type": "igniter",
           "gpio_pin": 86,
-          "sources": ["left_dsv1", "left_dsv2", "left_dsv3", "left_dsv4", "left_dsv5"],
+          "sources": [
+            "left_dsv1",
+            "left_dsv2",
+            "left_dsv3",
+            "left_dsv4",
+            "left_dsv5"
+          ],
           "inverted_output_device": true
         },
         {
           "name": "right_eye_glowfly",
           "type": "igniter",
           "gpio_pin": 87,
-          "sources": ["right_dsv1", "right_dsv2", "right_dsv3", "right_dsv4", "right_dsv5"],
+          "sources": [
+            "right_dsv1",
+            "right_dsv2",
+            "right_dsv3",
+            "right_dsv4",
+            "right_dsv5"
+          ],
           "inverted_output_device": true
         },
         {
@@ -159,7 +172,12 @@
           "name": "Vulcan's Engorged Column of Volcanic Undersea Justice",
           "type": "outlet",
           "gpio_pin": 70,
-          "sources": ["sign_supply_0", "sign_supply_1", "sign_supply_2", "sign_supply_3"],
+          "sources": [
+            "sign_supply_0",
+            "sign_supply_1",
+            "sign_supply_2",
+            "sign_supply_3"
+          ],
           "inverted_output_device": true
         },
         {
@@ -204,23 +222,23 @@
           "sources": ["sign_supply_0"]
         },
         {
-          "name":"sign_supply_0",
-          "type":"supply",
+          "name": "sign_supply_0",
+          "type": "supply",
           "gpio_pin": 46
         },
         {
-          "name":"sign_supply_1",
-          "type":"supply",
+          "name": "sign_supply_1",
+          "type": "supply",
           "gpio_pin": 65
         },
         {
-          "name":"sign_supply_2",
-          "type":"supply",
+          "name": "sign_supply_2",
+          "type": "supply",
           "gpio_pin": 63
         },
         {
-          "name":"sign_supply_3",
-          "type":"supply",
+          "name": "sign_supply_3",
+          "type": "supply",
           "gpio_pin": 37
         }
       ]
