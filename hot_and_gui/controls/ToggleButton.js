@@ -8,6 +8,8 @@ export default class ToggleButton extends React.Component {
       props = {
       id: server's id for the device this controls,
       text: button text,
+      on_state_text: Display text for when the associated device is on/active
+      off_state_text: Display text for when the associated device is off
       endpoints : {
         on: ajax_props {},
         off: ajax_props {}
@@ -27,6 +29,7 @@ export default class ToggleButton extends React.Component {
     } else {
       result = await ajax_adapter(this.props.endpoints.on);
     }
+    console.log(result);
     //TODO: conditionally set state based on result success.
     this.setState(prev_state => {
       return { on: !prev_state.on };

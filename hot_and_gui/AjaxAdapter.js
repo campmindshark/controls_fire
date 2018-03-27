@@ -34,7 +34,7 @@ export default function ajax_adapter(ajax_props) {
         : "action" in ajax_props ? ajax_props.action + "/" : "");
     console.log(final_url);
     x.open(ajax_props.verb, final_url, true);
-    x.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    x.setRequestHeader("Content-type", "application/json");
     x.onreadystatechange = function() {
       //Call a function when the state changes.
       if (x.readyState == 4) {
@@ -45,11 +45,14 @@ export default function ajax_adapter(ajax_props) {
         }
       }
     };
-    x.send(
-      "params" in ajax_props
-        ? "body" in ajax_props.params ? ajax_props.params.body : null
-        : null
-    );
+    var body = null;
+    if ("params" in ajax_props) {
+      if ("body" in ajax_props.params) {
+        body = ajax_props.params.body;
+      }
+    }
+
+    x.send(JSON.stringify(body));
 
     function build_query_string(query_params = []) {
       var kvps = query_params.map(param => {
