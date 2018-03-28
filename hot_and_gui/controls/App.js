@@ -44,11 +44,6 @@ export default class App extends React.Component {
             );
           })
         : [];
-    return (
-      <div>
-        <div>Your React Node app is set up!</div>
-        {part_markup}
-      </div>
-    );
+    return <div>{part_markup}</div>;
   }
 }

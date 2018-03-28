@@ -33,13 +33,21 @@ export default class BbbGpioDeviceContainer extends React.Component {
           <ToggleButton
             key={"enable" + this.props.id}
             id={this.props.id}
-            text={btn_txt}
+            text={{
+              on: "Disable ",
+              off: "Enable ",
+              button: btn_txt
+            }}
             endpoints={enable_endpoints}
           />
           <DeviceButton
             key={"live" + this.props.id}
             id={this.props.id}
-            text={btn_txt}
+            text={{
+              on: "Clear ",
+              off: "Activate ",
+              button: btn_txt
+            }}
             endpoints={live_control_endpoints}
           />
         </span>

@@ -7,16 +7,17 @@ export default class ToggleButton extends React.Component {
     /*
       props = {
       id: server's id for the device this controls,
-      text: button text,
-      on_state_text: Display text for when the associated device is on/active
-      off_state_text: Display text for when the associated device is off
+      text: {
+        on: "",
+        off: "",
+        button: ""
+      },
       endpoints : {
         on: ajax_props {},
         off: ajax_props {}
         }
       }
     */
-
     this.state = {
       on: false
     };
@@ -39,8 +40,8 @@ export default class ToggleButton extends React.Component {
   render() {
     return (
       <button onClick={this.toggle}>
-        {this.state.on == true ? "Clear " : "Light "}
-        {this.props.text}
+        {this.state.on == true ? this.props.text.on : this.props.text.off}
+        {this.props.text.button}
       </button>
     );
   }

@@ -34,8 +34,8 @@ export default class MomentaryButton extends React.Component {
   render() {
     return (
       <button onMouseUp={this.onMouseUp} onMouseDown={this.onMouseDown}>
-        {this.state.on == true ? "Close " : "Fire "}
-        {this.props.text}
+        {this.state.on == true ? this.props.text.on : this.props.text.off}
+        {this.props.text.button}
       </button>
     );
   }
