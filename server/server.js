@@ -9,17 +9,11 @@ import System from "./api/models/system_model";
 const app = express(),
   port = process.env.PORT || 5000,
   routes = require("./api/routes/fx_routes"),
-  //sqlite3 = require('sqlite3').verbose(),
-  //TODO: add endpoint to load config
   sys_config = require("../../system_config.json"),
   installation_config = require("../../installation_config.json"),
-  staticPath = path.join(__dirname, "../hot_and_gui/static"),
-  indexPath = path.join(__dirname, "../hot_and_gui/index.html");
+  staticPath = path.join(__dirname, "../hot_and_gui/static");
 
 app.use(express.static(staticPath));
-app.get("/", (req, res) => {
-  res.sendFile(indexPath);
-});
 
 app.use(function(req, res, next) {
   // Website you wish to allow to connect
@@ -37,7 +31,8 @@ app.use(function(req, res, next) {
     "X-Requested-With,content-type"
   );
 
-  // Set to true if you need the website to include cookies in the requests sent
+  // Set to true if you need the website to include
+  // cookies in the requests sent
   // to the API (e.g. in case you use sessions)
   res.setHeader("Access-Control-Allow-Credentials", true);
 
