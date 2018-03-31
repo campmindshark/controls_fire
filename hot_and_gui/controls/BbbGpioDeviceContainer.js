@@ -55,21 +55,20 @@ export default class BbbGpioDeviceContainer extends React.Component {
     );
     function get_enable_endpoints(id, url) {
       return {
-        on: get_enable_endpoint("POST"),
-        off: get_enable_endpoint("DELETE")
+        on: get_enable_endpoint("POST", { body: { fxId: id } }),
+        off: get_enable_endpoint("DELETE", { path: id })
       };
-      function get_enable_endpoint(verb) {
-        return {
+      function get_enable_endpoint(verb, params) {
+        var eps = {
           url: url,
           verb: verb,
           controller: "fxs",
           headers: {
-            "content-type": "application/json"
-          },
-          params: {
-            path: id
+            "Content-Type": "application/json"
           }
         };
+        eps.params = params;
+        return eps;
       }
     }
     function get_live_control_endpoints(id, url) {
@@ -83,7 +82,7 @@ export default class BbbGpioDeviceContainer extends React.Component {
           verb: "POST",
           controller: "fxs",
           headers: {
-            "content-type": "application/json"
+            "Content-Type": "application/json"
           },
           params: {
             path: id,

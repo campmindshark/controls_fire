@@ -37,7 +37,6 @@ export default function ajax_adapter(ajax_props) {
             ? build_query_string(ajax_props.params.query)
             : "")
         : "action" in ajax_props ? ajax_props.action + "/" : "");
-    console.log(final_url);
     // Set the request timeout in MS
     x.timeout = ajax_props.timeout ? ajax_props.timeout : 4000;
     x.open(ajax_props.verb, final_url, true);
@@ -62,7 +61,9 @@ export default function ajax_adapter(ajax_props) {
       "params" in ajax_props
         ? "body" in ajax_props.params ? ajax_props.params.body : null
         : null;
-    x.send(body != null ? JSON.stringify(body) : null);
+    var postBody = body != null ? JSON.stringify(body) : null;
+    console.log(postBody);
+    x.send(postBody);
 
     function build_query_string(query_params) {
       if (!query_params) return;
