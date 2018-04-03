@@ -22,7 +22,7 @@ export default class App extends React.Component {
     async function get_part_config() {
       var results = await ajax_adapter({
         verb: "GET",
-        url: "http://localhost:5000",
+        url: "http://192.168.2.19:5000",
         controller: "fxs"
       });
       return results;
@@ -38,7 +38,7 @@ export default class App extends React.Component {
               <BbbGpioDeviceContainer
                 key={i}
                 id={i}
-                base_url={"http://localhost:5000"}
+                base_url={"http://192.168.2.19:5000"}
                 part_config={part}
               />
             );

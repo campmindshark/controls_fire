@@ -14,16 +14,69 @@ export default class BbbGpioDeviceContainer extends React.Component {
       }
     */
   }
+  static get_enable_endpoints(id, url) {
+    return {
+      on: get_enable_endpoint("POST", { body: { fxId: id } }),
+      off: get_enable_endpoint("DELETE", { path: id })
+    };
+    function get_enable_endpoint(verb, params) {
+      var eps = {
+        url: url,
+        verb: verb,
+        controller: "fxs",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      };
+      eps.params = params;
+      return eps;
+    }
+  }
+  static get_live_control_endpoints(id, url) {
+    return {
+      on: get_toggle_btn_ajax_props(id, url, 1),
+      off: get_toggle_btn_ajax_props(id, url, 0)
+    };
+    function get_toggle_btn_ajax_props(id, url, state) {
+      return {
+        url: url,
+        verb: "POST",
+        controller: "fxs",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        params: {
+          path: id,
+          body: {
+            set_state: state
+          }
+        }
+      };
+    }
+  }
+  static get_button_text(type) {
+    var text;
+    switch (type) {
+      case "outlet":
+        return "Effect Solenoid";
+      case "supply":
+        return "Supply Solenoid";
+      case "igniter":
+        return "Glowfly";
+      default:
+        return "Unknown Device";
+    }
+  }
 
   render() {
     var type = this.props.part_config.type;
     var DeviceButton = type == "outlet" ? MomentaryButton : ToggleButton;
-    var btn_txt = get_button_text(type);
-    var live_control_endpoints = get_live_control_endpoints(
+    var btn_txt = BbbGpioDeviceContainer.get_button_text(type);
+    var live_control_endpoints = BbbGpioDeviceContainer.get_live_control_endpoints(
       this.props.id,
       this.props.base_url
     );
-    var enable_endpoints = get_enable_endpoints(
+    var enable_endpoints = BbbGpioDeviceContainer.get_enable_endpoints(
       this.props.id,
       this.props.base_url
     );
@@ -53,58 +106,5 @@ export default class BbbGpioDeviceContainer extends React.Component {
         </span>
       </div>
     );
-    function get_enable_endpoints(id, url) {
-      return {
-        on: get_enable_endpoint("POST", { body: { fxId: id } }),
-        off: get_enable_endpoint("DELETE", { path: id })
-      };
-      function get_enable_endpoint(verb, params) {
-        var eps = {
-          url: url,
-          verb: verb,
-          controller: "fxs",
-          headers: {
-            "Content-Type": "application/json"
-          }
-        };
-        eps.params = params;
-        return eps;
-      }
-    }
-    function get_live_control_endpoints(id, url) {
-      return {
-        on: get_toggle_btn_ajax_props(id, url, 1),
-        off: get_toggle_btn_ajax_props(id, url, 0)
-      };
-      function get_toggle_btn_ajax_props(id, url, state) {
-        return {
-          url: url,
-          verb: "POST",
-          controller: "fxs",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          params: {
-            path: id,
-            body: {
-              set_state: state
-            }
-          }
-        };
-      }
-    }
-    function get_button_text(type) {
-      var text;
-      switch (type) {
-        case "outlet":
-          return "Effect Solenoid";
-        case "supply":
-          return "Supply Solenoid";
-        case "igniter":
-          return "Glowfly";
-        default:
-          return "Unknown Device";
-      }
-    }
   }
 }
