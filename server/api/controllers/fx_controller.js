@@ -13,24 +13,38 @@ exports.list_fxs = function(req, res) {
 exports.enable_fx = async function(req, res) {
   //POST /fxs
   //Request to enable client control of req.body.fxId
-  console.log(
-    "[Effect Controller]",
-    " Enable Request fxId: ",
-    req.body.fxId,
-    Date.now()
-  );
-  var enabled_part = await req.app.locals.system.installation.enable_effect(
-    req.body.fxId
-  );
-  res.send(enabled_part);
+  try {
+    console.log(
+      "[Effect Controller]",
+      " Enable Request fxId: ",
+      req.body.fxId,
+      Date.now()
+    );
+    var enabled_part = await req.app.locals.system.installation.enable_effect(
+      req.body.fxId
+    );
+    res.send(enabled_part);
+  } catch (err) {
+    res.send(
+      "[Effect Controller]: Enable request did not succeed. fxId: " +
+        req.body.fxId
+    );
+  }
 };
 
 exports.disable_fxs = async function(req, res) {
   //DELETE /fxs
   //turn EVERYTHING off. Disable all fx.
-  console.log("[Effect Controller]", "Master Shut Off Request: ", Date.now());
-  var msg = await req.app.locals.system.installation.master_shut_off(true);
-  res.send(msg);
+  try {
+    console.log("[Effect Controller]", "Master Shut Off Request: ", Date.now());
+    var msg = await req.app.locals.system.installation.master_shut_off(true);
+    res.send(msg);
+  } catch (err) {
+    res.send(
+      "[Effect Controller]: Disable request did not succeed. fxId: " +
+        req.body.fxId
+    );
+  }
 };
 //#endregion
 //#region /fxs/:fxId
