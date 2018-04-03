@@ -4,7 +4,7 @@ import sys_controller from "../controllers/sys_controller";
 
 exports.routes = function(app) {
   app.route("/").get((req, res) => {
-    res.sendFile(path.join(__dirname, "../hot_and_gui/index.html"));
+    res.sendFile(path.join(__dirname, "../hot_and_gui/static/index.html"));
   });
   app
     .route("/fxs")

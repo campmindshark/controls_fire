@@ -3,14 +3,13 @@
 import path from "path";
 import express from "express";
 import bodyParser from "body-parser";
-import cors from "cors";
 import System from "./api/models/system_model";
 
 const app = express(),
   port = process.env.PORT || 5000,
   routes = require("./api/routes/fx_routes"),
-  sys_config = require("../../system_config.json"),
-  installation_config = require("../../installation_config.json"),
+  sys_config = require("../config/system_config"),
+  installation_config = require("../config/installation_config"),
   staticPath = path.join(__dirname, "../hot_and_gui/static");
 
 app.use(express.static(staticPath));
@@ -45,7 +44,6 @@ app.use(
   })
 );
 app.use(bodyParser.json());
-
 app.locals.system = new System(sys_config, installation_config);
 app.locals.system.initialize().then(() => {
   //TODO: set master_power relay(s) to ON

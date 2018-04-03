@@ -1,6 +1,7 @@
-var path = require("path");
-var webpack = require("webpack");
-var HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require("path"),
+  webpack = require("webpack"),
+  CleanWebpackPlugin = require("clean-webpack-plugin"),
+  HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: ["babel-polyfill", "./hot_and_gui/static/index.js"],
@@ -24,8 +25,11 @@ module.exports = {
     ]
   },
   plugins: [
+    new CleanWebpackPlugin(["build/hot_and_gui"], {
+      // Write logs to console.
+      verbose: true
+    }),
     new HtmlWebpackPlugin({
-      template: "./hot_and_gui/static/index.html",
       filename: "index.html",
       inject: "body"
     })
