@@ -14,7 +14,24 @@ const app = express(),
 
 app.use(express.static(staticPath));
 
-app.use(function(req, res, next) {
+app.use(set_response_headers);
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
+app.use(bodyParser.json());
+app.locals.system = new System(sys_config, installation_config);
+app.locals.system.initialize().then(() => {
+  //TODO: set master_power relay(s) to ON
+  console.log("[Server]: Set Routes");
+  routes.routes(app);
+  console.log("[Server]: Begin Listening");
+  app.listen(port);
+  console.log(`[Server]: Rejoice. You may now control Fire on port: ${port}`);
+});
+
+function set_response_headers(req, res, next) {
   // Website you wish to allow to connect
   res.setHeader("Access-Control-Allow-Origin", "*");
 
@@ -37,19 +54,4 @@ app.use(function(req, res, next) {
 
   // Pass to next layer of middleware
   next();
-});
-app.use(
-  bodyParser.urlencoded({
-    extended: true
-  })
-);
-app.use(bodyParser.json());
-app.locals.system = new System(sys_config, installation_config);
-app.locals.system.initialize().then(() => {
-  //TODO: set master_power relay(s) to ON
-  console.log("[Server]: Set Routes");
-  routes.routes(app);
-  console.log("[Server]: Begin Listening");
-  app.listen(port);
-  console.log(`[Server]: Rejoice. You may now control Fire on port: ${port}`);
-});
+}

@@ -37,7 +37,6 @@ export default class System {
             "[System]: Initialization Errror: No System Parts Configured."
           );
         }
-
         function config_check(system_parts) {
           return (
             system_parts.find(part => {
@@ -52,7 +51,6 @@ export default class System {
           throw new Error(err);
         }
       }
-
       function match_device_ip(ip) {
         var ifaces = os.networkInterfaces();
         var matched = false;
@@ -69,7 +67,13 @@ export default class System {
               console.log(ifname + ":" + alias, iface.address);
             } else {
               // this interface has only one ipv4 adress
-              console.log(ifname, iface.address);
+              console.log(
+                "[System]: Config Ip:",
+                ip,
+                "against:",
+                ifname,
+                iface.address
+              );
             }
             ++alias;
             if (iface.address.includes(ip.toString())) {
