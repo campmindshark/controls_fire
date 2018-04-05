@@ -1,5 +1,5 @@
 import React from "react";
-import ajax_adapter from "../AjaxAdapter";
+import xhr from "../xhr";
 
 export default class ToggleButton extends React.Component {
   constructor(props) {
@@ -26,9 +26,9 @@ export default class ToggleButton extends React.Component {
   async toggle() {
     var result;
     if (this.state.on == true) {
-      result = await ajax_adapter(this.props.endpoints.off);
+      result = await xhr(this.props.endpoints.off);
     } else {
-      result = await ajax_adapter(this.props.endpoints.on);
+      result = await xhr(this.props.endpoints.on);
     }
     console.log(result);
     //TODO: conditionally set state based on result success.

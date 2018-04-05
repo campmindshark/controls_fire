@@ -1,5 +1,4 @@
-/**
- * @param {Object} ajax_props = {
+/** @param {Object} req = {
  *      url,
  *      verb: "",
  *      header: {
@@ -22,30 +21,28 @@
  *      }
  *    }
  **/
-export default function ajax_adapter(ajax_props) {
-  console.log(ajax_props);
+export default function xhr(req) {
+  console.log(req);
   return new Promise(resolve => {
     var x = new XMLHttpRequest();
     var final_url =
-      ajax_props.url +
+      req.url +
       "/" +
-      ("controller" in ajax_props ? ajax_props.controller + "/" : "") +
-      ("params" in ajax_props
-        ? ("path" in ajax_props.params ? ajax_props.params.path + "/" : "") +
-          ("action" in ajax_props ? ajax_props.action + "/" : "") +
-          ("query" in ajax_props.params
-            ? build_query_string(ajax_props.params.query)
-            : "")
-        : "action" in ajax_props ? ajax_props.action + "/" : "");
+      ("controller" in req ? req.controller + "/" : "") +
+      ("params" in req
+        ? ("path" in req.params ? req.params.path + "/" : "") +
+          ("action" in req ? req.action + "/" : "") +
+          ("query" in req.params ? build_query_string(req.params.query) : "")
+        : "action" in req ? req.action + "/" : "");
     // Set the request timeout in MS
-    x.timeout = ajax_props.timeout ? ajax_props.timeout : 4000;
-    x.open(ajax_props.verb, final_url, true);
+    x.timeout = req.timeout ? req.timeout : 4000;
+    x.open(req.verb, final_url, true);
     add_headers(x);
     x.onabort = function() {
-      throw new Error("[AJAX]: Request Aborted", ajax_props, "ECONNABORTED", x);
+      throw new Error("[AJAX]: Request Aborted", req, "ECONNABORTED", x);
     };
     x.onerror = function() {
-      throw new Error("[AJAX]: Network Error", ajax_props, null, x);
+      throw new Error("[AJAX]: Network Error", req, null, x);
     };
     x.onreadystatechange = function() {
       //Call a function when the state changes.
@@ -58,9 +55,7 @@ export default function ajax_adapter(ajax_props) {
       }
     };
     var body =
-      "params" in ajax_props
-        ? "body" in ajax_props.params ? ajax_props.params.body : null
-        : null;
+      "params" in req ? ("body" in req.params ? req.params.body : null) : null;
     var postBody = body != null ? JSON.stringify(body) : null;
     console.log(postBody);
     x.send(postBody);
@@ -82,10 +77,10 @@ export default function ajax_adapter(ajax_props) {
       }
     }
     function add_headers(xhr) {
-      if (ajax_props.headers) {
-        var header_keys = Object.keys(ajax_props.headers);
+      if (req.headers) {
+        var header_keys = Object.keys(req.headers);
         header_keys.forEach(header_key => {
-          xhr.setRequestHeader(header_key, ajax_props.headers[header_key]);
+          xhr.setRequestHeader(header_key, req.headers[header_key]);
         });
       }
     }

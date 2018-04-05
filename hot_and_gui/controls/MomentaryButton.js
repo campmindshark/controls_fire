@@ -1,5 +1,5 @@
 import React from "react";
-import ajax_adapter from "../AjaxAdapter";
+import xhr from "../xhr";
 export default class MomentaryButton extends React.Component {
   constructor(props) {
     super(props);
@@ -26,7 +26,7 @@ export default class MomentaryButton extends React.Component {
     });
   }
   onMouseUp() {
-    ajax_adapter(this.props.endpoints.off);
+    xhr(this.props.endpoints.off);
     this.setState(prev_state => {
       return { on: false };
     });

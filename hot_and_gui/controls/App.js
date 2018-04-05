@@ -1,5 +1,5 @@
 import React from "react";
-import ajax_adapter from "../AjaxAdapter";
+import xhr from "../xhr";
 import BbbGpioDeviceContainer from "./BbbGpioDeviceContainer";
 
 export default class App extends React.Component {
@@ -20,7 +20,7 @@ export default class App extends React.Component {
       return prev;
     });
     async function get_part_config() {
-      var results = await ajax_adapter({
+      var results = await xhr({
         verb: "GET",
         url: "http://192.168.2.19:5000",
         controller: "fxs"
