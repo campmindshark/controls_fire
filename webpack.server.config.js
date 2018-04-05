@@ -42,6 +42,24 @@ module.exports = {
       }
     ]
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          chunks: "initial",
+          minChunks: 3,
+          name: "commons",
+          enforce: true
+        },
+        vendor: {
+          chunks: "initial",
+          test: path.resolve(__dirname, "node_modules"),
+          name: "vendor",
+          enforce: true
+        }
+      }
+    }
+  },
   resolve: {
     // you can now require('file') instead of require('file.js')
     extensions: [".js", ".json"]
