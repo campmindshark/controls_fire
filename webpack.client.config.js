@@ -7,7 +7,7 @@ module.exports = {
   entry: ["babel-polyfill", "./hot_and_gui/static/index.js"],
   output: {
     path: path.join(__dirname, "build/hot_and_gui/static"),
-    filename: "bundle.js"
+    filename: "[chunkhash].js"
   },
   module: {
     rules: [
@@ -23,6 +23,24 @@ module.exports = {
         }
       }
     ]
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          chunks: "initial",
+          minChunks: 3,
+          name: "commons",
+          enforce: true
+        },
+        vendor: {
+          chunks: "initial",
+          test: path.resolve(__dirname, "node_modules"),
+          name: "vendor",
+          enforce: true
+        }
+      }
+    }
   },
   plugins: [
     new CleanWebpackPlugin(["build/hot_and_gui"], {
