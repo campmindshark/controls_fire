@@ -5,16 +5,9 @@
   "main": "./server/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:prod": "npm run build:server && npm run build:client",
-    "start":
-      "npm run build:prod && NODE_ENV=production node ./build/server/server.js --exec babel-node --presets env",
-    "build:watch:client:dev":
-      "webpack --config ./webpack.client.config.js/ --mode development --watch --progress --colors",
-    "build:watch:server:dev":
-      "webpack --config ./webpack.server.config.js/ --mode development --watch --progress --colors",
-    "babel:watch:server": "babel ./server -d build/server --watch",
-    "start:server":
-      "nodemon ./build/server/server.js --exec babel-node --presets env"
+    "build:watch:client:dev": "webpack --config ./webpack.client.config.js/ --mode development --watch --progress --colors",
+    "build:watch:server:dev": "webpack --config ./webpack.server.config.js/ --mode development --watch --progress --colors",
+    "start:server": "nodemon ./build/server/server.js --exec babel-node --presets env"
   },
   "author": "Tushar Shah",
   "license": "ISC",
