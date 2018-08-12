@@ -6,7 +6,7 @@ exports.list_fxs = function(req, res) {
     " Full Array Info Requested: ",
     Date.now()
   );
-  var msg = req.app.locals.system.installation.get_array_details();
+  const msg = req.app.locals.system.installation.get_array_details();
   res.send(msg);
 };
 
@@ -20,7 +20,7 @@ exports.enable_fx = async function(req, res) {
       req.body.fxId,
       Date.now()
     );
-    var enabled_part = await req.app.locals.system.installation.enable_effect(
+    const enabled_part = await req.app.locals.system.installation.enable_effect(
       req.body.fxId
     );
     res.send(enabled_part);
@@ -37,7 +37,7 @@ exports.disable_fxs = async function(req, res) {
   //turn EVERYTHING off. Disable all fx.
   try {
     console.log("[Effect Controller]", "Master Shut Off Request: ", Date.now());
-    var msg = await req.app.locals.system.installation.master_shut_off(true);
+    const msg = await req.app.locals.system.installation.master_shut_off(true);
     res.send(msg);
   } catch (err) {
     res.send(
@@ -56,7 +56,7 @@ exports.get_fx_details = function(req, res) {
     "Details request for fxId: ",
     req.params.fxId
   );
-  var msg = req.app.locals.system.installation.get_effect_details(
+  const msg = req.app.locals.system.installation.get_effect_details(
     req.params.fxId
   );
   res.send(msg);
@@ -69,9 +69,9 @@ exports.update_config = function(req, res) {
   console.log("Config key: " + req.body.key);
   console.log("Requested value: " + req.body.value);
 
-  var id = req.params.fxId;
+  const id = req.params.fxId;
   if (id != null) {
-    var msg = req.app.locals.system.installation.reconfigure(
+    const msg = req.app.locals.system.installation.reconfigure(
       id,
       req.body.key,
       req.body.value
@@ -91,7 +91,7 @@ exports.disable_fx = async function(req, res) {
     req.params.fxId
   );
   if (req.params.fxId != null) {
-    var msg = await req.app.locals.system.installation.disable_effect(
+    const msg = await req.app.locals.system.installation.disable_effect(
       req.params.fxId,
       false
     );
@@ -104,8 +104,8 @@ exports.disable_fx = async function(req, res) {
 //#region /fxs/:fxId/fire
 exports.fire = function(req, res) {
   //POST /fxs/:fxId/fire
-  var new_value;
-  var part = req.app.locals.system.installation.parts[req.params.fxId];
+  const part = req.app.locals.system.installation.parts[req.params.fxId];
+  let new_value;
   if (req.body.open == 1) {
     new_value = part.inverted_output_device ? 0 : 1;
   } else {
@@ -116,8 +116,8 @@ exports.fire = function(req, res) {
 };
 exports.close = function(req, res) {
   //DELETE /fxs/:fxId/fire
-  var part = req.app.locals.system.installation.parts[req.params.fxId];
-  var new_value = part.inverted_output_device ? 1 : 0;
+  const part = req.app.locals.system.installation.parts[req.params.fxId];
+  const new_value = part.inverted_output_device ? 1 : 0;
   part.gpio.set_value(new_value);
   res.send(JSON.stringify(part));
 };
