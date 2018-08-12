@@ -5,9 +5,9 @@ exports.system_info = function(req, res) {
 };
 exports.get_system_value = function(req, res) {
   console.log("[System Controller] Value Request at: " + Date.now());
-  var key = req.params.key;
-  var values = req.app.locals.system.values;
-  var value = "[System Controller] Error: Key Not Found";
+  const key = req.params.key,
+  values = req.app.locals.system.values;
+  let value = "[System Controller] Error: Key Not Found";
   if (key in values) {
     value = req.app.locals.system.values[req.params.key];
   }
