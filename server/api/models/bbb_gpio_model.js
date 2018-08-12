@@ -24,14 +24,12 @@ export default class BbbGpio {
 
     const file_data_map = ["value", "active_low", "direction", "edge"].map(
       async file => {
-        var data = await fs.readFileAsync(this.path + file);
+        const data = await fs.readFileAsync(this.path + file);
         return data;
       }
     );
 
-    var file_data = await Promise.all(file_data_map).then(values => {
-      return values;
-    });
+    const file_data = await Promise.all(file_data_map);;
 
     this.raw_value = file_data[0].trim();
     this.active_low = file_data[1].trim();
@@ -40,7 +38,7 @@ export default class BbbGpio {
     console.log("[Gpio Init]: Values Loaded", Date.now());
     this.enabled = true;
 
-    var initial_corrected = this.active_low_corrected_value(init_value);
+    const initial_corrected = this.active_low_corrected_value(init_value);
     if (initial_corrected != this.raw_value) {
       await this.set_value(initial_corrected);
       console.log("[Gpio Init]: Initial Value Set for pin: " + this.pin);
@@ -120,17 +118,17 @@ export default class BbbGpio {
   //#region Properties
   async get_value() {
     if (this.enabled == true) {
-      var val = await fs.readFileAsync(this.path + "value");
+      const val = await fs.readFileAsync(this.path + "value");
       this.raw_value = val.trim();
     }
     return this.active_low_corrected_value(this.raw_value);
   }
 
   async set_value(value) {
-    if (this.enabled == false) {
+    if (this.enabled === false) {
       console.error("Cannot Command Disabled Effect");
     } else {
-      var new_value = this.active_low_corrected_value(value);
+      const new_value = this.active_low_corrected_value(value);
       this.raw_value = await fs.writeFileAsync(this.path + "value", new_value);
       console.log("[Gpio]: New Raw Value Set for Pin " + this.pin);
     }
@@ -138,10 +136,10 @@ export default class BbbGpio {
   //#endregion
   //#region helpers
   build_path(mode, pin) {
-    var mock_path =
+    const mock_path =
       process.cwd().substring(0, process.cwd().indexOf("src")) + "mock_gpio";
-    var path = mode == "mock" ? mock_path : "";
-    path += base_path + pin + "/";
+    const path = (mode == "mock" ? mock_path : "") + base_path + pin + "/";
+
     return path;
   }
   active_low_corrected_value(value) {

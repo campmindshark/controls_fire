@@ -1,4 +1,4 @@
-var fs = require("fs");
+const fs = require("fs");
 
 fs.readFileAsync = function(file) {
   return new Promise(resolve => {
