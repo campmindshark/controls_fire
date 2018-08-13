@@ -13,14 +13,14 @@ export default class App extends React.Component {
   }
 
   async componentWillMount() {
-    var config = JSON.parse(await get_part_config());
+    const config = JSON.parse(await get_part_config());
     console.log("config", config);
     this.setState(prev => {
       prev.config = config;
       return prev;
     });
     async function get_part_config() {
-      var results = await xhr({
+      const results = await xhr({
         verb: "GET",
         url: "http://192.168.2.19:5000",
         controller: "fxs"
@@ -30,8 +30,8 @@ export default class App extends React.Component {
   }
 
   render() {
-    var parts = this.state.config.parts;
-    var part_markup =
+    const parts = this.state.config.parts;
+    const part_markup =
       parts != undefined && parts.length > 0
         ? parts.map((part, i) => {
             return (

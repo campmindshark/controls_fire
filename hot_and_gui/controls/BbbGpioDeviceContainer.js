@@ -20,7 +20,7 @@ export default class BbbGpioDeviceContainer extends React.Component {
       off: get_enable_endpoint("DELETE", { path: id })
     };
     function get_enable_endpoint(verb, params) {
-      var eps = {
+      const eps = {
         url: url,
         verb: verb,
         controller: "fxs",
@@ -55,7 +55,6 @@ export default class BbbGpioDeviceContainer extends React.Component {
     }
   }
   static get_button_text(type) {
-    var text;
     switch (type) {
       case "outlet":
         return "Effect Solenoid";
@@ -69,14 +68,14 @@ export default class BbbGpioDeviceContainer extends React.Component {
   }
 
   render() {
-    var type = this.props.part_config.type;
-    var DeviceButton = type == "outlet" ? MomentaryButton : ToggleButton;
-    var btn_txt = BbbGpioDeviceContainer.get_button_text(type);
-    var live_control_endpoints = BbbGpioDeviceContainer.get_live_control_endpoints(
+    const type = this.props.part_config.type;
+    const DeviceButton = type == "outlet" ? MomentaryButton : ToggleButton;
+    const btn_txt = BbbGpioDeviceContainer.get_button_text(type);
+    const live_control_endpoints = BbbGpioDeviceContainer.get_live_control_endpoints(
       this.props.id,
       this.props.base_url
     );
-    var enable_endpoints = BbbGpioDeviceContainer.get_enable_endpoints(
+    const enable_endpoints = BbbGpioDeviceContainer.get_enable_endpoints(
       this.props.id,
       this.props.base_url
     );

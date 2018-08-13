@@ -24,7 +24,7 @@ export default class ToggleButton extends React.Component {
     this.toggle = this.toggle.bind(this);
   }
   async toggle() {
-    var result;
+    let result;
     if (this.state.on == true) {
       result = await xhr(this.props.endpoints.off);
     } else {
