@@ -8,10 +8,10 @@ export default class System {
   }
   initialize() {
     return new Promise(async resolve => {
-      var sys_parts = await build_internal_array(this.parts);
+      const sys_parts = await build_internal_array(this.parts);
       this.parts = sys_parts;
-      var installations = this.installation.installations;
-      for (var i = 0; i < installations.length; i++) {
+       const installations = this.installation.installations;
+      for (let i = 0; i < installations.length; i++) {
         console.log("[System]: Config Check:" + installations[i].name);
         if (match_device_ip(installations[i].ip) == true) {
           console.log("[System]: Installation Ip matched");
@@ -52,10 +52,10 @@ export default class System {
         }
       }
       function match_device_ip(ip) {
-        var ifaces = os.networkInterfaces();
-        var matched = false;
+        const ifaces = os.networkInterfaces();
+        let matched = false;
         Object.keys(ifaces).forEach(function(ifname) {
-          var alias = 0;
+          let alias = 0;
           ifaces[ifname].forEach(function(iface) {
             if ("IPv4" !== iface.family || iface.internal !== false) {
               // skip over localhost and non-ipv4 addresses

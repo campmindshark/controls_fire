@@ -23,7 +23,7 @@ export default class Installation {
       if (parts.length > BbbGpio.pins.length) {
         throw new Error("TOO MANY PARTS. Configure fewer parts.");
       }
-      for (var i = 0; i < parts.length; i++) {
+      for (let i = 0; i < parts.length; i++) {
         parts[i] = await build_part(parts[i], enable_on_create);
       }
       console.log(parts);
@@ -35,8 +35,8 @@ export default class Installation {
     }
 
     async function build_part(part_config, enable_on_create) {
-      var part = part_config;
-      var id = BbbGpio.pins.findIndex(element => {
+      const part = part_config,
+      id = BbbGpio.pins.findIndex(element => {
         return element == part_config.gpio_pin;
       });
       if (id != -1) {
@@ -68,9 +68,8 @@ export default class Installation {
     return this;
   }
   get_effect_details(id) {
-    var part = this.parts[id];
     return {
-      part: part,
+      part: this.parts[id],
       gpio_mode: Installation.mode_test()
     };
   }
@@ -78,8 +77,7 @@ export default class Installation {
   //#region POST
   async enable_effect(id) {
     console.log("[Installation]: Enable Effect Id: ", id);
-    var part = this.parts[id];
-    part.gpio = new BbbGpio(part.gpio_pin, Installation.mode_test());
+    this.parts[id].gpio = new BbbGpio(part.gpio_pin, Installation.mode_test());
     await part.gpio.initialize(0);
     return part;
   }
@@ -94,7 +92,7 @@ export default class Installation {
       if (key in this.parts[part_id]) {
         switch (key) {
           case "gpio":
-            var part_to_disable = this.parts.find(element => {
+            const part_to_disable = this.parts.find(element => {
               return (
                 BbbGpio.pins[element.gpio.id] == value && element.id != part_id
               );
@@ -121,17 +119,11 @@ export default class Installation {
   //#region DELETE
   async master_shut_off(graceful) {
     console.log("[Installation]:  Master Shut Off Start");
-    var disable_all_effects = this.parts.map(async (part, i) => {
-      var result = await this.disable_effect(i, graceful);
+    const disable_all_effects = this.parts.map(async (part, i) => {
+      const result = await this.disable_effect(i, graceful);
       return result;
     });
-    var msg = await Promise.all(disable_all_effects)
-      .then(results => {
-        return results;
-      })
-      .catch(err => {
-        return err;
-      });
+    const msg = await Promise.all(disable_all_effects);
     console.log("[Installation]: Master Shut Off Complete");
     return msg;
   }
