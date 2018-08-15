@@ -10,7 +10,7 @@ export default class System {
     return new Promise(async resolve => {
       const sys_parts = await build_internal_array(this.parts);
       this.parts = sys_parts;
-       const installations = this.installation.installations;
+      const installations = this.installation.installations;
       for (let i = 0; i < installations.length; i++) {
         console.log("[System]: Config Check:" + installations[i].name);
         if (match_device_ip(installations[i].ip) == true) {

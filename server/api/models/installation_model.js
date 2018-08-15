@@ -36,9 +36,9 @@ export default class Installation {
 
     async function build_part(part_config, enable_on_create) {
       const part = part_config,
-      id = BbbGpio.pins.findIndex(element => {
-        return element == part_config.gpio_pin;
-      });
+        id = BbbGpio.pins.findIndex(element => {
+          return element == part_config.gpio_pin;
+        });
       if (id != -1) {
         part.gpio = new BbbGpio(BbbGpio.pins[id], Installation.mode_test());
         //add/set gpio property
@@ -77,7 +77,8 @@ export default class Installation {
   //#region POST
   async enable_effect(id) {
     console.log("[Installation]: Enable Effect Id: ", id);
-    this.parts[id].gpio = new BbbGpio(part.gpio_pin, Installation.mode_test());
+    const part = this.parts[id];
+    part.gpio = new BbbGpio(part.gpio_pin, Installation.mode_test());
     await part.gpio.initialize(0);
     return part;
   }
@@ -90,9 +91,10 @@ export default class Installation {
     );
     if (part_id != null) {
       if (key in this.parts[part_id]) {
+        let part_to_disable;
         switch (key) {
           case "gpio":
-            const part_to_disable = this.parts.find(element => {
+            part_to_disable = this.parts.find(element => {
               return (
                 BbbGpio.pins[element.gpio.id] == value && element.id != part_id
               );

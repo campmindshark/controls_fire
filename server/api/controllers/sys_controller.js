@@ -8,8 +8,8 @@ exports.get_system_value = (req, res) => {
   const values = req.app.locals.system.values;
 
   const value = (req.params.key in values)
-  ? req.app.locals.system.values[req.params.key]
-  : "[System Controller] Error: Key Not Found";
+    ? req.app.locals.system.values[req.params.key]
+    : "[System Controller] Error: Key Not Found";
 
   res.send(value);
 };

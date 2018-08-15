@@ -29,7 +29,7 @@ export default class BbbGpio {
       }
     );
 
-    const file_data = await Promise.all(file_data_map);;
+    const file_data = await Promise.all(file_data_map);
 
     this.raw_value = file_data[0].trim();
     this.active_low = file_data[1].trim();

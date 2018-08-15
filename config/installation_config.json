@@ -3,7 +3,7 @@
     {
       "name": "EyeFire",
       "version": "1.0.0",
-      "ip": "192.168.2.19",
+      "ip": "192.168.2.6",
       "parts": [
         {
           "name": "left_dsv_0",
@@ -131,7 +131,7 @@
     {
       "name": "SignFire",
       "version": "1.0.0",
-      "ip": "192.168.2.4",
+      "ip": "192.168.2.6",
       "parts": [
         {
           "name": "left_bank_0",

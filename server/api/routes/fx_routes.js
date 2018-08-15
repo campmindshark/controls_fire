@@ -2,10 +2,13 @@ import path from "path";
 import fx_controller from "../controllers/fx_controller";
 import sys_controller from "../controllers/sys_controller";
 
-exports.routes = function(app) {
-  app.route("/").get((req, res) => {
-    res.sendFile(__dirname + "../hot_and_gui/static/index.html");
-  });
+exports.routes = (app) => {
+  app
+    .route("/")
+    .get((req, res) => {
+      const hot_and_gui_path = path.resolve("./hot_and_gui/static/index.html");
+      res.sendFile(hot_and_gui_path);
+    });
   app
     .route("/fxs")
     .get(fx_controller.list_fxs)
