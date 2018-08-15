@@ -1,5 +1,5 @@
 //#region /fxs
-exports.list_fxs = function(req, res) {
+exports.list_fxs = (req, res) => {
   //GET /fxs
   console.log(
     "[Effect Controller]",
@@ -10,7 +10,7 @@ exports.list_fxs = function(req, res) {
   res.send(msg);
 };
 
-exports.enable_fx = async function(req, res) {
+exports.enable_fx = async (req, res) => {
   //POST /fxs
   //Request to enable client control of req.body.fxId
   try {
@@ -32,7 +32,7 @@ exports.enable_fx = async function(req, res) {
   }
 };
 
-exports.disable_fxs = async function(req, res) {
+exports.disable_fxs = async (req, res) => {
   //DELETE /fxs
   //turn EVERYTHING off. Disable all fx.
   try {
@@ -48,7 +48,7 @@ exports.disable_fxs = async function(req, res) {
 };
 //#endregion
 //#region /fxs/:fxId
-exports.get_fx_details = function(req, res) {
+exports.get_fx_details = (req, res) => {
   //GET /fx/:fxId
   //type and state informatiom for req.params.fxId
   console.log(
@@ -62,7 +62,7 @@ exports.get_fx_details = function(req, res) {
   res.send(msg);
 };
 
-exports.update_config = function(req, res) {
+exports.update_config = (req, res) => {
   //PATCH /fx/:fxId
   console.log("[Effect Controller]");
   console.log("Config update requested for fxId: " + req.params.fxId);
@@ -82,7 +82,7 @@ exports.update_config = function(req, res) {
   }
 };
 
-exports.disable_fx = async function(req, res) {
+exports.disable_fx = async (req, res) => {
   //DELETE /fxs/:fxId
   //Turn off and disable client control of req.params.fxId
   console.log(
@@ -102,7 +102,7 @@ exports.disable_fx = async function(req, res) {
 };
 //#endregion
 //#region /fxs/:fxId/fire
-exports.fire = function(req, res) {
+exports.fire = (req, res) => {
   //POST /fxs/:fxId/fire
   const part = req.app.locals.system.installation.parts[req.params.fxId];
   let new_value;
@@ -114,7 +114,7 @@ exports.fire = function(req, res) {
   part.gpio.set_value(new_value);
   res.send(JSON.stringify(part));
 };
-exports.close = function(req, res) {
+exports.close = (req, res) => {
   //DELETE /fxs/:fxId/fire
   const part = req.app.locals.system.installation.parts[req.params.fxId];
   const new_value = part.inverted_output_device ? 1 : 0;

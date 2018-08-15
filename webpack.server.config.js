@@ -4,7 +4,7 @@ const path = require("path"),
   HtmlWebpackPlugin = require("html-webpack-plugin"),
   fs = require("fs");
 
-var nodeModules = {};
+const nodeModules = {};
 fs
   .readdirSync("node_modules")
   .filter(function(x) {
