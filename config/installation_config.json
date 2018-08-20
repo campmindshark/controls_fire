@@ -3,7 +3,7 @@
     {
       "name": "EyeFire",
       "version": "1.0.0",
-      "ip": "192.168.2.19",
+      "ip": "10.0.1.19",
       "parts": [
         {
           "name": "left_dsv_0",
@@ -131,7 +131,7 @@
     {
       "name": "SignFire",
       "version": "1.0.0",
-      "ip": "192.168.2.4",
+      "ip": "10.0.1.19",
       "parts": [
         {
           "name": "left_bank_0",
@@ -145,27 +145,6 @@
           "type": "outlet",
           "gpio_pin": 78,
           "sources": ["sign_supply_0"],
-          "inverted_output_device": true
-        },
-        {
-          "name": "left_bank_2",
-          "type": "outlet",
-          "gpio_pin": 76,
-          "sources": ["sign_supply_1"],
-          "inverted_output_device": true
-        },
-        {
-          "name": "left_bank_3",
-          "type": "outlet",
-          "gpio_pin": 74,
-          "sources": ["sign_supply_1"],
-          "inverted_output_device": true
-        },
-        {
-          "name": "left_bank_4",
-          "type": "outlet",
-          "gpio_pin": 72,
-          "sources": ["sign_supply_1"],
           "inverted_output_device": true
         },
         {
@@ -190,56 +169,53 @@
         {
           "name": "right_bank_1",
           "type": "outlet",
-          "gpio_pin": 35,
+          "gpio_pin": 7,
           "sources": ["sign_supply_2"],
           "inverted_output_device": true
         },
         {
-          "name": "right_bank_2",
-          "type": "outlet",
-          "gpio_pin": 67,
-          "sources": ["sign_supply_2"],
-          "inverted_output_device": true
+          "name": "pilot_left",
+          "type": "pilot",
+          "gpio_pin": 5,
+          "sources": ["sign_supply_0"]
         },
         {
-          "name": "right_bank_3",
-          "type": "outlet",
-          "gpio_pin": 68,
-          "sources": ["sign_supply_3"],
-          "inverted_output_device": true
+          "name": "pilot_right",
+          "type": "pilot",
+          "gpio_pin": 4,
+          "sources": ["sign_supply_0"]
         },
         {
-          "name": "right_bank_4",
-          "type": "outlet",
-          "gpio_pin": 44,
-          "sources": ["sign_supply_3"],
-          "inverted_output_device": true
+          "name": "ignitor_left",
+          "type": "ignitor",
+          "gpio_pin": 3,
+          "sources": ["sign_supply_0"]
         },
         {
-          "name": "sign_pilot",
-          "type": "outlet",
-          "gpio_pin": 26,
+          "name": "ignitor_right",
+          "type": "ignitor",
+          "gpio_pin": 2,
           "sources": ["sign_supply_0"]
         },
         {
           "name": "sign_supply_0",
           "type": "supply",
-          "gpio_pin": 46
+          "gpio_pin": 14
         },
         {
           "name": "sign_supply_1",
           "type": "supply",
-          "gpio_pin": 65
+          "gpio_pin": 66
         },
         {
           "name": "sign_supply_2",
           "type": "supply",
-          "gpio_pin": 63
+          "gpio_pin": 69
         },
         {
           "name": "sign_supply_3",
           "type": "supply",
-          "gpio_pin": 37
+          "gpio_pin": 72
         }
       ]
     }
